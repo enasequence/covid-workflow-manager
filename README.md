@@ -1,1 +1,1 @@
-# covid-workflow-manager
+# Covid Workflow Manager
