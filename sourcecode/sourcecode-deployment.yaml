@@ -1,9 +1,8 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: sourcecode-statefulset
+  name: sourcecode-deployment
 spec:
-  serviceName: sourcecode-service-headless
   replicas: 1
   selector:
     matchLabels:
@@ -45,12 +44,7 @@ spec:
         volumeMounts:
           - name: data
             mountPath: /git
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        resources:
-          requests:
-            storage: 1Gi
-        accessModes:
-          - ReadWriteMany
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: sourcecode-pvc
