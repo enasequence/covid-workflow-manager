@@ -9,7 +9,7 @@ claim with name "sourcecode-pvc". It could be used later in other pods.
 ### How to run this microservice on k8s cluster:
 **Create ConfigMap:**
 ```bash
-kubectl create configmap sourcecode-config \
+kubectl create configmap jovian-sourcecode-config \
 --from-literal=git-sync-repo=<url of github repo> \
 --from-literal=git-sync-dest=/git \
 --from-literal=git-sync-branch=master \
@@ -19,12 +19,12 @@ kubectl create configmap sourcecode-config \
 
 **Create Persistent Volume Claim**
 ```bash
-kubectl create -f sourcecode-pvc.yaml
+kubectl create -f jovian-sourcecode-pvc.yaml
 ```
 
 **Create Deployment:**
 ```bash
-kubectl create -f sourcecode-deployment.yaml
+kubectl create -f jovian-sourcecode-deployment.yaml
 ```
 
 **Check different components of microservice:**

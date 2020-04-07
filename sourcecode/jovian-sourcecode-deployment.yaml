@@ -47,4 +47,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: sourcecode-pvc
+            claimName: jovian-sourcecode-pvc

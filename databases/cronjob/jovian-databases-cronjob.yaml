@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: jovian-databases-cronjob
+spec:
+  schedule: "* * * * 0"
+  jobTemplate:
+    metadata:
+      labels:
+        ms: jovian-databases-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: alexeyebi/jovian-databases
+        volumeMounts:
+          - name: data
+            mountPath: /mnt/database
+          - name: code
+            mountPath: /git
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: jovian-databases-pvc
+        - name: code
+          persistentVolumeClaim:
+            claimName: jovian-sourcecode-pvc

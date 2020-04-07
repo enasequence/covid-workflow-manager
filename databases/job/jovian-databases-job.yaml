@@ -11,11 +11,16 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: main
-        image: ''
+        image: alexeyebi/jovian-databases
         volumeMounts:
           - name: data
             mountPath: /mnt/database
+          - name: code
+            mountPath: /git
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: jovian-databases-pvc
+        - name: code
+          persistentVolumeClaim:
+            claimName: jovian-sourcecode-pvc
