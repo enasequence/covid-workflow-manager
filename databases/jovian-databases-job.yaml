@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jovian-databases-job
+spec:
+  template:
+    metadata:
+      labels:
+        ms: jovian-databases-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: ''
+        volumeMounts:
+          - name: data
+            mountPath: /mnt/database
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: jovian-databases-pvc
