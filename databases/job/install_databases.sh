@@ -46,3 +46,5 @@ perl "${CONDA_PREFIX}"/bin/update_blastdb.pl --decompress nt
 
 cd "${DB_PATH_NR}" || exit
 perl "${CONDA_PREFIX}"/bin/update_blastdb.pl --decompress nr
+
+exit 0
