@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jovian-pipeline-run-job
+spec:
+  template:
+    metadata:
+      labels:
+        ms: jovian-pipeline-run-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: alexeyebi/jovian-pipeline-run
+        volumeMounts:
+          - name: head
+            mountPath: /root
+          - name: body
+            mountPath: /git
+          - name: databases
+            mountPath: /mnt/database
+      volumes:
+        - name: head
+          persistentVolumeClaim:
+            claimName: jovian-pipeline-head-pvc
+        - name: body
+          persistentVolumeClaim:
+            claimName: jovian-sourcecode-pvc
+        - name: databases
+          persistentVolumeClaim:
+            claimName: jovian-databases-pvc

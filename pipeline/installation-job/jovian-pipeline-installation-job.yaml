@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jovian-pipeline-installation-job
+spec:
+  template:
+    metadata:
+      labels:
+        ms: jovian-pipeline-installation-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: alexeyebi/jovian-pipeline-installation
+        volumeMounts:
+          - name: head
+            mountPath: /root
+          - name: body
+            mountPath: /git
+      volumes:
+        - name: head
+          persistentVolumeClaim:
+            claimName: jovian-pipeline-head-pvc
+        - name: body
+          persistentVolumeClaim:
+            claimName: jovian-sourcecode-pvc
