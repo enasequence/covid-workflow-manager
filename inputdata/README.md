@@ -10,12 +10,7 @@ kubectl create configmap jovian-inputdata-config \
 --from-literal=password-dest=<data hub password> \
 ```
 
-**Create Persistent Volume Claim**
+**Create Persistent Volume Claim and CronJob**
 ```bash
-kubectl create -f jovian-inputdata-pvc.yaml
-```
-
-**Start a cron job to check for new data and downloading**
-```bash
-kubectl create -f jovian-inputdata-cronjob.yaml
+kubectl create -f jovian-inputdata-pvc+cronjob.yaml
 ```

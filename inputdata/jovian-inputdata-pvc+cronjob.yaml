@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jovian-inputdata-pvc
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+  - ReadWriteMany
+
+---
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: jovian-inputdata-cronjob
+spec:
+  schedule: "* 0 * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        ms: inputdata-cronjob
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: alexeyebi/jovian-inputdata-cronjob
+        volumeMounts:
+          - name: data
+            mountPath: /raw_data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: jovian-inputdata-pvc

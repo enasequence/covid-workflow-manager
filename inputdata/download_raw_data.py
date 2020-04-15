@@ -1,6 +1,8 @@
 import sys
 import os
 
+from pymongo import MongoClient
+
 FIRST_PATTERN = 'ftp.sra.ebi.ac.uk/vol1/'
 SECOND_PATTERN = 'ftp.dcc-private.ebi.ac.uk/vol1/'
 
@@ -12,7 +14,6 @@ def main():
     """
     files_to_download = parse_file()
     for file_name in files_to_download:
-        print(file_name)
         os.system(f"wget {file_name}")
 
 
@@ -33,8 +34,18 @@ def parse_file():
 
 
 def check_file_in_database(file_name):
-    # TODO add connection to db and check
-    return False
+    """
+    This function will check for current file in MongoDB and insert it in case
+    of absence
+    :param file_name: name of the file to check
+    :return: True if file is already in database and False otherwise
+    """
+    results = DB.find_one({'id': file_name})
+    if results is None:
+        DB.insert_one({'id': file_name, 'status': 'new_data'})
+        return False
+    else:
+        return True
 
 
 def generate_download_links(download_string):
@@ -56,6 +67,11 @@ def generate_download_links(download_string):
 
 
 if __name__ == "__main__":
+    # Getting credentials from command line
     DATA_HUB = sys.argv[1]
     DATA_HUB_PASSWORD = sys.argv[2]
+
+    # Getting access to MongoDB
+    CLIENT = MongoClient('mongodb://sample-status-db-svc')
+    DB = CLIENT.samples
     main()
