@@ -5,5 +5,5 @@ new_data, analysis_started, analysis_finished, data_submitted
 ### How to run this microservice on k8s cluster:
 **This command will create service, pvc and deployment with one Pod**
 ```bash
-kubectl create -f sample-status-db-svc+pvc+deployment.yaml
+kubectl create -f jovian-sample-status-db-svc+pvc+deployment.yaml
 ```

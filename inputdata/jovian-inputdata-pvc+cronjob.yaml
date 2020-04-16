@@ -20,7 +20,7 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        ms: inputdata-cronjob
+        ms: jovian-inputdata-cronjob
     spec:
       restartPolicy: OnFailure
       containers:
