@@ -26,6 +26,17 @@ spec:
       containers:
       - name: main
         image: alexeyebi/jovian-inputdata-cronjob
+        env:
+          - name: DATA_HUB
+            valueFrom:
+              configMapKeyRef:
+                name: jovian-inputdata-config
+                key: data-hub
+          - name: DATA_HUB_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: jovian-inputdata-config
+                key: password-dest
         volumeMounts:
           - name: data
             mountPath: /raw_data

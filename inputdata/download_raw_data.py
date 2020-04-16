@@ -14,7 +14,8 @@ def main():
     """
     files_to_download = parse_file()
     for file_name in files_to_download:
-        os.system(f"wget {file_name}")
+        output_file = f"/raw_data/{os.path.basename(file_name)}"
+        os.system(f"wget -t 2 {file_name} -O {output_file}")
 
 
 def parse_file():
@@ -40,9 +41,9 @@ def check_file_in_database(file_name):
     :param file_name: name of the file to check
     :return: True if file is already in database and False otherwise
     """
-    results = DB.find_one({'id': file_name})
+    results = DB.samples.find_one({'id': file_name})
     if results is None:
-        DB.insert_one({'id': file_name, 'status': 'new_data'})
+        DB.samples.insert_one({'id': file_name, 'status': 'new_data'})
         return False
     else:
         return True
