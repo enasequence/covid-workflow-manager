@@ -36,7 +36,7 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: jovian-inputdata-config
-                key: password-dest
+                key: data-hub-password
         volumeMounts:
           - name: data
             mountPath: /raw_data

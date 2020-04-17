@@ -7,7 +7,7 @@ check required data hub and download new files upon arrival.
 ```bash
 kubectl create configmap jovian-inputdata-config \
 --from-literal=data-hub=<data hub name> \
---from-literal=password-dest=<data hub password>
+--from-literal=data-hub-password=<data hub password>
 ```
 
 **Create Persistent Volume Claim and CronJob**
