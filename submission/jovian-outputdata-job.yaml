@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jovian-outputdata-job
+spec:
+  template:
+    metadata:
+      labels:
+        ms: jovian-outputdata-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: alexeyebi/jovian-outputdata-job
