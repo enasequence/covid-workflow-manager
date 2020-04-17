@@ -13,9 +13,11 @@ def main():
     download all required files
     """
     files_to_download = parse_file()
-    for file_name in files_to_download:
-        output_file = f"/raw_data/{os.path.basename(file_name)}"
-        os.system(f"wget -t 2 {file_name} -O {output_file}")
+    for file_name, file_urls in files_to_download.items():
+        os.system(f"mkdir /raw_data/{file_name}")
+        for file_url in file_urls:
+            output_file = f"/raw_data/{file_name}/{os.path.basename(file_url)}"
+            os.system(f"wget -t 2 {file_url} -O {output_file}")
 
 
 def parse_file():
@@ -23,14 +25,14 @@ def parse_file():
     This function will read output file and generate list of links to download
     :return: list of links to download
     """
-    files = list()
+    files = dict()
     with open("covid.tsv", 'r') as f:
         next(f)
         for line in f:
             line = line.rstrip()
             data = line.split("\t")
             if not check_file_in_database(data[7]):
-                files.extend(generate_download_links(data[10]))
+                files[data[7]] = generate_download_links(data[10])
     return files
 
 
