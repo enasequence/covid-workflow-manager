@@ -1,5 +1,6 @@
 import sys
 import os
+import subprocess
 
 from pymongo import MongoClient
 
@@ -13,11 +14,23 @@ def main():
     download all required files
     """
     files_to_download = parse_file()
+    data_download_errors = list()
     for file_name, file_urls in files_to_download.items():
-        os.system(f"mkdir /raw_data/{file_name}")
+        completed_process_mkdir = subprocess.run(
+            f"mkdir /raw_data/{file_name}", shell=True, capture_output=True)
+        if completed_process_mkdir.returncode != 0:
+            data_download_errors.append(
+                completed_process_mkdir.stderr.decode('utf-8'))
         for file_url in file_urls:
             output_file = f"/raw_data/{file_name}/{os.path.basename(file_url)}"
-            os.system(f"wget -t 2 {file_url} -O {output_file}")
+            completed_process_wget = subprocess.run(
+                f"wget -t 2 {file_url} -O {output_file}", shell=True,
+                capture_output=True)
+            if completed_process_wget.returncode != 0:
+                data_download_errors.append(
+                    completed_process_wget.stderr.decode('utf-8'))
+    # TODO: write errors to mongodb
+    print(data_download_errors)
 
 
 def parse_file():

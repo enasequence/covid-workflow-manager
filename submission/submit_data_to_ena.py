@@ -24,31 +24,32 @@ def upload_files_to_ena(filename):
     This function will upload files to ENA
     :param filename: file to upload to ENA
     """
+    global REPEATS
+    REPEATS += 1
     upload_command = f"curl -T {filename}  ftp://webin.ebi.ac.uk " \
                      f"--user {USER}:{PASSWORD}"
-    md5_uploaded = f"curl -s ftp://webin.ebi.ac.uk/{filename} " \
+    md5_uploaded_command = f"curl -s ftp://webin.ebi.ac.uk/{filename} " \
                    f"--user {USER}:{PASSWORD} | md5sum | cut -f1 -d ' '"
-    md5_original = f"md5sum {filename} | cut -f1 -d ' '"
+    md5_original_command = f"md5sum {filename} | cut -f1 -d ' '"
 
-    # TODO: check last recommendations
-    uploadmd5, uploaderr = subprocess.Popen(
-        md5_original, shell=True, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE).communicate()
-    out, err = subprocess.Popen(
-        upload_command, shell=True, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE).communicate()
-    downloadmd5, downloaderr = subprocess.Popen(
-        md5_uploaded, shell=True, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE).communicate()
-    uploadmd5 = uploadmd5.decode().strip(' \t\n\r')
-    downloadmd5 = downloadmd5.decode().strip(' \t\n\r')
-    if uploadmd5 == downloadmd5:
-        # TODO: write error to MongoDB
+    completed_process_original = subprocess.run(md5_original_command,
+                                                shell=True, capture_output=True)
+    completed_process_command = subprocess.run(upload_command, shell=True,
+                                               capture_output=True)
+    completed_process_uploaded = subprocess.run(md5_uploaded_command,
+                                                shell=True, capture_output=True)
+    md5_original = completed_process_original.stdout.decode('utf-8').rstrip()
+    md5_uploaded = completed_process_uploaded.stdout.decode('utf-8').rstrip()
+    if md5_original == md5_uploaded:
+        # TODO: write timestamp to MongoDB
         pass
     else:
-        # TODO: restrict number of attempts
         time.sleep(10)
-        upload_files_to_ena(filename)
+        if REPEATS == 3:
+            # TODO: write error to mongodb
+            print(completed_process_command.stderr.decode('utf-8'))
+        else:
+            upload_files_to_ena(filename)
 
 
 def create_analysis_xml():
@@ -74,20 +75,18 @@ def submit_xml_files_to_ena():
     command = f'curl -k  -F "SUBMISSION=@{SUBMISSION_XML}" ' \
               f'-F "ANALYSIS=@{ANALYSIS_XML}" ' \
               f'"{ANALYSIS_SUBMISSION_URL_DEV}%20{USER}%20{PASSWORD}"'
-    # TODO: check last recommendations
-    sp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE)
-    out, err = sp.communicate()
-    # TODO: write logs to MongoDB
+    completed_process_command = subprocess.run(command, shell=True,
+                                               capture_output=True)
+    returned_xml = completed_process_command.stdout
     submission_error_messages = list()
-    if out:
-        root = etree.XML(out)
-        root = etree.fromstring(out)
+    if returned_xml:
+        root = etree.XML(returned_xml)
+        root = etree.fromstring(returned_xml)
         for messages in root.findall('MESSAGES'):
             for mess in messages.findall('ERROR'):
                 submission_error_messages.append('ERROR:' + mess.text)
-
-    print("returncode of subprocess:", sp.returncode)
+    # TODO: write logs to MongoDB
+    print(submission_error_messages)
 
 
 if __name__ == "__main__":
@@ -106,4 +105,6 @@ if __name__ == "__main__":
                                    "drop-box/submit/?auth=ENA"
     ANALYSIS_SUBMISSION_URL_DEV = "https://www-test.ebi.ac.uk/ena/submit/" \
                                   "drop-box/submit/?auth=ENA"
+
+    REPEATS = 0
     main()
