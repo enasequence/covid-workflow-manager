@@ -1,8 +1,10 @@
 import sys
 import subprocess
 import time
+import datetime
 
 from lxml import etree
+from pymongo import MongoClient
 
 from .analysis_xml import AnalysisXML
 from .submission_xml import SubmissionXML
@@ -29,7 +31,7 @@ def upload_files_to_ena(filename):
     upload_command = f"curl -T {filename}  ftp://webin.ebi.ac.uk " \
                      f"--user {USER}:{PASSWORD}"
     md5_uploaded_command = f"curl -s ftp://webin.ebi.ac.uk/{filename} " \
-                   f"--user {USER}:{PASSWORD} | md5sum | cut -f1 -d ' '"
+                           f"--user {USER}:{PASSWORD} | md5sum | cut -f1 -d ' '"
     md5_original_command = f"md5sum {filename} | cut -f1 -d ' '"
 
     completed_process_original = subprocess.run(md5_original_command,
@@ -40,16 +42,20 @@ def upload_files_to_ena(filename):
                                                 shell=True, capture_output=True)
     md5_original = completed_process_original.stdout.decode('utf-8').rstrip()
     md5_uploaded = completed_process_uploaded.stdout.decode('utf-8').rstrip()
+    sample = DB.samples.find_one({'id': RUN})
     if md5_original == md5_uploaded:
-        # TODO: write timestamp to MongoDB
-        pass
+        sample['import_to_ena']['date'] = datetime.datetime.now()
+        sample['import_to_ena']['status'] = 'success'
     else:
         time.sleep(10)
         if REPEATS == 3:
-            # TODO: write error to mongodb
-            print(completed_process_command.stderr.decode('utf-8'))
+            sample['import_to_ena']['date'] = datetime.datetime.now()
+            sample['import_to_ena']['status'] = 'failed'
+            sample['import_to_ena']['errors'] = [
+                completed_process_command.stderr.decode('utf-8')]
         else:
             upload_files_to_ena(filename)
+    DB.samples.update_one({'id': RUN}, {'$set': sample})
 
 
 def create_analysis_xml():
@@ -85,8 +91,15 @@ def submit_xml_files_to_ena():
         for messages in root.findall('MESSAGES'):
             for mess in messages.findall('ERROR'):
                 submission_error_messages.append('ERROR:' + mess.text)
-    # TODO: write logs to MongoDB
-    print(submission_error_messages)
+    sample = DB.samples.find_one({'id': RUN})
+    if len(submission_error_messages) > 0:
+        sample['import_to_ena']['date'] = datetime.datetime.now()
+        sample['import_to_ena']['status'] = 'failed'
+        sample['import_to_ena']['errors'] = submission_error_messages
+    else:
+        sample['import_to_ena']['date'] = datetime.datetime.now()
+        sample['import_to_ena']['status'] = 'success'
+    DB.samples.update_one({'id': RUN}, {'$set': sample})
 
 
 if __name__ == "__main__":
@@ -94,9 +107,12 @@ if __name__ == "__main__":
     GZIP_ANALYSIS_FILE = sys.argv[1]
     TAB_ANALYSIS_FILE = sys.argv[2]
 
+    # Get run name from command line
+    RUN = sys.argv[3]
+
     # Get credentials from command line
-    USER = sys.argv[3]
-    PASSWORD = sys.argv[4]
+    USER = sys.argv[4]
+    PASSWORD = sys.argv[5]
 
     # Define XML files
     ANALYSIS_XML = '/analysis.xml'
@@ -106,5 +122,10 @@ if __name__ == "__main__":
     ANALYSIS_SUBMISSION_URL_DEV = "https://www-test.ebi.ac.uk/ena/submit/" \
                                   "drop-box/submit/?auth=ENA"
 
+    # Number of attempts of data submission to ENA
     REPEATS = 0
+
+    # Getting access to MongoDB
+    CLIENT = MongoClient('mongodb://sample-status-db-svc')
+    DB = CLIENT.samples
     main()

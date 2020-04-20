@@ -1,6 +1,7 @@
 import sys
 import os
 import subprocess
+import datetime
 
 from pymongo import MongoClient
 
@@ -14,8 +15,9 @@ def main():
     download all required files
     """
     files_to_download = parse_file()
-    data_download_errors = list()
     for file_name, file_urls in files_to_download.items():
+        data_download_errors = list()
+        sample = DB.samples.find_one({'id': file_name})
         completed_process_mkdir = subprocess.run(
             f"mkdir /raw_data/{file_name}", shell=True, capture_output=True)
         if completed_process_mkdir.returncode != 0:
@@ -29,8 +31,14 @@ def main():
             if completed_process_wget.returncode != 0:
                 data_download_errors.append(
                     completed_process_wget.stderr.decode('utf-8'))
-    # TODO: write errors to mongodb
-    print(data_download_errors)
+        if len(data_download_errors) > 0:
+            sample['export_from_ena']['date'] = datetime.datetime.now()
+            sample['export_from_ena']['status'] = 'failed'
+            sample['export_from_ena']['errors'] = data_download_errors
+        else:
+            sample['export_from_ena']['date'] = datetime.datetime.now()
+            sample['export_from_ena']['status'] = 'downloaded'
+        DB.samples.update_one({'id': file_name}, {'$set': sample})
 
 
 def parse_file():
@@ -58,10 +66,26 @@ def check_file_in_database(file_name):
     """
     results = DB.samples.find_one({'id': file_name})
     if results is None:
-        DB.samples.insert_one({'id': file_name, 'status': 'new_data'})
+        sample = get_sample_structure()
+        sample['id'] = file_name
+        sample['export_from_ena']['date'] = datetime.datetime.now()
+        sample['export_from_ena']['status'] = 'download started'
+
+        DB.samples.insert_one(sample)
         return False
     else:
         return True
+
+
+def get_sample_structure():
+    """
+    This function will return data structure to write to db
+    :return:
+    """
+    return {'id': None,
+            'export_from_ena': {'date': None, 'status': None, 'errors': None},
+            'pipeline_analysis': {'date': None, 'status': None, 'errors': None},
+            'import_to_ena': {'date': None, 'status': None, 'errors': None}}
 
 
 def generate_download_links(download_string):

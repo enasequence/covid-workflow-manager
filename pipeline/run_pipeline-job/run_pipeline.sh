@@ -1,3 +1,5 @@
+python update_samples_status.py ${RUN} 'analysis started'
+
 # This will use HEAD pvc (5Gi)
 source activate Jovian_master
 
@@ -21,4 +23,5 @@ eval $(parse_yaml profile/variables.yaml "config_")
 snakemake -s Snakefile --profile "${PROFILE}" ${@}
 set -ue
 
+python update_samples_status.py ${RUN} 'analysis finished'
 exit 0
