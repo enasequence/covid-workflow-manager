@@ -1,0 +1,94 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Sample ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Import status</th>
+            <th scope="col">Pipeline status</th>
+            <th>Export status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data | paginate: { itemsPerPage: 10, currentPage: p }">
+            {{item}}
+          </tr>
+          <tr>
+            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+          </tr>
+          <tr>
+            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
+            <td><span class="badge badge-pill badge-info">Undef</span></td>
+          </tr>
+          <tr>
+            <td><a [routerLink]="'ERR3482177'">ERR3482180</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-danger">Failed</span></td>
+            <td><span class="badge badge-pill badge-danger">Failed</span></td>
+          </tr>
+        <tr>
+            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+          </tr>
+          <tr>
+            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
+            <td><span class="badge badge-pill badge-info">Undef</span></td>
+          </tr>
+        <tr>
+            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+          </tr>
+          <tr>
+            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
+            <td><span class="badge badge-pill badge-info">Undef</span></td>
+          </tr>
+          <tr>
+            <td><a [routerLink]="'ERR3482177'">ERR3482180</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-danger">Failed</span></td>
+            <td><span class="badge badge-pill badge-danger">Failed</span></td>
+          </tr>
+        <tr>
+            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+          </tr>
+          <tr>
+            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
+            <td>Apr 20, 2020</td>
+            <td><span class="badge badge-pill badge-success">Success</span></td>
+            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
+            <td><span class="badge badge-pill badge-info">Undef</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
