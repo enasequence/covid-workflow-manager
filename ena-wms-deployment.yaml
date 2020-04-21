@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ena-wms-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ms: ena-wms
+  template:
+    metadata:
+      labels:
+        ms: ena-wms
+    spec:
+      containers:
+      - image: openweb/git-sync
+        name: ena-wms
+        env:
+        - name: GIT_SYNC_REPO
+          valueFrom:
+            configMapKeyRef:
+              name: ena-wms-config
+              key: git-sync-repo
+        - name: GIT_SYNC_DEST
+          valueFrom:
+            configMapKeyRef:
+              name: ena-wms-config
+              key: git-sync-dest
+        - name: GIT_SYNC_BRANCH
+          valueFrom:
+            configMapKeyRef:
+              name: ena-wms-config
+              key: git-sync-branch
+        - name: GIT_SYNC_REV
+          valueFrom:
+            configMapKeyRef:
+              name: ena-wms-config
+              key: git-sync-rev
+        - name: GIT_SYNC_WAIT
+          valueFrom:
+            configMapKeyRef:
+              name: ena-wms-config
+              key: git-sync-wait
+        volumeMounts:
+          - name: code
+            mountPath: /git
+      volumes:
+        - name: code
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
