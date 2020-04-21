@@ -11,7 +11,7 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: main
-        image: alexeyebi/jovian-databases
+        image: alexeyebi/jovian-databases-job
         volumeMounts:
           - name: data
             mountPath: /mnt/database

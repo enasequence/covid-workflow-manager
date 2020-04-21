@@ -1,45 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sourcecode-deployment
+  name: jovian-sourcecode-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      ms: sourcecode
+      ms: jovian-sourcecode
   template:
     metadata:
       labels:
-        ms: sourcecode
+        ms: jovian-sourcecode
     spec:
       containers:
       - image: openweb/git-sync
-        name: sourcecode
+        name: jovian-sourcecode
         env:
         - name: GIT_SYNC_REPO
           valueFrom:
             configMapKeyRef:
-              name: sourcecode-config
+              name: jovian-sourcecode-config
               key: git-sync-repo
         - name: GIT_SYNC_DEST
           valueFrom:
             configMapKeyRef:
-              name: sourcecode-config
+              name: jovian-sourcecode-config
               key: git-sync-dest    
         - name: GIT_SYNC_BRANCH
           valueFrom:
             configMapKeyRef:
-              name: sourcecode-config
+              name: jovian-sourcecode-config
               key: git-sync-branch
         - name: GIT_SYNC_REV
           valueFrom:
             configMapKeyRef:
-              name: sourcecode-config
+              name: jovian-sourcecode-config
               key: git-sync-rev
         - name: GIT_SYNC_WAIT
           valueFrom:
             configMapKeyRef:
-              name: sourcecode-config
+              name: jovian-sourcecode-config
               key: git-sync-wait
         volumeMounts:
           - name: data
