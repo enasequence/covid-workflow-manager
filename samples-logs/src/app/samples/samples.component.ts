@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-samples',
@@ -9,9 +10,10 @@ export class SamplesComponent implements OnInit {
   p: number = 1;
   data: any[];
 
-  constructor() { }
+  constructor(private title: Title) { }
 
   ngOnInit() {
+    this.title.setTitle('Samples Logs');
   }
 
 }
