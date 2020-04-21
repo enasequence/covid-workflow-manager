@@ -7,12 +7,12 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        ms: jovian-databases-job
+        ms: jovian-databases-cronjob
     spec:
       restartPolicy: OnFailure
       containers:
       - name: main
-        image: alexeyebi/jovian-databases
+        image: alexeyebi/jovian-databases-cronjob
         volumeMounts:
           - name: data
             mountPath: /mnt/database
