@@ -22,6 +22,7 @@ def main():
         sample['export_from_ena']['status'].append('download started')
         DB.samples.update_one({'id': file_name}, {'$set': sample})
 
+        # Starting download for every url
         sample = DB.samples.find_one({'id': file_name})
         data_download_errors = list()
         completed_process_mkdir = subprocess.run(
@@ -29,21 +30,29 @@ def main():
         if completed_process_mkdir.returncode != 0:
             data_download_errors.append(
                 completed_process_mkdir.stderr.decode('utf-8'))
+        # Download should be finished for all files in file_urls
+        download_finished_for_urls = 0
         for file_url in file_urls:
-            output_file = f"/raw_data/{file_name}/{os.path.basename(file_url)}"
-            completed_process_wget = subprocess.run(
-                f"wget -t 2 {file_url} -O {output_file}", shell=True,
-                capture_output=True)
-            if completed_process_wget.returncode != 0:
-                data_download_errors.append(
-                    completed_process_wget.stderr.decode('utf-8'))
-        if len(data_download_errors) > 0:
-            sample['export_from_ena']['date'].append(datetime.datetime.now())
-            sample['export_from_ena']['status'].append('failed')
-            sample['export_from_ena']['errors'].extend(data_download_errors)
+            for _ in range(10):
+                output_file = f"/raw_data/{file_name}/" \
+                              f"{os.path.basename(file_url)}"
+                completed_process_wget = subprocess.run(
+                    f"wget -t 2 {file_url} -O {output_file}", shell=True,
+                    capture_output=True)
+                if completed_process_wget.returncode != 0:
+                    data_download_errors.append(
+                        completed_process_wget.stderr.decode('utf-8'))
+                else:
+                    download_finished_for_urls += 1
+                    break
+        sample['export_from_ena']['date'].append(datetime.datetime.now())
+        sample['export_from_ena']['errors'].extend(data_download_errors)
+        if len(data_download_errors) > 0 and \
+                download_finished_for_urls != len(file_urls):
+            download_status = 'failed'
         else:
-            sample['export_from_ena']['date'].append(datetime.datetime.now())
-            sample['export_from_ena']['status'].append('download finished')
+            download_status = 'download finished'
+        sample['export_from_ena']['status'].append(download_status)
         DB.samples.update_one({'id': file_name}, {'$set': sample})
 
 
