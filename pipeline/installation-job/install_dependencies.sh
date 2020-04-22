@@ -1,6 +1,8 @@
 # This will use HEAD pvc (5Gi)
+set +ue
 conda env create -f /git/envs/Jovian_master_environment.yaml
 source activate Jovian_master
+set -ue
 
 PROFILE="profile"
 UNIQUE_ID=$(/git/bin/generate_id.sh)
