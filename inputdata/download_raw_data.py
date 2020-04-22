@@ -30,6 +30,7 @@ def main():
         if completed_process_mkdir.returncode != 0:
             data_download_errors.append(
                 completed_process_mkdir.stderr.decode('utf-8'))
+
         # Download should be finished for all files in file_urls
         download_finished_for_urls = 0
         for file_url in file_urls:
@@ -51,6 +52,7 @@ def main():
                 download_finished_for_urls != len(file_urls):
             download_status = 'failed'
         else:
+            # TODO: submit pipeline job from here (submit file_name with it)
             download_status = 'download finished'
         sample['export_from_ena']['status'].append(download_status)
         DB.samples.update_one({'id': file_name}, {'$set': sample})
