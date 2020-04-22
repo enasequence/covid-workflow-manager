@@ -18,7 +18,8 @@ def main():
     for file_name, file_urls in files_to_download.items():
         # Updating status of sample
         sample = DB.samples.find_one({'id': file_name})
-        sample['export_from_ena']['date'].append(datetime.datetime.now())
+        sample['export_from_ena']['date'].append(
+            datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
         sample['export_from_ena']['status'].append('download started')
         DB.samples.update_one({'id': file_name}, {'$set': sample})
 
@@ -46,7 +47,8 @@ def main():
                 else:
                     download_finished_for_urls += 1
                     break
-        sample['export_from_ena']['date'].append(datetime.datetime.now())
+        sample['export_from_ena']['date'].append(
+            datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
         sample['export_from_ena']['errors'].extend(data_download_errors)
         if len(data_download_errors) > 0 and \
                 download_finished_for_urls != len(file_urls):
@@ -85,7 +87,8 @@ def check_file_in_database(file_name):
     if results is None:
         sample = get_sample_structure()
         sample['id'] = file_name
-        sample['export_from_ena']['date'].append(datetime.datetime.now())
+        sample['export_from_ena']['date'].append(
+            datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
         sample['export_from_ena']['status'].append('run added for download')
 
         DB.samples.insert_one(sample)
