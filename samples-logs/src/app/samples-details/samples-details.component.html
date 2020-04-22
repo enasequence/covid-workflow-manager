@@ -10,60 +10,46 @@
   <div class="row">
     <div class="col-md-12">
       <h3>1. ENA import</h3>
+      <h5>Logs:</h5>
       <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Some status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 14:36</span>
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let date of sampleData['export_from_ena']['date']; let i=index">
+          {{sampleData['export_from_ena']['status'][i]}}
+          <span class="badge badge-primary badge-pill">{{date}}</span>
+        </li>
+      </ul>
+      <h5 *ngIf="sampleData['export_from_ena']['errors'].length>0">Errors:</h5>
+      <ul class="list-group">
+        <li
+          class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
+          *ngFor="let error of sampleData['export_from_ena']['errors']">
+          {{error}}
         </li>
       </ul>
     </div>
   </div>
 
+  <hr>
+
   <div class="row">
     <div class="col-md-12">
-      <h3>2. Pipeline run</h3>
-      <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Some status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 14:36</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Another status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 14:56</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Some different status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 15:20</span>
-        </li>
-      </ul>
+      <h3>2. Pipeline run
+        <button type="button" class="btn btn-success">
+          <a href="https://koesterlab.github.io/resources/report.html"
+             target="_blank">
+            Pipeline report</a>
+        </button>
+      </h3>
+
     </div>
   </div>
+
+  <hr>
 
   <div class="row">
     <div class="col-md-12">
       <h3>3. ENA export</h3>
-      <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Some status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 14:36</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Another status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 14:56</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Some different status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 15:20</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Another status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 14:56</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          Some different status
-          <span class="badge badge-primary badge-pill">Apr 20, 2020, 15:20</span>
-        </li>
-      </ul>
     </div>
   </div>
 </div>

@@ -19,77 +19,23 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of data | paginate: { itemsPerPage: 10, currentPage: p }">
-            {{item}}
-          </tr>
-          <tr>
-            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-          </tr>
-          <tr>
-            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
-            <td><span class="badge badge-pill badge-info">Undef</span></td>
-          </tr>
-          <tr>
-            <td><a [routerLink]="'ERR3482177'">ERR3482180</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-danger">Failed</span></td>
-            <td><span class="badge badge-pill badge-danger">Failed</span></td>
-          </tr>
-        <tr>
-            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-          </tr>
-          <tr>
-            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
-            <td><span class="badge badge-pill badge-info">Undef</span></td>
-          </tr>
-        <tr>
-            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-          </tr>
-          <tr>
-            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
-            <td><span class="badge badge-pill badge-info">Undef</span></td>
-          </tr>
-          <tr>
-            <td><a [routerLink]="'ERR3482177'">ERR3482180</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-danger">Failed</span></td>
-            <td><span class="badge badge-pill badge-danger">Failed</span></td>
-          </tr>
-        <tr>
-            <td><a [routerLink]="'ERR3482174'">ERR3482174</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-          </tr>
-          <tr>
-            <td><a [routerLink]="'ERR3482177'">ERR3482177</a></td>
-            <td>Apr 20, 2020</td>
-            <td><span class="badge badge-pill badge-success">Success</span></td>
-            <td><span class="badge badge-pill badge-warning">Pipeline started</span></td>
-            <td><span class="badge badge-pill badge-info">Undef</span></td>
+            <td><a [routerLink]="item['id']">{{item['id']}}</a></td>
+            <td>{{getDate(item['export_from_ena']['date'][0])}}</td>
+            <td>
+              <span [ngClass]="getExportStatusClass(item['export_from_ena']['status'])">
+                {{getExportStatus(item['export_from_ena']['status'])}}
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-pill badge-info">
+                Undefined
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-pill badge-info">
+                Undefined
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>
