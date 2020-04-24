@@ -1,5 +1,6 @@
 # This will use HEAD pvc (5Gi)
 set +ue
+conda config --set channel_priority false
 conda env create -f /git/envs/Jovian_master_environment.yaml
 source activate Jovian_master
 set -ue

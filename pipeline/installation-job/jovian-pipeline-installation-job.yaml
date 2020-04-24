@@ -15,7 +15,12 @@ spec:
         volumeMounts:
           - name: body
             mountPath: /git
+          - name: data
+            mountPath: /mnt/database
       volumes:
         - name: body
           persistentVolumeClaim:
             claimName: jovian-sourcecode-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: jovian-databases-pvc
