@@ -1,7 +1,8 @@
-python update_samples_status.py ${RUN} 'analysis started'
-
-# This will use HEAD pvc (5Gi)
+set +ue
+conda config --set channel_priority false
+conda env create -f /git/envs/Jovian_master_environment.yaml
 source activate Jovian_master
+set -ue
 
 source /git/bin/functions.sh
 
@@ -11,8 +12,8 @@ SET_HOSTNAME=$(/git/bin/gethostname.sh)
 
 cd /git || exit
 
-# Should use input_data pvc (~100Gi)
-INPUT_DIR="raw_data/"
+
+INPUT_DIR="/raw_data/ERR3482174"
 bin/generate_sample_sheet.py "${INPUT_DIR}" > sample_sheet.yaml
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
@@ -23,5 +24,4 @@ eval $(parse_yaml profile/variables.yaml "config_")
 snakemake -s Snakefile --profile "${PROFILE}" ${@}
 set -ue
 
-python update_samples_status.py ${RUN} 'analysis finished'
 exit 0

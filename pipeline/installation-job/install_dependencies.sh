@@ -1,4 +1,3 @@
-# This will use HEAD pvc (5Gi)
 set +ue
 conda config --set channel_priority false
 conda env create -f /git/envs/Jovian_master_environment.yaml
@@ -10,7 +9,6 @@ UNIQUE_ID=$(/git/bin/generate_id.sh)
 SET_HOSTNAME=$(/git/bin/gethostname.sh)
 
 # Installing of Jovian specifif conda environments
-# This will use BODY pvc (10Gi)
 cd /git || exit
 touch sample_sheet.yaml
 echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > profile/variables.yaml

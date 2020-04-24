@@ -11,21 +11,21 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: main
-        image: alexeyebi/jovian-pipeline-run
+        image: alexeyebi/jovian-pipeline-run-job
         volumeMounts:
-          - name: head
-            mountPath: /root
-          - name: body
+          - name: sourcecode
             mountPath: /git
           - name: databases
             mountPath: /mnt/database
+          - name: data
+            mountPath: /raw_data
       volumes:
-        - name: head
-          persistentVolumeClaim:
-            claimName: jovian-pipeline-head-pvc
-        - name: body
+        - name: sourcecode
           persistentVolumeClaim:
             claimName: jovian-sourcecode-pvc
         - name: databases
           persistentVolumeClaim:
             claimName: jovian-databases-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: jovian-inputdata-pvc

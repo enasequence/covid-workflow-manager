@@ -13,14 +13,14 @@ spec:
       - name: main
         image: alexeyebi/jovian-pipeline-installation-job
         volumeMounts:
-          - name: body
+          - name: sourcecode
             mountPath: /git
-          - name: data
+          - name: databases
             mountPath: /mnt/database
       volumes:
-        - name: body
+        - name: sourcecode
           persistentVolumeClaim:
             claimName: jovian-sourcecode-pvc
-        - name: data
+        - name: databases
           persistentVolumeClaim:
             claimName: jovian-databases-pvc
