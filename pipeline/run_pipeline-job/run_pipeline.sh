@@ -13,7 +13,7 @@ SET_HOSTNAME=$(/git/bin/gethostname.sh)
 cd /git || exit
 
 
-INPUT_DIR="/raw_data/ERR3482174"
+INPUT_DIR="/raw_data/ERR3482180"
 bin/generate_sample_sheet.py "${INPUT_DIR}" > sample_sheet.yaml
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
