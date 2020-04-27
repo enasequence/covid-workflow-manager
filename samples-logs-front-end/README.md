@@ -16,8 +16,3 @@ kubectl create -f samples-logs-deployments.yaml
 ```bash
 kubectl create -f samples-logs-svc.yaml
 ```
-
-**Create Ingress**
-```bash
-kubectl create -f samples-logs-ingress.yaml
-```

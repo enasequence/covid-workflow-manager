@@ -10,7 +10,11 @@ spec:
   - host:
     http:
       paths:
+      - path: /api
+        backend:
+          serviceName: samples-logs-back-end-svc
+          servicePort: 80
       - path: /
         backend:
-          serviceName: samples-logs-svc
+          serviceName: samples-logs-front-end-svc
           servicePort: 80
