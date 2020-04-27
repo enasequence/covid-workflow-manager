@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: samples-logs-deployment
+  name: samples-logs-front-end-deployment
 spec:
   replicas: 1
   template:
