@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { SamplesComponent } from './samples/samples.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import {ApiDataService} from "./api-data.service";
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ApiDataService} from "./api-data.service";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    HttpClientModule
   ],
   providers: [ApiDataService],
   bootstrap: [AppComponent]
