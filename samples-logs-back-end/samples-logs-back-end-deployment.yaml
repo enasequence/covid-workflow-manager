@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: samples-logs-back-end-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        ms: samples-logs-back-end
+    spec:
+      containers:
+      - name: samples-logs-back-end
+        image: alexeyebi/jovian-samples-logs-back-end
+        ports:
+        - containerPort: 80

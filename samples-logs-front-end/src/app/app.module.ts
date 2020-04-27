@@ -7,6 +7,7 @@ import { SamplesDetailsComponent } from './samples-details/samples-details.compo
 import { HeaderComponent } from './header/header.component';
 import { SamplesComponent } from './samples/samples.component';
 import {NgxPaginationModule} from "ngx-pagination";
+import {ApiDataService} from "./api-data.service";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     AppRoutingModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [ApiDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
