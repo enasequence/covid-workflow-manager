@@ -8,6 +8,7 @@ def main():
     sample = DB.samples.find_one({'id': RUN})
     sample['pipeline_analysis']['date'] = datetime.datetime.now()
     sample['pipeline_analysis']['status'] = STATUS
+    DB.samples.update_one({'id': RUN}, {'$set': sample})
 
 
 if __name__ == "__main__":

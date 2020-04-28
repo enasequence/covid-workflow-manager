@@ -1,3 +1,7 @@
+FILENAME=$1
+
+python update_samples_status.py "$FILENAME" "pipeline started"
+
 set +ue
 conda config --set channel_priority false
 conda env create -f /git/envs/Jovian_master_environment.yaml
@@ -13,7 +17,7 @@ SET_HOSTNAME=$(/git/bin/gethostname.sh)
 cd /git || exit
 
 
-INPUT_DIR="/raw_data/ERR3482180"
+INPUT_DIR="/raw_data/$FILENAME"
 bin/generate_sample_sheet.py "${INPUT_DIR}" > sample_sheet.yaml
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
@@ -23,5 +27,7 @@ echo -e "Server_host:\n    hostname: http://${SET_HOSTNAME}" >> profile/variable
 eval $(parse_yaml profile/variables.yaml "config_")
 snakemake -s Snakefile --profile "${PROFILE}" ${@}
 set -ue
+
+python update_samples_status.py "$FILENAME" "pipeline finished"
 
 exit 0

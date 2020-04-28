@@ -62,6 +62,9 @@ def main():
                 # Assigning unique id to job (id of run)
                 job_to_submit['metadata']['name'] = f'jovian-pipeline-run-' \
                                                     f'job-{file_name.lower()}'
+                # Submitting run id as arg to job
+                job_to_submit['spec']['template']['spec']['containers'][0][
+                    'args'] = [file_name]
                 job_to_submit = json.dumps(job_to_submit)
 
             # Get token, required by k8s api server to submit jobs

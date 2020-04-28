@@ -12,6 +12,7 @@ spec:
       containers:
       - name: main
         image: alexeyebi/jovian-pipeline-run-job
+        args: ["jovian-pipeline-run-job"]
         resources:
           limits:
             cpu: "19"
