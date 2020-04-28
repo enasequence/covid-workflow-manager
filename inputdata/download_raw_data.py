@@ -186,6 +186,6 @@ if __name__ == "__main__":
     DATA_HUB_PASSWORD = sys.argv[2]
 
     # Getting access to MongoDB
-    CLIENT = MongoClient('mongodb://jovian-sample-status-db-svc')
+    CLIENT = MongoClient('mongodb://samples-logs-db-svc')
     DB = CLIENT.samples
     main()

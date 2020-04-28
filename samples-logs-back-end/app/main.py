@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/")
 def samples():
     # Getting access to MongoDB
-    client = MongoClient('mongodb://jovian-sample-status-db-svc')
+    client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
 
     results = list()
