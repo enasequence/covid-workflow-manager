@@ -61,7 +61,7 @@ def main():
                 job_to_submit = yaml.load(f.read(), Loader=yaml.FullLoader)
                 # Assigning unique id to job (id of run)
                 job_to_submit['metadata']['name'] = f'jovian-pipeline-run-' \
-                                                    f'job-{file_name}'
+                                                    f'job-{file_name.lower()}'
                 job_to_submit = json.dumps(job_to_submit)
 
             # Get token, required by k8s api server to submit jobs
@@ -81,6 +81,9 @@ def main():
                 submit_job_process.stdout.decode('utf-8'))
             if submit_job_process_results['status'] == 'Failure':
                 write_sample_status(sample, 'submitting pipeline job failed')
+                write_sample_errors(sample, [
+                    submit_job_process_results['message']
+                ])
             else:
                 write_sample_status(sample, 'submitting pipeline job succeed')
         DB.samples.update_one({'id': file_name}, {'$set': sample})
@@ -106,8 +109,6 @@ def write_sample_errors(sample, errors):
     :return:
     """
     if len(errors) > 0:
-        sample['export_from_ena']['date'].append(
-            datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
         sample['export_from_ena']['errors'].extend(errors)
 
 
