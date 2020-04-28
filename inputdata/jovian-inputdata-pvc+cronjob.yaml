@@ -41,7 +41,12 @@ spec:
         volumeMounts:
           - name: data
             mountPath: /raw_data
+          - name: wms
+            mountPath: /wms
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: jovian-inputdata-pvc
+        - name: wms
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
