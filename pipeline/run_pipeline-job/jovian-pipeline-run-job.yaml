@@ -8,7 +8,7 @@ spec:
       labels:
         ms: jovian-pipeline-run-job
     spec:
-      restartPolicy: OnFailure
+      restartPolicy: Never
       containers:
       - name: main
         image: alexeyebi/jovian-pipeline-run-job

@@ -30,6 +30,6 @@ eval $(parse_yaml "/output/$FILENAME/profile/variables.yaml" "config_")
 snakemake -s Snakefile --profile "${PROFILE}" ${@}
 set -ue
 
-python update_samples_status.py "$FILENAME" "pipeline finished"
+python /update_samples_status.py "$FILENAME" "pipeline finished"
 
 exit 0
