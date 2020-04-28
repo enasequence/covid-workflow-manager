@@ -10,7 +10,7 @@ set -ue
 
 source /git/bin/functions.sh
 
-PROFILE="profile"
+PROFILE="/output/$FILENAME/profile"
 UNIQUE_ID=$(/git/bin/generate_id.sh)
 SET_HOSTNAME=$(/git/bin/gethostname.sh)
 
@@ -18,13 +18,15 @@ cd /git || exit
 
 
 INPUT_DIR="/raw_data/$FILENAME"
-bin/generate_sample_sheet.py "${INPUT_DIR}" > sample_sheet.yaml
+mkdir -p "/output/$FILENAME"
+bin/generate_sample_sheet.py "${INPUT_DIR}" > "/output/$FILENAME/sample_sheet.yaml"
+cp -r /git/profile "/output/$FILENAME"
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
 set +ue
-echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > profile/variables.yaml
-echo -e "Server_host:\n    hostname: http://${SET_HOSTNAME}" >> profile/variables.yaml
-eval $(parse_yaml profile/variables.yaml "config_")
+echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > "/output/$FILENAME/profile/variables.yaml"
+echo -e "Server_host:\n    hostname: http://${SET_HOSTNAME}" >> "/output/$FILENAME/profile/variables.yaml"
+eval $(parse_yaml "/output/$FILENAME/profile/variables.yaml" "config_")
 snakemake -s Snakefile --profile "${PROFILE}" ${@}
 set -ue
 

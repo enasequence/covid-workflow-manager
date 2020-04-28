@@ -27,6 +27,8 @@ spec:
             mountPath: /mnt/database
           - name: data
             mountPath: /raw_data
+          - name: results
+            mountPath: /output
       volumes:
         - name: sourcecode
           persistentVolumeClaim:
@@ -37,3 +39,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: jovian-inputdata-pvc
+        - name: results
+          persistentVolumeClaim:
+            claimName: jovian-outputdata-pvc
