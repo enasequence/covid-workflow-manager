@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jovian-sample-status-db-svc
+  name: samples-logs-db-svc
 spec:
   ports:
   - port: 27017
     targetPort: 27017
   selector:
-    ms: jovian-sample-status
+    ms: samples-logs-db
 
 ---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jovian-sample-status-db-pvc
+  name: samples-logs-db-pvc
 spec:
   resources:
     requests:
@@ -28,16 +28,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jovian-sample-status-db-deployment
+  name: samples-logs-db-deployments
 spec:
   selector:
     matchLabels:
-      ms: jovian-sample-status
+      ms: samples-logs-db
   replicas: 1
   template:
     metadata:
       labels:
-        ms: jovian-sample-status
+        ms: samples-logs-db
     spec:
       containers:
       - name: mongodb
@@ -50,4 +50,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: jovian-sample-status-db-pvc
+            claimName: samples-logs-db-pvc
