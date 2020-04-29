@@ -6,8 +6,8 @@ from pymongo import MongoClient
 
 def main():
     sample = DB.samples.find_one({'id': RUN})
-    sample['pipeline_analysis']['date'] = datetime.datetime.now()
-    sample['pipeline_analysis']['status'] = STATUS
+    sample['pipeline_analysis']['date'].append(datetime.datetime.now())
+    sample['pipeline_analysis']['status'].append(STATUS)
     DB.samples.update_one({'id': RUN}, {'$set': sample})
 
 

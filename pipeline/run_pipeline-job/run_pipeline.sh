@@ -1,4 +1,4 @@
-FILENAME=$1
+FILENAME="$1"
 
 python update_samples_status.py "$FILENAME" "pipeline started"
 
@@ -35,7 +35,7 @@ set +ue
 echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > "profile/variables.yaml"
 echo -e "Server_host:\n    hostname: http://${SET_HOSTNAME}" >> "profile/variables.yaml"
 eval $(parse_yaml "profile/variables.yaml" "config_")
-snakemake -s Snakefile --profile "${PROFILE}" ${@}
+snakemake -s Snakefile --profile "${PROFILE}"
 set -ue
 
 conda deactivate
