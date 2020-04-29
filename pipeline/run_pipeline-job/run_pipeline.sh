@@ -39,6 +39,10 @@ snakemake -s Snakefile --profile "${PROFILE}"
 set -ue
 
 conda deactivate
-python /update_samples_status.py "$FILENAME" "pipeline finished"
+if [ -e results/snakemake_report.html ]; then
+    python /update_samples_status.py "$FILENAME" "pipeline finished"
+else
+    python /update_samples_status.py "$FILENAME" "pipeline finished with errors"
+fi
 
 exit 0
