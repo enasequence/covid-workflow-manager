@@ -22,13 +22,13 @@
             <td><a [routerLink]="item['id']">{{item['id']}}</a></td>
             <td>{{getDate(item['export_from_ena']['date'][0])}}</td>
             <td>
-              <span [ngClass]="getExportStatusClass(item['export_from_ena']['status'])">
-                {{getExportStatus(item['export_from_ena']['status'])}}
+              <span [ngClass]="getExportStatusClass(item['export_from_ena']['status'], 'ena_import')">
+                {{getExportStatus(item['export_from_ena']['status'], 'ena_import')}}
               </span>
             </td>
             <td>
-              <span class="badge badge-pill badge-info">
-                Undefined
+              <span [ngClass]="getExportStatusClass(item['pipeline_analysis']['status'], 'pipeline_analysis')">
+                {{getExportStatus(item['pipeline_analysis']['status'], 'pipeline_analysis')}}
               </span>
             </td>
             <td>

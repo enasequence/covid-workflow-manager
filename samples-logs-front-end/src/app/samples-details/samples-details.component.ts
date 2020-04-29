@@ -20,13 +20,13 @@ export class SamplesDetailsComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle('Sample Logs details');
     this.route.params.subscribe((params: Params) => {
-      this.sampleId = params['id'];
+      this.sampleId = params.id;
       this.dataService.getAllSamples().subscribe(
       data => {
-        this.data = data['results'];
+        this.data = data.results;
         if (this.data) {
-          for (let record of this.data) {
-        if (record['id'] === this.sampleId) {
+          for (const record of this.data) {
+        if (record.id === this.sampleId) {
           this.sampleData = record;
         }
         }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Title} from "@angular/platform-browser";
-import {ApiDataService} from "../api-data.service";
+import {Title} from '@angular/platform-browser';
+import {ApiDataService} from '../api-data.service';
 
 @Component({
   selector: 'app-samples',
@@ -8,8 +8,18 @@ import {ApiDataService} from "../api-data.service";
   styleUrls: ['./samples.component.css']
 })
 export class SamplesComponent implements OnInit {
-  p: number = 1;
+  p = 1;
   data: any;
+  statuses = {
+    ena_import: {
+      success: 'download finished',
+      failed: 'download failed'
+    },
+    pipeline_analysis: {
+      success: 'pipeline finished',
+      failed: 'pipeline finished with errors'
+    }
+  };
 
   constructor(private title: Title, private dataService: ApiDataService) { }
 
@@ -17,7 +27,7 @@ export class SamplesComponent implements OnInit {
     this.title.setTitle('Samples Logs');
     this.dataService.getAllSamples().subscribe(
       data => {
-        this.data = data['results'];
+        this.data = data.results;
       },
       error => {
         console.log(error);
@@ -29,12 +39,24 @@ export class SamplesComponent implements OnInit {
     return item.split('-')[0];
   }
 
-  getExportStatus(item: any) {
-    return item.indexOf('download finished') !== -1 ? 'Success' : 'Failed';
+  getExportStatus(item: any, statusType: string) {
+    if (item.indexOf(this.statuses[statusType].success) !== -1) {
+      return 'Success';
+    } else if (item.indexOf(this.statuses[statusType].failed) !== -1) {
+      return 'Failed';
+    } else {
+      return 'Undefined';
+    }
   }
 
-  getExportStatusClass(item: any) {
-    return item.indexOf('download finished') !== -1 ? 'badge badge-pill badge-success' : 'badge badge-pill badge-danger';
+  getExportStatusClass(item: any, statusType: string) {
+    if (item.indexOf(this.statuses[statusType].success) !== -1) {
+      return 'badge badge-pill badge-success';
+    } else if (item.indexOf(this.statuses[statusType].failed) !== -1) {
+      return 'badge badge-pill badge-danger';
+    } else {
+      return 'badge badge-pill badge-info';
+    }
   }
 
 }

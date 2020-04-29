@@ -10,26 +10,35 @@ set -ue
 
 source /git/bin/functions.sh
 
-PROFILE="/output/$FILENAME/profile"
+PROFILE="profile"
 UNIQUE_ID=$(/git/bin/generate_id.sh)
 SET_HOSTNAME=$(/git/bin/gethostname.sh)
 
-cd /git || exit
+
 
 
 INPUT_DIR="/raw_data/$FILENAME"
 mkdir -p "/output/$FILENAME"
-bin/generate_sample_sheet.py "${INPUT_DIR}" > "/output/$FILENAME/sample_sheet.yaml"
-cp -r /git/profile "/output/$FILENAME"
+
+cd "/output/$FILENAME" || exit
+
+/git/bin/generate_sample_sheet.py "${INPUT_DIR}" > "sample_sheet.yaml"
+cp -r /git/bin ./
+cp -r /git/envs ./
+cp -r /git/files ./
+cp -r /git/profile ./
+cp -r /git/rules ./
+cp /git/Snakefile ./
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
 set +ue
-echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > "/output/$FILENAME/profile/variables.yaml"
-echo -e "Server_host:\n    hostname: http://${SET_HOSTNAME}" >> "/output/$FILENAME/profile/variables.yaml"
-eval $(parse_yaml "/output/$FILENAME/profile/variables.yaml" "config_")
+echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > "profile/variables.yaml"
+echo -e "Server_host:\n    hostname: http://${SET_HOSTNAME}" >> "profile/variables.yaml"
+eval $(parse_yaml "profile/variables.yaml" "config_")
 snakemake -s Snakefile --profile "${PROFILE}" ${@}
 set -ue
 
+conda deactivate
 python /update_samples_status.py "$FILENAME" "pipeline finished"
 
 exit 0
