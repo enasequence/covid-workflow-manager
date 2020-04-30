@@ -99,9 +99,9 @@ def write_sample_status(sample, status):
     :param status: status message
     :return:
     """
-    sample['export_from_ena']['date'].append(
+    sample['import_from_ena']['date'].append(
         datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
-    sample['export_from_ena']['status'].append(status)
+    sample['import_from_ena']['status'].append(status)
 
 
 def write_sample_errors(sample, errors):
@@ -112,7 +112,7 @@ def write_sample_errors(sample, errors):
     :return:
     """
     if len(errors) > 0:
-        sample['export_from_ena']['errors'].extend(errors)
+        sample['import_from_ena']['errors'].extend(errors)
 
 
 def parse_file():
@@ -126,25 +126,29 @@ def parse_file():
         for line in f:
             line = line.rstrip()
             data = line.split("\t")
-            if not check_file_in_database(data[7]):
+            if not check_file_in_database(data[7], data[2], data[5]):
                 files[data[7]] = generate_download_links(data[10])
     return files
 
 
-def check_file_in_database(file_name):
+def check_file_in_database(file_name, sample_id, study_id):
     """
     This function will check for current file in MongoDB and insert it in case
     of absence
     :param file_name: name of the file to check
+    :param sample_id: BioSample id
+    :param study_id: Study accession
     :return: True if file is already in database and False otherwise
     """
     results = DB.samples.find_one({'id': file_name})
     if results is None:
         sample = get_sample_structure()
         sample['id'] = file_name
-        sample['export_from_ena']['date'].append(
+        sample['sample_id'] = sample_id
+        sample['study_id'] = study_id
+        sample['import_from_ena']['date'].append(
             datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
-        sample['export_from_ena']['status'].append('run added for download')
+        sample['import_from_ena']['status'].append('run added for download')
 
         DB.samples.insert_one(sample)
         return False
@@ -158,11 +162,13 @@ def get_sample_structure():
     :return:
     """
     return {'id': None,
-            'export_from_ena': {'date': list(), 'status': list(),
+            'sample_id': None,
+            'study_id': None,
+            'import_from_ena': {'date': list(), 'status': list(),
                                 'errors': list()},
             'pipeline_analysis': {'date': list(), 'status': list(),
                                   'errors': list()},
-            'import_to_ena': {'date': list(), 'status': list(),
+            'export_to_ena': {'date': list(), 'status': list(),
                               'errors': list()}}
 
 

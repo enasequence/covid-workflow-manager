@@ -43,16 +43,10 @@ class AnalysisXML:
         analysis_type = etree.SubElement(analysis_elt, 'ANALYSIS_TYPE')
         etree.SubElement(analysis_type, 'PATHOGEN_ANALYSIS')
         files = etree.SubElement(analysis_elt, 'FILES')
-        etree.SubElement(files, 'FILE',
-                         filename=self.analysis_files[0].file_name,
-                         filetype=self.analysis_files[0].file_type,
-                         checksum_method="MD5",
-                         checksum=self.analysis_files[0].file_md5)
-        etree.SubElement(files, 'FILE',
-                         filename=self.analysis_files[1].file_name,
-                         filetype=self.analysis_files[1].file_type,
-                         checksum_method="MD5",
-                         checksum=self.analysis_files[1].file_md5)
+        for file in self.analysis_files:
+            etree.SubElement(files, 'FILE', filename=file.file_name,
+                             filetype=file.file_type,
+                             checksum_method="MD5", checksum=file.file_md5)
 
         # Analysis attributes
         analysis_attributes = etree.SubElement(analysis_elt,
@@ -60,7 +54,6 @@ class AnalysisXML:
 
         analysis_attribute = etree.SubElement(analysis_attributes,
                                               'ANALYSIS_ATTRIBUTE')
-
         etree.SubElement(analysis_attribute, "TAG").text = "PIPELINE_NAME"
         etree.SubElement(analysis_attribute, "VALUE").text = self.pipeline_name
 

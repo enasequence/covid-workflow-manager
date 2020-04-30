@@ -1,4 +1,5 @@
 FROM continuumio/miniconda3
-RUN pip install lxml; pip install pymongo
+RUN pip install lxml pymongo
 ADD *.py /
-ENTRYPOINT ["python", "submit_data_to_ena.py"]
+ADD submit_data_to_ena.sh /submit_data_to_ena.sh
+ENTRYPOINT ["bash", "submit_data_to_ena.sh"]
