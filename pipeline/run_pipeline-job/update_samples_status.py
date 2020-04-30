@@ -10,6 +10,9 @@ def main():
         datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
     sample['pipeline_analysis']['status'].append(STATUS)
     DB.samples.update_one({'id': RUN}, {'$set': sample})
+    if STATUS == 'pipeline finished':
+        # TODO Start export job
+        pass
 
 
 if __name__ == "__main__":
