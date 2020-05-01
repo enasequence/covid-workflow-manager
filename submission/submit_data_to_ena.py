@@ -7,9 +7,9 @@ import os
 from lxml import etree
 from pymongo import MongoClient
 
-from .analysis_xml import AnalysisXML
-from .submission_xml import SubmissionXML
-from .analysis_file import AnalysisFile
+from analysis_xml import AnalysisXML
+from submission_xml import SubmissionXML
+from analysis_file import AnalysisFile
 
 
 def main():
@@ -48,6 +48,8 @@ def main():
         write_sample_errors(sample, [gzip_process.stderr.decode('utf-8')])
         DB.samples.update_one({'id': RUN}, {'$set': sample})
         return
+    # Adding archive type to results folder name
+    new_filenames[-1] += '.tar.gz'
 
     # Uploading files to ENA
     md5_values = dict()
@@ -142,7 +144,7 @@ def create_analysis_xml(sample, md5_values, timestamp):
     centre_name = "COMPARE"
     sample_accession = sample['sample_id']
     study_accession = sample['study_id']
-    analysis_date = sample['import_from_ena']['date'][0]
+    analysis_date = time.strftime("%Y-%m-%dT%H:%M:%S")
     analysis_files = list()
     for file_name, md5 in md5_values.items():
         file_type = "other" if 'results' in file_name else 'tab'
@@ -229,6 +231,6 @@ if __name__ == "__main__":
                                   "drop-box/submit/?auth=ENA"
 
     # Getting access to MongoDB
-    CLIENT = MongoClient('mongodb://sample-status-db-svc')
+    CLIENT = MongoClient('mongodb://samples-logs-db-svc')
     DB = CLIENT.samples
     main()

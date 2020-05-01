@@ -7,4 +7,4 @@ cp results/all_virusHost.tsv ./
 cp results/all_taxClassified.tsv ./
 cp results/all_taxUnclassified.tsv ./
 
-python /submit_data_to_ena.py "$FILENAME"
+python /submit_data_to_ena.py "$FILENAME" "$USER" "$PASSWORD"
