@@ -12,3 +12,14 @@ spec:
       containers:
       - name: main
         image: alexeyebi/jovian-outputdata-job
+        env:
+          - name: USER
+            valueFrom:
+              configMapKeyRef:
+                name: jovian-outputdata-config
+                key: submission-user
+          - name: PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: jovian-outputdata-config
+                key: submission-password

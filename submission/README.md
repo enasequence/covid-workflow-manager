@@ -6,8 +6,8 @@ automatically submit data to ENA.
 **Create ConfigMap**
 ```bash
 kubectl create configmap jovian-outputdata-config \
---from-literal=data-hub=<data hub name> \
---from-literal=password-dest=<data hub password>
+--from-literal=submission-user=<submission username> \
+--from-literal=submission-password=<username password>
 ```
 
 **Start Job to submit data to ENA**
