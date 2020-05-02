@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jovian-notebooks-deployment
+spec:
+  replicas: 
+  template:
+    metadata:
+      labels:
+        ms: notebooks
+    spec:
+      containers:
+      - name: notebooks
+        image: nginx
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jovian-notebooks-svc
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    ms: notebooks
