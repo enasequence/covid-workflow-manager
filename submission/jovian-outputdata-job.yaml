@@ -23,3 +23,20 @@ spec:
               configMapKeyRef:
                 name: jovian-outputdata-config
                 key: submission-password
+        volumeMounts:
+          - name: aws-config
+            mountPath: /root/.aws
+          - name: results
+            mountPath: /output
+          - name: code
+            mountPath: /git
+      volumes:
+        - name: aws-config
+          configMap:
+            name: aws-config
+        - name: results
+          persistentVolumeClaim:
+            claimName: jovian-outputdata-pvc
+        - name: code
+          persistentVolumeClaim:
+            claimName: jovian-sourcecode-pvc

@@ -23,5 +23,6 @@ cp results/all_filtered_SNPs.tsv ./
 cp results/all_virusHost.tsv ./
 cp results/all_taxClassified.tsv ./
 cp results/all_taxUnclassified.tsv ./
+cp /git/Notebook_report_k8s.ipynb ./
 
 python /submit_data_to_ena.py "$FILENAME" "$USER" "$PASSWORD"

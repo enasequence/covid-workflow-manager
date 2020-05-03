@@ -53,7 +53,7 @@ def main():
     write_sample_status(sample, 'started to render notebook')
     # Changing results directory paths
     edit_notebook_process = subprocess.run(
-        f"sed -i 's@results@{new_filenames[-1]}@g' Notebook_report_k8s.ipynb",
+        f"sed -i 's@results@{prefix}_results@g' Notebook_report_k8s.ipynb",
         shell=True, capture_output=True)
     # Executing notebooks
     execute_notebook_process = subprocess.run(
@@ -63,10 +63,18 @@ def main():
     convert_notebook_process = subprocess.run(
         "jupyter nbconvert --to HTML Notebook_report_k8s.nbconvert.ipynb",
         shell=True, capture_output=True)
-    if edit_notebook_process.returncode != 0 or \
-            execute_notebook_process.returncode != 0 or \
-            convert_notebook_process != 0:
+    if edit_notebook_process.returncode != 0:
         write_sample_status(sample, 'failed to render notebook')
+        write_sample_errors(sample, [edit_notebook_process.stderr.decode(
+            'utf-8')])
+    elif execute_notebook_process.returncode != 0:
+        write_sample_status(sample, 'failed to render notebook')
+        write_sample_errors(sample, [execute_notebook_process.stderr.decode(
+            'utf-8')])
+    elif convert_notebook_process != 0:
+        write_sample_status(sample, 'failed to render notebook')
+        write_sample_errors(sample, [convert_notebook_process.stderr.decode(
+            'utf-8')])
     else:
         write_sample_status(sample, 'notebook was rendered successfully')
 
@@ -74,13 +82,14 @@ def main():
     new_filenames[-1] += '.tar.gz'
 
     # Creating backup of results directory
-    backup_command = f"aws --endpoint-url https://s3.embassy.ebi.ac.uk s3 cp" \
+    backup_command = f"aws --endpoint-url https://s3.embassy.ebi.ac.uk s3 cp " \
                      f"{new_filenames[-1]} " \
                      f"s3://covid-19-analysis-pipelines-97368143"
     backup_process = subprocess.run(backup_command, shell=True,
                                     capture_output=True)
     if backup_process.returncode != 0:
         write_sample_status(sample, 'Failed to create backup')
+        write_sample_errors(sample, [backup_process.stderr.decode('utf-8')])
     else:
         write_sample_status(sample, 'Back created successfully')
 
