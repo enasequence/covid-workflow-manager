@@ -29,6 +29,7 @@ cp -r /git/files ./
 cp -r /git/profile ./
 cp -r /git/rules ./
 cp /git/Snakefile ./
+cp /git/.git ./
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
 set +ue

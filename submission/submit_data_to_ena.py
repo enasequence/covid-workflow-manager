@@ -48,8 +48,41 @@ def main():
         write_sample_errors(sample, [gzip_process.stderr.decode('utf-8')])
         DB.samples.update_one({'id': RUN}, {'$set': sample})
         return
+
+    # Rendering notebook
+    write_sample_status(sample, 'started to render notebook')
+    # Changing results directory paths
+    edit_notebook_process = subprocess.run(
+        f"sed -i 's@results@{new_filenames[-1]}@g' Notebook_report_k8s.ipynb",
+        shell=True, capture_output=True)
+    # Executing notebooks
+    execute_notebook_process = subprocess.run(
+        "jupyter nbconvert --to notebook --execute Notebook_report_k8s.ipynb",
+        shell=True, capture_output=True)
+    # Converting to html format
+    convert_notebook_process = subprocess.run(
+        "jupyter nbconvert --to HTML Notebook_report_k8s.nbconvert.ipynb",
+        shell=True, capture_output=True)
+    if edit_notebook_process.returncode != 0 or \
+            execute_notebook_process.returncode != 0 or \
+            convert_notebook_process != 0:
+        write_sample_status(sample, 'failed to render notebook')
+    else:
+        write_sample_status(sample, 'notebook was rendered successfully')
+
     # Adding archive type to results folder name
     new_filenames[-1] += '.tar.gz'
+
+    # Creating backup of results directory
+    backup_command = f"aws --endpoint-url https://s3.embassy.ebi.ac.uk s3 cp" \
+                     f"{new_filenames[-1]} " \
+                     f"s3://covid-19-analysis-pipelines-97368143"
+    backup_process = subprocess.run(backup_command, shell=True,
+                                    capture_output=True)
+    if backup_process.returncode != 0:
+        write_sample_status(sample, 'Failed to create backup')
+    else:
+        write_sample_status(sample, 'Back created successfully')
 
     # Uploading files to ENA
     md5_values = dict()

@@ -14,6 +14,13 @@ spec:
         image: nginx
         ports:
         - containerPort: 80
+        volumeMounts:
+          - name: notebooks
+            mountPath: /usr/share/nginx/html
+      volumes:
+        - name: notebooks
+          persistentVolumeClaim:
+            claimName: jovian-outputdata-pvc
 
 ---
 
