@@ -154,11 +154,15 @@ def upload_files_to_ena(filename, sample, repeats):
     md5_original_command = f"md5sum {filename} | cut -f1 -d ' '"
 
     completed_process_original = subprocess.run(md5_original_command,
-                                                shell=True, capture_output=True)
+                                                shell=True,
+                                                capture_output=True,
+                                                timeout=300)
     completed_process_command = subprocess.run(upload_command, shell=True,
-                                               capture_output=True)
+                                               capture_output=True, timeout=300)
     completed_process_uploaded = subprocess.run(md5_uploaded_command,
-                                                shell=True, capture_output=True)
+                                                shell=True,
+                                                capture_output=True,
+                                                timeout=300)
     md5_original = completed_process_original.stdout.decode('utf-8').rstrip()
     md5_uploaded = completed_process_uploaded.stdout.decode('utf-8').rstrip()
     if md5_original == md5_uploaded:
