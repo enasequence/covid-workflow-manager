@@ -12,6 +12,7 @@ spec:
       containers:
       - name: main
         image: alexeyebi/jovian-outputdata-job
+        args: ["jovian-outputdata-job"]
         env:
           - name: USER
             valueFrom:

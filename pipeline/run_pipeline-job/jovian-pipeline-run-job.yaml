@@ -29,6 +29,8 @@ spec:
             mountPath: /raw_data
           - name: results
             mountPath: /output
+          - name: wms
+            mountPath: /wms
       volumes:
         - name: sourcecode
           persistentVolumeClaim:
@@ -42,3 +44,6 @@ spec:
         - name: results
           persistentVolumeClaim:
             claimName: jovian-outputdata-pvc
+        - name: wms
+            persistentVolumeClaim:
+              claimName: ena-wms-pvc
