@@ -35,11 +35,6 @@
   <div class="row" *ngIf="sampleData">
     <div class="col-md-12">
       <h3>2. Pipeline run
-        <button type="button" class="btn btn-success">
-          <a href="https://koesterlab.github.io/resources/report.html"
-             target="_blank">
-            Pipeline report</a>
-        </button>
       </h3>
       <h5 *ngIf="sampleData['pipeline_analysis']['status'].length>0">Logs:</h5>
       <ul class="list-group">
@@ -70,16 +65,16 @@
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
-          *ngFor="let date of sampleData['import_to_ena']['date']; let i=index">
-          {{sampleData['import_to_ena']['status'][i]}}
+          *ngFor="let date of sampleData['export_to_ena']['date']; let i=index">
+          {{sampleData['export_to_ena']['status'][i]}}
           <span class="badge badge-primary badge-pill">{{date}}</span>
         </li>
       </ul>
-      <h5 *ngIf="sampleData['import_to_ena']['errors'].length>0">Errors:</h5>
+      <h5 *ngIf="sampleData['export_to_ena']['errors'].length>0">Errors:</h5>
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
-          *ngFor="let error of sampleData['import_to_ena']['errors']">
+          *ngFor="let error of sampleData['export_to_ena']['errors']">
           {{error}}
         </li>
       </ul>

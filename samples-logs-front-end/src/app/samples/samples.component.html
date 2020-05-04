@@ -32,8 +32,8 @@
               </span>
             </td>
             <td>
-              <span class="badge badge-pill badge-info">
-                Undefined
+              <span [ngClass]="getExportStatusClass(item['export_to_ena']['status'], 'ena_export')">
+                {{getExportStatus(item['export_to_ena']['status'], 'ena_export')}}
               </span>
             </td>
           </tr>

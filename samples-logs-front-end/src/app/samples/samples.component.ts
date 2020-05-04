@@ -18,6 +18,10 @@ export class SamplesComponent implements OnInit {
     pipeline_analysis: {
       success: 'pipeline finished',
       failed: 'pipeline finished with errors'
+    },
+    ena_export: {
+      success: 'submission to ENA finished',
+      failed: 'submission to ENA failed'
     }
   };
 
