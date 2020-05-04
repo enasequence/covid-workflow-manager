@@ -149,7 +149,8 @@ def upload_files_to_ena(filename, sample, repeats):
         write_sample_status(sample, f'starting to upload {filename} to ENA')
     upload_command = f"curl -T {filename}  ftp://webin.ebi.ac.uk " \
                      f"--user {USER}:{PASSWORD}"
-    md5_uploaded_command = f"curl -s ftp://webin.ebi.ac.uk/{filename} " \
+    md5_uploaded_command = f"curl -s ftp://webin.ebi.ac.uk/" \
+                           f"{os.path.basename(filename)} " \
                            f"--user {USER}:{PASSWORD} | md5sum | cut -f1 -d ' '"
     md5_original_command = f"md5sum {filename} | cut -f1 -d ' '"
 
