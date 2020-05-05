@@ -88,10 +88,10 @@ def main():
     backup_process = subprocess.run(backup_command, shell=True,
                                     capture_output=True)
     if backup_process.returncode != 0:
-        write_sample_status(sample, 'Failed to create backup')
+        write_sample_status(sample, 'failed to create backup')
         write_sample_errors(sample, [backup_process.stderr.decode('utf-8')])
     else:
-        write_sample_status(sample, 'Back created successfully')
+        write_sample_status(sample, 'back-up created successfully')
 
     # Uploading files to ENA
     md5_values = dict()
@@ -105,7 +105,10 @@ def main():
             return
 
     # Create xml files
+    write_sample_status(sample, 'creating analysis xml')
     create_analysis_xml(sample, md5_values, timestamp)
+
+    write_sample_status(sample, 'creating submission xml')
     create_submission_xml(timestamp)
 
     # Submit xml files to ENA
@@ -237,6 +240,7 @@ def submit_xml_files_to_ena(sample):
     """
     This function will submit xml files to ENA
     """
+    write_sample_status(sample, 'starting to submit xml files to ENA')
     command = f'curl -k  -F "SUBMISSION=@{SUBMISSION_XML}" ' \
               f'-F "ANALYSIS=@{ANALYSIS_XML}" ' \
               f'"{ANALYSIS_SUBMISSION_URL_DEV}%20{USER}%20{PASSWORD}"'
