@@ -1,4 +1,5 @@
 FROM continuumio/miniconda3
+RUN apt-get update; apt-get -y install curl make
 RUN pip install lxml pymongo awscli jupyter pandas qgrid
 RUN jupyter nbextension enable --py --sys-prefix qgrid
 ADD *.py /
