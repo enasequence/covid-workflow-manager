@@ -39,13 +39,15 @@ eval $(parse_yaml "profile/variables.yaml" "config_")
 snakemake -s Snakefile --profile "${PROFILE}"
 set -ue
 
-bash bin/virus_typing.sh NoV
-bash bin/virus_typing.sh EV
-bash bin/virus_typing.sh RVA
-bash bin/virus_typing.sh HAV
-bash bin/virus_typing.sh HEV
-bash bin/virus_typing.sh PV
-bash bin/virus_typing.sh Flavi
+if [ -d data/tables ]; then
+  bash bin/virus_typing.sh NoV
+  bash bin/virus_typing.sh EV
+  bash bin/virus_typing.sh RVA
+  bash bin/virus_typing.sh HAV
+  bash bin/virus_typing.sh HEV
+  bash bin/virus_typing.sh PV
+  bash bin/virus_typing.sh Flavi
+fi
 
 conda deactivate
 if [ -e results/snakemake_report.html ]; then
