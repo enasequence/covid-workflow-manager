@@ -20,10 +20,10 @@
         <tbody>
           <tr *ngFor="let item of data | paginate: { itemsPerPage: 10, currentPage: p }">
             <td><a [routerLink]="item['id']">{{item['id']}}</a></td>
-            <td>{{getDate(item['export_from_ena']['date'][0])}}</td>
+            <td>{{getDate(item['import_from_ena']['date'][0])}}</td>
             <td>
-              <span [ngClass]="getExportStatusClass(item['export_from_ena']['status'], 'ena_import')">
-                {{getExportStatus(item['export_from_ena']['status'], 'ena_import')}}
+              <span [ngClass]="getExportStatusClass(item['import_from_ena']['status'], 'ena_import')">
+                {{getExportStatus(item['import_from_ena']['status'], 'ena_import')}}
               </span>
             </td>
             <td>
