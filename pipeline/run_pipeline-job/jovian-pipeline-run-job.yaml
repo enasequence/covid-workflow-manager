@@ -45,5 +45,5 @@ spec:
           persistentVolumeClaim:
             claimName: jovian-outputdata-pvc
         - name: wms
-            persistentVolumeClaim:
-              claimName: ena-wms-pvc
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
