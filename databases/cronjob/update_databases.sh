@@ -1,6 +1,6 @@
 set +ue
 conda env create -f /git/envs/Jovian_helper_environment.yaml
-source activate Jovian_helper
+conda activate Jovian_helper
 set -ue
 # Set paths
 DB_PATH_NT="/mnt/database/NT_database"
