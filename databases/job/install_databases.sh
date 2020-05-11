@@ -1,7 +1,10 @@
 set +ue
 conda env create -f /git/bin/envs/Jovian_helper_environment.yaml
+conda init bash
+source /root/.bashrc
 conda activate Jovian_helper
 set -ue
+
 # Set paths
 DB_PATH_NT="/mnt/database/NT_database"
 DB_PATH_TAX="/mnt/database/taxdb"
