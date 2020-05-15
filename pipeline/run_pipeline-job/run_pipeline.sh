@@ -9,7 +9,7 @@ conda config --set channel_priority false
 conda env create -f /git/bin/envs/Jovian_master_environment.yaml
 conda init bash
 source /root/.bashrc
-source activate Jovian_master
+conda activate Jovian_master
 set -ue
 
 PROFILE="config"
@@ -46,14 +46,12 @@ eval $(parse_yaml "config/variables.yaml" "config_")
 snakemake -s bin/Snakefile --profile "${PROFILE}"
 set -ue
 
-#bash /git/bin/scripts/virus_typing.sh "all"
-
 conda deactivate
 
-#if [ -e results/snakemake_report.html ]; then
-#    python /update_samples_status.py "$FILENAME" "pipeline finished"
-#else
-#    python /update_samples_status.py "$FILENAME" "pipeline finished with errors"
-#fi
+if [ -e results/snakemake_report.html ]; then
+    python /update_samples_status.py "$FILENAME" "pipeline finished"
+else
+    python /update_samples_status.py "$FILENAME" "pipeline finished with errors"
+fi
 
 exit 0
