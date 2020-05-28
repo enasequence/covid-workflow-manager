@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: reverent-fermat
+spec:
+  containers:
+  - image: alexeyebi/ont-pipeline-run-job
+    args: ["arg1", "arg2", "arg3", "arg4"]
+    name: reverent-fermat
+    volumeMounts:
+    - mountPath: /output
+      name: vol-1
+    - mountPath: /raw_data
+      name: data
+  volumes:
+  - name: vol-1
+    persistentVolumeClaim:
+      claimName: jovian-outputdata-pvc
+  - name: data
+    persistentVolumeClaim:
+      claimName: jovian-inputdata-pvc
