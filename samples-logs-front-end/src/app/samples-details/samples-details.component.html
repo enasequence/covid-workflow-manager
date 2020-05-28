@@ -32,14 +32,9 @@
 
   <hr>
 
-  <div class="row">
+  <div class="row" *ngIf="sampleData">
     <div class="col-md-12">
       <h3>2. Pipeline run
-        <a href="{{generateLink()}}"
-           class="btn btn-primary btn-lg disabled"
-           role="button"
-           aria-disabled="true"
-           target="_blank">Nextflow Report</a>
       </h3>
       <h5 *ngIf="sampleData['pipeline_analysis']['status'].length>0">Logs:</h5>
       <ul class="list-group">
@@ -83,6 +78,15 @@
           {{error}}
         </li>
       </ul>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="sampleData">
+    <div class="col-md-12">
+      <a href="{{generateLink()}}"
+         class="btn btn-primary btn-lg"
+         role="button"
+         target="_blank">Nextflow Report</a>
     </div>
   </div>
 </div>

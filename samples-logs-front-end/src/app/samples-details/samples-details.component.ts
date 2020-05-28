@@ -40,6 +40,7 @@ export class SamplesDetailsComponent implements OnInit {
   }
 
   generateLink() {
+    console.log(`http://193.62.54.246/nextflow_reports/${this.sampleId}_output/${this.sampleId}.html`);
     return `http://193.62.54.246/nextflow_reports/${this.sampleId}_output/${this.sampleId}.html`;
   }
 
