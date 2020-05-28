@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ont-inputdata-cronjob
+spec:
+  schedule: "* 0 * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        ms: ont-inputdata-cronjob
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: alexeyebi/ont-inputdata-cronjob
+        env:
+          - name: DATA_HUB
+            valueFrom:
+              configMapKeyRef:
+                name: ont-inputdata-config
+                key: data-hub
+          - name: DATA_HUB_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: ont-inputdata-config
+                key: data-hub-password
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: wms
+            mountPath: /wms
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ont-data-pvc
+        - name: wms
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
