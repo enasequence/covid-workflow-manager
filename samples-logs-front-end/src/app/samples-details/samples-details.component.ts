@@ -39,4 +39,8 @@ export class SamplesDetailsComponent implements OnInit {
     });
   }
 
+  generateLink() {
+    return `http://193.62.54.246/nextflow_reports/${this.sampleId}_output/${this.sampleId}.html`;
+  }
+
 }
