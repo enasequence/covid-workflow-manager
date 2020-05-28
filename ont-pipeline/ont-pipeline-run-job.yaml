@@ -1,21 +1,27 @@
-apiVersion: v1
-kind: Pod
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: reverent-fermat
+  name: ont-pipeline-run-job
 spec:
-  containers:
-  - image: alexeyebi/ont-pipeline-run-job
-    args: ["arg1", "arg2", "arg3", "arg4"]
-    name: reverent-fermat
-    volumeMounts:
-    - mountPath: /output
-      name: vol-1
-    - mountPath: /raw_data
-      name: data
-  volumes:
-  - name: vol-1
-    persistentVolumeClaim:
-      claimName: jovian-outputdata-pvc
-  - name: data
-    persistentVolumeClaim:
-      claimName: jovian-inputdata-pvc
+  template:
+    metadata:
+      labels:
+        ms: ont-pipeline-run-job
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: alexeyebi/ont-pipeline-run-job
+        name: ont-pipeline-run-pod
+        args: ["ERR4164785"]
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: sourcecode
+            mountPath: /git
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ont-data-pvc
+        - name: sourcecode
+          persistentVolumeClaim:
+            claimName: ont-sourcecode-pvc

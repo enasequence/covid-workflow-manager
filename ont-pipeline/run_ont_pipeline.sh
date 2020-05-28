@@ -1,10 +1,11 @@
-REFERENCE="$1"
-INPUT="$2"
-OUTDIR="$3"
-FILENAME="$4"
+FILENAME="$1"
+REFERENCE="/data/${FILENAME}_output/reference.fasta"
+INPUT="/data/${FILENAME}_input/${FILENAME}_1.fastq.gz"
+OUTDIR="results"
 
-cd /output || exit
-# TODO: copy pipeline file from git
-# TODO: copy reference file from git
+mkdir -p /data/"${FILENAME}_output"
+cd /data/"${FILENAME}_output" || exit
+cp /git/nanopore_nextflow.nf ./
+cp /git/reference.fasta ./
 
-nextflow -C /nextflow.config run nanopore_nextflow.nf --REFERENCE "$REFERENCE" --INPUT "$INPUT" --outdir "$OUTDIR" -with-report "${FILENAME}.html"
+nextflow -C /nextflow.config run nanopore_nextflow.nf --REFERENCE "$REFERENCE" --INPUT "$INPUT" --NAME "${FILENAME}_consensus" --outdir "$OUTDIR" -with-report "${FILENAME}.html"

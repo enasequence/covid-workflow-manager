@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ont-data-pvc
+spec:
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: nfs-client
+  accessModes:
+  - ReadWriteMany
