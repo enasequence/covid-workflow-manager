@@ -26,7 +26,7 @@ def jovian_samples_details(run_id):
 
 
 @app.route("/ont")
-def jovian_samples():
+def ont_samples():
     # Getting access to MongoDB
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
@@ -38,7 +38,7 @@ def jovian_samples():
 
 
 @app.route("/ont/<run_id>")
-def jovian_samples_details(run_id):
+def ont_samples_details(run_id):
     # Getting access to MongoDB
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples

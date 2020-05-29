@@ -36,7 +36,7 @@ def main():
             data_download_errors.append(
                 completed_process_wget.stderr.decode('utf-8')
             )
-
+        write_sample_errors(sample, data_download_errors)
         if len(data_download_errors) > 0:
             write_sample_status(sample, 'download failed')
         else:
@@ -112,23 +112,23 @@ def parse_file():
         for line in f:
             line = line.rstrip()
             data = line.split("\t")
-            if not check_file_in_database(data[7], data[2], data[5]) \
-                    and len(data) == 12:
+            if not check_file_in_database(data[7], data[2], data[5], len(data)):
                 files[data[7]] = data[10]
     return files
 
 
-def check_file_in_database(file_name, sample_id, study_id):
+def check_file_in_database(file_name, sample_id, study_id, length):
     """
     This function will check for current file in MongoDB and insert it in case
     of absence
     :param file_name: name of the file to check
     :param sample_id: BioSample id
     :param study_id: Study accession
+    :param length: length of the data
     :return: True if file is already in database and False otherwise
     """
     results = DB.samples.find_one({'id': file_name})
-    if results is None and study_id == 'PRJEB38388':
+    if results is None and study_id == 'PRJEB38388' and length == 12:
         sample = get_sample_structure()
         sample['id'] = file_name
         sample['sample_id'] = sample_id

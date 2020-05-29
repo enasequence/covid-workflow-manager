@@ -3,11 +3,11 @@ import {Title} from '@angular/platform-browser';
 import {ApiDataService} from '../api-data.service';
 
 @Component({
-  selector: 'app-samples',
-  templateUrl: './samples.component.html',
-  styleUrls: ['./samples.component.css']
+  selector: 'app-ont-samples',
+  templateUrl: './ont-samples.component.html',
+  styleUrls: ['./ont-samples.component.css']
 })
-export class SamplesComponent implements OnInit {
+export class OntSamplesComponent implements OnInit {
   p = 1;
   data: any;
   statuses = {
@@ -28,8 +28,8 @@ export class SamplesComponent implements OnInit {
   constructor(private title: Title, private dataService: ApiDataService) { }
 
   ngOnInit() {
-    this.title.setTitle('Samples Logs');
-    this.dataService.getAllSamplesJovian().subscribe(
+    this.title.setTitle('ONT Samples Logs');
+    this.dataService.getAllSamplesONT().subscribe(
       data => {
         this.data = data.results;
       },

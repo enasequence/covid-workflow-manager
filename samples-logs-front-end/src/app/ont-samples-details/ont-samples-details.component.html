@@ -1,0 +1,44 @@
+<app-header></app-header>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">{{sampleId}}</h1>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="data">
+    <div class="col-md-12">
+      <h3>1. ENA import</h3>
+      <h5 *ngIf="data['import_from_ena']['status'].length>0">Logs:</h5>
+      <ul class="list-group">
+        <li
+          class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
+          *ngFor="let date of data['import_from_ena']['date']; let i=index">
+          {{data['import_from_ena']['status'][i]}}
+          <span class="badge badge-primary badge-pill">{{date}}</span>
+        </li>
+      </ul>
+      <h5 *ngIf="data['import_from_ena']['errors'].length>0">Errors:</h5>
+      <ul class="list-group">
+        <li
+          class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
+          *ngFor="let error of data['import_from_ena']['errors']">
+          {{error}}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row" *ngIf="data">
+    <div class="col-md-12">
+      <h3>2. Pipeline run and ENA export reports</h3>
+      <iframe [src]="generateReport()" width="100%" height=980 *ngIf="reportLink">
+      </iframe>
+    </div>
+  </div>
+
+  <hr>
+</div>

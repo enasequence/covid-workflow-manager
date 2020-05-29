@@ -9,13 +9,17 @@ import { SamplesComponent } from './samples/samples.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import {ApiDataService} from "./api-data.service";
 import {HttpClientModule} from '@angular/common/http';
+import { OntSamplesComponent } from './ont-samples/ont-samples.component';
+import { OntSamplesDetailsComponent } from './ont-samples-details/ont-samples-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SamplesDetailsComponent,
     HeaderComponent,
-    SamplesComponent
+    SamplesComponent,
+    OntSamplesComponent,
+    OntSamplesDetailsComponent
   ],
   imports: [
     BrowserModule,

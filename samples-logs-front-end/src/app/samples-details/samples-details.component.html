@@ -7,23 +7,23 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="sampleData">
+  <div class="row" *ngIf="data">
     <div class="col-md-12">
       <h3>1. ENA import</h3>
-      <h5 *ngIf="sampleData['import_from_ena']['status'].length>0">Logs:</h5>
+      <h5 *ngIf="data['import_from_ena']['status'].length>0">Logs:</h5>
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
-          *ngFor="let date of sampleData['import_from_ena']['date']; let i=index">
-          {{sampleData['import_from_ena']['status'][i]}}
+          *ngFor="let date of data['import_from_ena']['date']; let i=index">
+          {{data['import_from_ena']['status'][i]}}
           <span class="badge badge-primary badge-pill">{{date}}</span>
         </li>
       </ul>
-      <h5 *ngIf="sampleData['import_from_ena']['errors'].length>0">Errors:</h5>
+      <h5 *ngIf="data['import_from_ena']['errors'].length>0">Errors:</h5>
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
-          *ngFor="let error of sampleData['import_from_ena']['errors']">
+          *ngFor="let error of data['import_from_ena']['errors']">
           {{error}}
         </li>
       </ul>
@@ -32,24 +32,24 @@
 
   <hr>
 
-  <div class="row" *ngIf="sampleData">
+  <div class="row" *ngIf="data">
     <div class="col-md-12">
       <h3>2. Pipeline run
       </h3>
-      <h5 *ngIf="sampleData['pipeline_analysis']['status'].length>0">Logs:</h5>
+      <h5 *ngIf="data['pipeline_analysis']['status'].length>0">Logs:</h5>
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
-          *ngFor="let date of sampleData['pipeline_analysis']['date']; let i=index">
-          {{sampleData['pipeline_analysis']['status'][i]}}
+          *ngFor="let date of data['pipeline_analysis']['date']; let i=index">
+          {{data['pipeline_analysis']['status'][i]}}
           <span class="badge badge-primary badge-pill">{{date}}</span>
         </li>
       </ul>
-      <h5 *ngIf="sampleData['pipeline_analysis']['errors'].length>0">Errors:</h5>
+      <h5 *ngIf="data['pipeline_analysis']['errors'].length>0">Errors:</h5>
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
-          *ngFor="let error of sampleData['pipeline_analysis']['errors']">
+          *ngFor="let error of data['pipeline_analysis']['errors']">
           {{error}}
         </li>
       </ul>
@@ -58,35 +58,26 @@
 
   <hr>
 
-  <div class="row" *ngIf="sampleData">
+  <div class="row" *ngIf="data">
     <div class="col-md-12">
       <h3>3. ENA export</h3>
-      <h5 *ngIf="sampleData['export_to_ena']['status'].length>0">Logs:</h5>
+      <h5 *ngIf="data['export_to_ena']['status'].length>0">Logs:</h5>
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
-          *ngFor="let date of sampleData['export_to_ena']['date']; let i=index">
-          {{sampleData['export_to_ena']['status'][i]}}
+          *ngFor="let date of data['export_to_ena']['date']; let i=index">
+          {{data['export_to_ena']['status'][i]}}
           <span class="badge badge-primary badge-pill">{{date}}</span>
         </li>
       </ul>
-      <h5 *ngIf="sampleData['export_to_ena']['errors'].length>0">Errors:</h5>
+      <h5 *ngIf="data['export_to_ena']['errors'].length>0">Errors:</h5>
       <ul class="list-group">
         <li
           class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
-          *ngFor="let error of sampleData['export_to_ena']['errors']">
+          *ngFor="let error of data['export_to_ena']['errors']">
           {{error}}
         </li>
       </ul>
-    </div>
-  </div>
-
-  <div class="row" *ngIf="sampleData">
-    <div class="col-md-12">
-      <a href="{{generateLink()}}"
-         class="btn btn-primary btn-lg"
-         role="button"
-         target="_blank">Nextflow Report</a>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
-import {Title} from "@angular/platform-browser";
-import {ApiDataService} from "../api-data.service";
+import {ActivatedRoute, Params} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {ApiDataService} from '../api-data.service';
 
 @Component({
   selector: 'app-samples-details',
@@ -10,7 +10,6 @@ import {ApiDataService} from "../api-data.service";
 })
 export class SamplesDetailsComponent implements OnInit {
   sampleId: string;
-  sampleData: any;
   data: any;
 
   constructor(private route: ActivatedRoute,
@@ -21,27 +20,15 @@ export class SamplesDetailsComponent implements OnInit {
     this.title.setTitle('Sample Logs details');
     this.route.params.subscribe((params: Params) => {
       this.sampleId = params.id;
-      this.dataService.getAllSamples().subscribe(
+      this.dataService.getSampleJovian(this.sampleId).subscribe(
       data => {
         this.data = data.results;
-        if (this.data) {
-          for (const record of this.data) {
-        if (record.id === this.sampleId) {
-          this.sampleData = record;
-        }
-        }
-        }
       },
       error => {
         console.log(error);
       }
     );
     });
-  }
-
-  generateLink() {
-    console.log(`http://193.62.54.246/nextflow_reports/${this.sampleId}_output/${this.sampleId}.html`);
-    return `http://193.62.54.246/nextflow_reports/${this.sampleId}_output/${this.sampleId}.html`;
   }
 
 }

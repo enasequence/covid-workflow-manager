@@ -10,10 +10,33 @@ export class ApiDataService {
 
   constructor(private http: HttpClient) { }
 
-  getAllSamples() {
-    return this.http.get<any>('http://193.62.54.246/api/').pipe(
+  getAllSamplesJovian() {
+    return this.http.get<any>('http://193.62.54.246/api/jovian').pipe(
       retry(3),
       catchError(this.handleError),
+    );
+  }
+
+  getSampleJovian(id: string) {
+    const url = `http://193.62.54.246/api/jovian/${id}`;
+    return this.http.get<any>(url).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllSamplesONT() {
+    return this.http.get<any>('http://193.62.54.246/api/ont').pipe(
+      retry(3),
+      catchError(this.handleError),
+    );
+  }
+
+  getSampleONT(id: string) {
+    const url = `http://193.62.54.246/api/ont/${id}`;
+    return this.http.get<any>(url).pipe(
+      retry(3),
+      catchError(this.handleError)
     );
   }
 
