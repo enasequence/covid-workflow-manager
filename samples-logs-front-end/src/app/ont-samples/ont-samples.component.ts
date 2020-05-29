@@ -16,8 +16,8 @@ export class OntSamplesComponent implements OnInit {
       failed: 'download failed'
     },
     pipeline_analysis: {
-      success: 'pipeline finished',
-      failed: 'pipeline finished with errors'
+      success: 'pipeline_finished',
+      started: 'pipeline_started'
     },
     ena_export: {
       success: 'submission to ENA finished',
@@ -46,8 +46,8 @@ export class OntSamplesComponent implements OnInit {
   getExportStatus(item: any, statusType: string) {
     if (item.indexOf(this.statuses[statusType].success) !== -1) {
       return 'Success';
-    } else if (item.indexOf(this.statuses[statusType].failed) !== -1) {
-      return 'Failed';
+    } else if (item.indexOf(this.statuses[statusType].started) !== -1) {
+      return 'Processing';
     } else {
       return 'Undefined';
     }
@@ -56,8 +56,8 @@ export class OntSamplesComponent implements OnInit {
   getExportStatusClass(item: any, statusType: string) {
     if (item.indexOf(this.statuses[statusType].success) !== -1) {
       return 'badge badge-pill badge-success';
-    } else if (item.indexOf(this.statuses[statusType].failed) !== -1) {
-      return 'badge badge-pill badge-danger';
+    } else if (item.indexOf(this.statuses[statusType].started) !== -1) {
+      return 'badge badge-pill badge-warning';
     } else {
       return 'badge badge-pill badge-info';
     }
