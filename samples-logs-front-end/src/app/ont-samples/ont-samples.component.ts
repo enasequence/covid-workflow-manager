@@ -68,7 +68,7 @@ export class OntSamplesComponent implements OnInit {
       const enaExportStatus = this.getExportStatus(item.export_to_ena.status, 'ena_export');
       this.summary.ena_import[enaImportStatus] += 1;
       this.summary.pipeline_analysis[pipelineAnalysisStatus] += 1;
-      this.summary.ena_import[enaExportStatus] += 1;
+      this.summary.ena_export[enaExportStatus] += 1;
     }
   }
 
