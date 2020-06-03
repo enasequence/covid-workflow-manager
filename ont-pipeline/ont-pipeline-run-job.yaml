@@ -13,6 +13,17 @@ spec:
       - image: alexeyebi/ont-pipeline-run-job
         name: ont-pipeline-run-pod
         args: ["ERR4164785"]
+        env:
+          - name: USER
+            valueFrom:
+              configMapKeyRef:
+                name: ont-pipeline-config
+                key: user
+          - name: PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: ont-pipeline-config
+                key: password
         volumeMounts:
           - name: data
             mountPath: /data
