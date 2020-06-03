@@ -25,6 +25,24 @@ export class OntSamplesComponent implements OnInit {
     }
   };
 
+  summary = {
+    ena_import: {
+      Success: 0,
+      Processing: 0,
+      Undefined: 0
+    },
+    pipeline_analysis: {
+      Success: 0,
+      Processing: 0,
+      Undefined: 0
+    },
+    ena_export: {
+      Success: 0,
+      Processing: 0,
+      Undefined: 0
+    }
+  };
+
   constructor(private title: Title, private dataService: ApiDataService) { }
 
   ngOnInit() {
@@ -32,11 +50,23 @@ export class OntSamplesComponent implements OnInit {
     this.dataService.getAllSamplesONT().subscribe(
       data => {
         this.data = data.results;
+        this.getSummary(this.data);
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  getSummary(data: any) {
+    for (const item of data) {
+      const enaImportStatus = this.getExportStatus(data.import_from_ena.status, 'ena_import');
+      const pipelineAnalysisStatus = this.getExportStatus(data.pipeline_analysis.status, 'pipeline_analysis');
+      const enaExportStatus = this.getExportStatus(data.export_to_ena.status, 'ena_export');
+      this.summary.ena_import[enaImportStatus] += 1;
+      this.summary.pipeline_analysis[pipelineAnalysisStatus] += 1;
+      this.summary.ena_import[enaExportStatus] += 1;
+    }
   }
 
   getDate(item: any) {
