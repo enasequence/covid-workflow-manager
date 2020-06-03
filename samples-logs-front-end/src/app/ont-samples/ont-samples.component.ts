@@ -62,7 +62,7 @@ export class OntSamplesComponent implements OnInit {
 
   getSummary(data: any) {
     for (const item of data) {
-      console.log(data);
+      console.log(item);
       const enaImportStatus = this.getExportStatus(data.import_from_ena.status, 'ena_import');
       const pipelineAnalysisStatus = this.getExportStatus(data.pipeline_analysis.status, 'pipeline_analysis');
       const enaExportStatus = this.getExportStatus(data.export_to_ena.status, 'ena_export');
