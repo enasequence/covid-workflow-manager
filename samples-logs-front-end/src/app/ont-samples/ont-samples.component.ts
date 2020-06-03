@@ -20,8 +20,8 @@ export class OntSamplesComponent implements OnInit {
       started: 'pipeline_started'
     },
     ena_export: {
-      success: 'submission to ENA finished',
-      failed: 'submission to ENA failed'
+      success: 'export_finished',
+      started: 'export_started'
     }
   };
 
