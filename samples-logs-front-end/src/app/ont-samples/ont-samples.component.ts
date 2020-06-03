@@ -50,7 +50,9 @@ export class OntSamplesComponent implements OnInit {
     this.dataService.getAllSamplesONT().subscribe(
       data => {
         this.data = data.results;
-        this.getSummary(this.data);
+        if (this.data) {
+          this.getSummary(data.results);
+        }
       },
       error => {
         console.log(error);
