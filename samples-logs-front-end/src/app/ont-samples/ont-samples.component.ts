@@ -29,34 +29,27 @@ export class OntSamplesComponent implements OnInit {
     ena_import: {
       Success: 0,
       Processing: 0,
-      Undefined: 0
+      Undefined: 0,
+      Failed: 0
     },
     pipeline_analysis: {
       Success: 0,
       Processing: 0,
-      Undefined: 0
+      Undefined: 0,
+      Failed: 0
     },
     ena_export: {
       Success: 0,
       Processing: 0,
-      Undefined: 0
+      Undefined: 0,
+      Failed: 0
     }
   };
-
-  status = [
-    'export_started',
-    'export_started',
-    'export_started',
-    'export_started',
-    'export_started',
-    'export_started'
-  ];
 
   constructor(private title: Title, private dataService: ApiDataService) { }
 
   ngOnInit() {
     this.title.setTitle('ONT Samples Logs');
-    console.log(this.getAllIndices(this.status, 'export_started').length);
     this.dataService.getAllSamplesONT().subscribe(
       data => {
         this.data = data.results;
