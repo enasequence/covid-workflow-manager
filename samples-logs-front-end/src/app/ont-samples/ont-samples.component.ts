@@ -43,10 +43,20 @@ export class OntSamplesComponent implements OnInit {
     }
   };
 
+  status = [
+    'export_started',
+    'export_started',
+    'export_started',
+    'export_started',
+    'export_started',
+    'export_started'
+  ];
+
   constructor(private title: Title, private dataService: ApiDataService) { }
 
   ngOnInit() {
     this.title.setTitle('ONT Samples Logs');
+    console.log(this.getAllIndices(this.status, 'export_started').length);
     this.dataService.getAllSamplesONT().subscribe(
       data => {
         this.data = data.results;
@@ -80,16 +90,32 @@ export class OntSamplesComponent implements OnInit {
     if (item.indexOf(this.statuses[statusType].success) !== -1) {
       return 'Success';
     } else if (item.indexOf(this.statuses[statusType].started) !== -1) {
+      if (this.getAllIndices(item, this.statuses[statusType].started).length >= 6) {
+        return 'Failed';
+      }
       return 'Processing';
     } else {
       return 'Undefined';
     }
   }
 
+  getAllIndices(arr: any, val: string) {
+    const indices = [];
+    let i = -1;
+    while (arr.indexOf(val, i + 1) !== -1) {
+      i = arr.indexOf(val, i + 1);
+      indices.push(i);
+    }
+    return indices;
+  }
+
   getExportStatusClass(item: any, statusType: string) {
     if (item.indexOf(this.statuses[statusType].success) !== -1) {
       return 'badge badge-pill badge-success';
     } else if (item.indexOf(this.statuses[statusType].started) !== -1) {
+      if (this.getAllIndices(item, this.statuses[statusType].started).length >= 6) {
+        return 'badge badge-pill badge-danger';
+      }
       return 'badge badge-pill badge-warning';
     } else {
       return 'badge badge-pill badge-info';
