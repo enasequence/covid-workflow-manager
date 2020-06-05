@@ -84,9 +84,9 @@ def get_status(item, key):
         }
     }
     if key == 'ena_import':
-        if statuses['key']['success'] in item:
+        if statuses[key]['success'] in item:
             return 'Success'
-        elif statuses['key']['failed'] in item:
+        elif statuses[key]['failed'] in item:
             return 'Failed'
         else:
             return 'Undefined'
