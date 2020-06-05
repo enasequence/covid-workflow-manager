@@ -11,6 +11,7 @@ import {ApiDataService} from "./api-data.service";
 import {HttpClientModule} from '@angular/common/http';
 import { OntSamplesComponent } from './ont-samples/ont-samples.component';
 import { OntSamplesDetailsComponent } from './ont-samples-details/ont-samples-details.component';
+import { OntSamplesFiltersComponent } from './ont-samples-filters/ont-samples-filters.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { OntSamplesDetailsComponent } from './ont-samples-details/ont-samples-de
     HeaderComponent,
     SamplesComponent,
     OntSamplesComponent,
-    OntSamplesDetailsComponent
+    OntSamplesDetailsComponent,
+    OntSamplesFiltersComponent
   ],
   imports: [
     BrowserModule,

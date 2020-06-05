@@ -24,46 +24,46 @@
   <div class="row">
     <div class="col-md-4">
       <h5>Import status: </h5>
-      <button type="button" class="btn btn-success btn-sm">
+      <button type="button" class="btn btn-success btn-sm" [routerLink]="['import_from_ena', 'Success']">
         Success <span class="badge badge-light">{{summary['ena_import']['Success']}}</span>
       </button>
-      <button type="button" class="btn btn-warning btn-sm">
+      <button type="button" class="btn btn-warning btn-sm" [routerLink]="['import_from_ena', 'Processing']">
         Processing <span class="badge badge-light">{{summary['ena_import']['Processing']}}</span>
       </button>
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" [routerLink]="['import_from_ena', 'Undefined']">
         Undefined <span class="badge badge-light">{{summary['ena_import']['Undefined']}}</span>
       </button>
-      <button type="button" class="btn btn-danger btn-sm">
+      <button type="button" class="btn btn-danger btn-sm" [routerLink]="['import_from_ena', 'Failed']">
         Failed <span class="badge badge-light">{{summary['ena_import']['Failed']}}</span>
       </button>
     </div>
     <div class="col-md-4">
       <h5>Pipeline status: </h5>
-      <button type="button" class="btn btn-success btn-sm">
+      <button type="button" class="btn btn-success btn-sm" [routerLink]="['pipeline_analysis', 'Success']">
         Success <span class="badge badge-light">{{summary['pipeline_analysis']['Success']}}</span>
       </button>
-      <button type="button" class="btn btn-warning btn-sm">
+      <button type="button" class="btn btn-warning btn-sm" [routerLink]="['pipeline_analysis', 'Processing']">
         Processing <span class="badge badge-light">{{summary['pipeline_analysis']['Processing']}}</span>
       </button>
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" [routerLink]="['pipeline_analysis', 'Undefined']">
         Undefined <span class="badge badge-light">{{summary['pipeline_analysis']['Undefined']}}</span>
       </button>
-      <button type="button" class="btn btn-danger btn-sm">
+      <button type="button" class="btn btn-danger btn-sm" [routerLink]="['pipeline_analysis', 'Failed']">
         Failed <span class="badge badge-light">{{summary['pipeline_analysis']['Failed']}}</span>
       </button>
     </div>
     <div class="col-md-4">
       <h5>Export status: </h5>
-      <button type="button" class="btn btn-success btn-sm">
+      <button type="button" class="btn btn-success btn-sm" [routerLink]="['export_to_ena', 'Success']">
         Success <span class="badge badge-light">{{summary['ena_export']['Success']}}</span>
       </button>
-      <button type="button" class="btn btn-warning btn-sm">
+      <button type="button" class="btn btn-warning btn-sm" [routerLink]="['export_to_ena', 'Processing']">
         Processing <span class="badge badge-light">{{summary['ena_export']['Processing']}}</span>
       </button>
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" [routerLink]="['export_to_ena', 'Undefined']">
         Undefined <span class="badge badge-light">{{summary['ena_export']['Undefined']}}</span>
       </button>
-      <button type="button" class="btn btn-danger btn-sm">
+      <button type="button" class="btn btn-danger btn-sm" [routerLink]="['export_to_ena', 'Failed']">
         Failed <span class="badge badge-light">{{summary['ena_export']['Failed']}}</span>
       </button>
     </div>

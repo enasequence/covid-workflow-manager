@@ -32,6 +32,14 @@ export class ApiDataService {
     );
   }
 
+  getFilteredSamplesONT(stage: string, status: string) {
+    const url = `http://193.62.54.246/api/ont/${stage}/${status}`;
+    return this.http.get<any>(url).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   getSampleONT(id: string) {
     const url = `http://193.62.54.246/api/ont/${id}`;
     return this.http.get<any>(url).pipe(
