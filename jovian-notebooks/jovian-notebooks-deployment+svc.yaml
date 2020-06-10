@@ -17,10 +17,16 @@ spec:
         volumeMounts:
           - name: notebooks
             mountPath: /usr/share/nginx/html
+          - name: config
+            mountPath: /etc/nginx/conf.d
+            readOnly: true
       volumes:
         - name: notebooks
           persistentVolumeClaim:
             claimName: jovian-outputdata-pvc
+        - name: config
+          configMap:
+            name: notebooks-nginx-config
 
 ---
 
