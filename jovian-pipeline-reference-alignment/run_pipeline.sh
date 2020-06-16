@@ -1,9 +1,8 @@
-FILENAME="$1"
-REFERENCE_FASTA="$2"
+REFERENCE_FASTA=/mnt/database/reference.fasta
 
 source /git/bin/includes/functions
 
-python update_samples_status.py "$FILENAME" "pipeline started"
+#python update_samples_status.py "$FILENAME" "pipeline started"
 
 set +ue
 conda config --set channel_priority false
@@ -20,10 +19,10 @@ HOSTNAME=$(hostname)
 
 
 
-INPUT_DIR="/raw_data/$FILENAME"
-mkdir -p "/output/$FILENAME"
+INPUT_DIR="/raw_data/test_jovian_ra"
+mkdir -p "/output/test_jovian_ra"
 
-cd "/output/$FILENAME" || exit
+cd "/output/test_jovian_ra" || exit
 cp /root/.ncbirc ./
 
 python /git/bin/scripts/generate_sample_sheet.py "${INPUT_DIR}" > "sample_sheet.yaml"
@@ -49,10 +48,10 @@ set -ue
 
 conda deactivate
 
-if [ -e results/snakemake_report.html ]; then
-    python /update_samples_status.py "$FILENAME" "pipeline finished"
-else
-    python /update_samples_status.py "$FILENAME" "pipeline finished with errors"
-fi
+#if [ -e results/snakemake_report.html ]; then
+#    python /update_samples_status.py "$FILENAME" "pipeline finished"
+#else
+#    python /update_samples_status.py "$FILENAME" "pipeline finished with errors"
+#fi
 
 exit 0
