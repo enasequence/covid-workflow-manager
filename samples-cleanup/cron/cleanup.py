@@ -63,6 +63,15 @@ SAMPLE_PATH = '/data/{file_name}_input'
 # http://193.62.54.246/api/ont
 
 
+def delete_job(api_instance, job_name, namespace):
+    api_response = api_instance.delete_namespaced_job(
+        name=job_name,
+        namespace=namespace,
+        body=client.V1DeleteOptions(
+            propagation_policy='Foreground',
+            grace_period_seconds=5))
+    print("Job deleted. status='%s'" % str(api_response.status))
+
 def logging_setup():
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler('cleanup.log')
@@ -83,8 +92,29 @@ def logging_setup():
 
 
 def remove_jobs(samples):
-    pass
+    try:
+        config.load_kube_config()
+    except:
+        # load_kube_config throws if there is no config, but does not document what it throws, so I can't rely on any particular type here
+        config.load_incluster_config()
 
+    c = client.Configuration()  # go and get a copy of the default config
+    c.verify_ssl = False  # set verify_ssl to false in that config
+    # make that config the default for all new clients
+    client.Configuration.set_default(c)
+    v1 = client.CoreV1Api()
+    api = client.ApiClient()
+
+    for sample in samples:
+        try:
+            sample_name = sample['id']
+            job_name = f"ont-pipeline-run-job-{sample_name.lower()}"
+            if(ARGS["dryrun"]):
+                logger.info(f' DRY - delete_job(api,{job_name},"default")')
+            else:
+                delete_job(api,job_name,"default")        
+        except Exception:
+            logger.exception(f'Failed to remove job {job_name}')
 
 def remove_pods(samples):
     # for sample in samples
