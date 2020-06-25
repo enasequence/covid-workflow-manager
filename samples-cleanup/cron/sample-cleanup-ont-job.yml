@@ -4,7 +4,7 @@ metadata:
   name: samples-cleanup
 spec:
   # schedule: "0 0 * * *"
-  jobTemplate:
+  template:
     metadata:
       labels:
         ms: samples-cleanup-ont
