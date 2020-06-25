@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8s-api
+spec:
+  template:
+    metadata:
+      labels:
+        ms: k8s-api
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        # image: ctr26/k8s-example
+        # image: 
+        image: python:3
+        imagePullPolicy: Always

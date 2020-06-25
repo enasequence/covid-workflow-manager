@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: k8s-api
+spec:
+  template:
+    metadata:
+      labels:
+        ms: k8s-api
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: ctr26/k8s-example:latest
+        # image: hello-world
+        imagePullPolicy: Always
