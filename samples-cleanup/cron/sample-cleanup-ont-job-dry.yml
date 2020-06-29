@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: samples-cleanup-ont-dry
+spec:
+  template:
+    metadata:
+      labels:
+        ms: samples-cleanup-ont-dry
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: ctr26/samples-cleanup-cron:latest
+        args: ["--dryrun", "--ont", "--verbose"]
+        # image: hello-world
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: data
+            mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ont-data-pvc
