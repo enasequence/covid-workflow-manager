@@ -222,7 +222,9 @@ def main():
         # Cycle through clean-up functions
         for routine in routines:
             try:
+                logger.info(f'Starting: {routine.__name__}')
                 routine(successful_samples)
+                logger.info(f'Finished: {routine.__name__}')
             except Exception:
                 logger.exception("Failed on : " + routine.__name__)
     except Exception:

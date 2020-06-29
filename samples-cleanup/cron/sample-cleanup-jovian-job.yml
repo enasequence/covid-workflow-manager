@@ -1,18 +1,18 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: samples-cleanup-ont
+  name: samples-cleanup-jovian
 spec:
   template:
     metadata:
       labels:
-        ms: samples-cleanup-ont
+        ms: samples-cleanup-jovian
     spec:
       restartPolicy: OnFailure
       containers:
       - name: main
         image: ctr26/samples-cleanup-cron:latest
-        args: ["--ont", "--verbose"]
+        args: ["--jovian", "--verbose"]
         # image: hello-world
         imagePullPolicy: Always
         volumeMounts:
@@ -21,4 +21,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: ont-data-pvc
+            claimName: jovian-inputdata-pvc
