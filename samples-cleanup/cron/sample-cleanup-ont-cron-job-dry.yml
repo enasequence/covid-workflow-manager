@@ -1,18 +1,19 @@
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
-  name: samples-cleanup-ont
+  name: samples-cleanup-ont--cron-dry
 spec:
-  template:
+  schedule: "0 0 * * *"
+  jobTemplate:
     metadata:
       labels:
-        ms: samples-cleanup-ont
+        ms: samples-cleanup-ont--cron-dry
     spec:
       restartPolicy: OnFailure
       containers:
       - name: main
         image: ctr26/samples-cleanup-cron:latest
-        args: ["--ont", "--verbose"]
+        args: ["--dryrun", "--ont", "--verbose"]
         # image: hello-world
         imagePullPolicy: Always
         volumeMounts:
