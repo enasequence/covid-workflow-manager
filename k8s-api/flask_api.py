@@ -15,9 +15,9 @@ from flask import request
 
 from flask import Flask
 
-JOB_NAME = "pi"
-NAMEPACE = "covid"
-YML_JOB_NAME = "k8s-api-job-hello-world"
+# JOB_NAME = "pi"
+# NAMEPACE = "covid"
+# YML_JOB_NAME = "k8s-api-job-hello-world"
 
 app = Flask(__name__)
 flask_api = Api(app)
@@ -58,7 +58,9 @@ class K8s_api(Resource):
         try:
             delete_job(client.BatchV1Api(), **args)
             return f"Deleted job {args['job_name']}", 200
-        return eturn args, 400
+        except e:
+            return args, 400
+        return args, 400
 
 
 def create_job_object_test():
@@ -142,77 +144,11 @@ def main():
         config.load_incluster_config()
 
     c = client.Configuration()  # go and get a copy of the default config
-    c.verify_ssl = False  # set verify_ssl to false in that config
+    c.verify_ssl = True  # set verify_ssl to false in that config
     # make that config the default for all new clients
     # client.Configuration.set_default(c)
-    v1 = client.CoreV1Api()
-    api = client.ApiClient()
-
-    # # batch_v1 = client.BatchV1Api()
-
-    # ret = v1.list_namespaced_pod(NAMEPACE)
-
-    # print("Listing pods with their IPs in this namespace:")
-
-    # for i in ret.items:
-    #     print("%s\t%s\t%s" %
-    #           (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
-
-    # print("Listing pods with their IPs all namespaces")
-
-    # ret = v1.list_pod_for_all_namespaces()
-    # for i in ret.items:
-    #     print("%s\t%s\t%s" %
-    #           (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
-
-    # batch_v1 = client.BatchV1Api()
-
-    # print("Job demo")
-
-    # jobs_list = batch_v1.list_job_for_all_namespaces()
-    # # print(jobs_list)
-
-    # # Create a job object with client-python API. The job we
-    # # created is same as the `pi-job.yaml` in the /examples folder.
-
-    # job = create_job_object_test()
-
-    # try:
-    #     print("Create job")
-    #     create_job(batch_v1, job, NAMEPACE)
-    # except:
-    #     print("Failed to create job")
-
-    # try:
-    #     print("Update job")
-    #     update_job(batch_v1, job, JOB_NAME, NAMEPACE)
-    # except:
-    #     print("Failed to update job")
-
-    # try:
-    #     print("Delete job")
-    #     delete_job(batch_v1, JOB_NAME, NAMEPACE)
-    # except:
-    #     print("Failed to delete job")
-
-    # try:
-    #     print("create_from_yaml")
-    #     yml_path = path.join(path.dirname(__file__), f'{YML_JOB_NAME}.yml')
-    #     utils.create_from_yaml(api, yml_path, namespace=NAMEPACE)
-    # except:
-    #     print("Failed to create job from yml")
-
-    # try:
-    #     print("delete_job_yaml")
-    #     delete_job(batch_v1, YML_JOB_NAME, NAMEPACE)
-    # except:
-    #     print("Failed to delete job from yml")
-
-    #     print("Listing pods with their IPs all namespaces")
-
-    # args = {'namespace': NAMEPACE,
-    #         'job_name': JOB_NAME,
-    #         'job_body': job}
+    # v1 = client.CoreV1Api()
+    # api = client.ApiClient()
 
     flask_api.add_resource(K8s_api, '/')
     # k8s_api_obj = K8s_api()
