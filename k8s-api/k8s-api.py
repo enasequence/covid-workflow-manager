@@ -69,7 +69,7 @@ def main():
         config.load_incluster_config()
 
     c = client.Configuration()  # go and get a copy of the default config
-    c.verify_ssl = False  # set verify_ssl to false in that config
+    c.verify_ssl = True  # set verify_ssl to false in that config
     # make that config the default for all new clients
     client.Configuration.set_default(c)
     v1 = client.CoreV1Api()
@@ -135,11 +135,11 @@ def main():
     except:
         print("Failed to create job from yml")
         
-    try:
-        print("delete_job_yaml")
-        delete_job(batch_v1,YML_JOB_NAME,NAMEPACE)
-    except:
-        print("Failed to delete job from yml")
+    # try:
+    #     print("delete_job_yaml")
+    #     delete_job(batch_v1,YML_JOB_NAME,NAMEPACE)
+    # except:
+    #     print("Failed to delete job from yml")
 
 
 
