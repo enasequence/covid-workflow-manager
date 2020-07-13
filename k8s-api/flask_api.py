@@ -31,33 +31,43 @@ parser.add_argument('job_body', type=str, help='Serialised json/yml')
 
 class K8s_api(Resource):
 
-    # POST with create jobs
+    
     def post(self):
+        """# POST with create jobs"""
         create_job(client.BatchV1Api(), *(parser.parse_args()))
         # yml_path = path.join(path.dirname(__file__), f'{YML_JOB_NAME}.yml')
         # utils.create_from_yaml(client.BatchV1Api(), job_body)
+        return f"Created job {args['job_name']}", 200
         return args
 
-    # PUT will update a job, if empty it will restart the job?
+    
     def put(self):
+        """# PUT will update a job, if empty it will restart the job?"""
         args = parser.parse_args()
         update_job(client.BatchV1Api(), *args)
+        return f"Updated job {args['job_name']}", 200
         return args
 
-    # GET will get description of job maybe
     def get(self):
+        """ GET will get description of job maybe """
         args = parser.parse_args()
+        pass
         return args
 
-    # DELETE will delete jobs
+    
     def delete(self):
+        """# DELETE will delete jobs"""
         args = parser.parse_args()
-        delete_job(client.BatchV1Api(), **args)
+        try:
+            delete_job(client.BatchV1Api(), **args)
+            return f"Deleted job {args['job_name']}",200
+        except:
+            return args, 400
         return args
 
 
 def create_job_object_test():
-    # Configureate Pod template container
+    """ # Create dummy job for testing Pod template container """
     container = client.V1Container(
         name="pi",
         image="perl",
@@ -81,6 +91,7 @@ def create_job_object_test():
 
 
 def create_job(api_instance, job_body, job_name, namespace):
+    """Create job using the api, job_body, job_name and namespace"""
     api_response = api_instance.create_namespaced_job(
         body=job_body,
         namespace=namespace)
@@ -88,8 +99,9 @@ def create_job(api_instance, job_body, job_name, namespace):
 
 
 def update_job(api_instance, job_body, job_name, namespace):
+    """Update job using the api, job_body, job_name and namespace"""
     # Update container image
-    job.spec.template.spec.containers[0].image = "perl"
+    # job.spec.template.spec.containers[0].image = "perl"
     api_response = api_instance.patch_namespaced_job(
         name=job_name,
         namespace=namespace,
@@ -97,7 +109,8 @@ def update_job(api_instance, job_body, job_name, namespace):
     print("Job updated. status='%s'" % str(api_response.status))
 
 
-def delete_job(api_instance, job_body, job_name, namespace):
+def delete_job(api_instance, job_name, namespace, job_body=None):
+    """ Delete job using the api, job_name and namespace, job_body should be left blank """
     api_response = api_instance.delete_namespaced_job(
         name=job_name,
         namespace=namespace,
@@ -108,6 +121,7 @@ def delete_job(api_instance, job_body, job_name, namespace):
 
 
 def get_namespace_of_this():
+    """ Get namespace of current service. """
     current_namespace = None
     try:
         current_namespace = open(
