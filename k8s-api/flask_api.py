@@ -31,7 +31,6 @@ parser.add_argument('job_body', type=str, help='Serialised json/yml')
 
 class K8s_api(Resource):
 
-    
     def post(self):
         """# POST with create jobs"""
         create_job(client.BatchV1Api(), *(parser.parse_args()))
@@ -40,7 +39,6 @@ class K8s_api(Resource):
         return f"Created job {args['job_name']}", 200
         return args
 
-    
     def put(self):
         """# PUT will update a job, if empty it will restart the job?"""
         args = parser.parse_args()
@@ -54,16 +52,13 @@ class K8s_api(Resource):
         pass
         return args
 
-    
     def delete(self):
         """# DELETE will delete jobs"""
         args = parser.parse_args()
         try:
             delete_job(client.BatchV1Api(), **args)
-            return f"Deleted job {args['job_name']}",200
-        except:
-            return args, 400
-        return args
+            return f"Deleted job {args['job_name']}", 200
+        return eturn args, 400
 
 
 def create_job_object_test():
@@ -110,7 +105,8 @@ def update_job(api_instance, job_body, job_name, namespace):
 
 
 def delete_job(api_instance, job_name, namespace, job_body=None):
-    """ Delete job using the api, job_name and namespace, job_body should be left blank """
+    """ Delete job using the api, job_name and namespace, job_body
+    should be left blank """
     api_response = api_instance.delete_namespaced_job(
         name=job_name,
         namespace=namespace,
@@ -126,7 +122,7 @@ def get_namespace_of_this():
     try:
         current_namespace = open(
             "/var/run/secrets/kubernetes.io/serviceaccount/namespace").read()
-    except:
+    except e:
         print("Can't open secrets")
     return current_namespace
 
@@ -139,8 +135,10 @@ def main():
 
     try:
         config.load_kube_config()
-    except:
-        # load_kube_config throws if there is no config, but does not document what it throws, so I can't rely on any particular type here
+    except e:
+        """# load_kube_config throws if there is no config,
+        but does not document what it throws,
+        so I can't rely on any particular type here"""
         config.load_incluster_config()
 
     c = client.Configuration()  # go and get a copy of the default config
@@ -150,74 +148,74 @@ def main():
     v1 = client.CoreV1Api()
     api = client.ApiClient()
 
+    # # batch_v1 = client.BatchV1Api()
+
+    # ret = v1.list_namespaced_pod(NAMEPACE)
+
+    # print("Listing pods with their IPs in this namespace:")
+
+    # for i in ret.items:
+    #     print("%s\t%s\t%s" %
+    #           (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
+
+    # print("Listing pods with their IPs all namespaces")
+
+    # ret = v1.list_pod_for_all_namespaces()
+    # for i in ret.items:
+    #     print("%s\t%s\t%s" %
+    #           (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
+
     # batch_v1 = client.BatchV1Api()
 
-    ret = v1.list_namespaced_pod(NAMEPACE)
+    # print("Job demo")
 
-    print("Listing pods with their IPs in this namespace:")
+    # jobs_list = batch_v1.list_job_for_all_namespaces()
+    # # print(jobs_list)
 
-    for i in ret.items:
-        print("%s\t%s\t%s" %
-              (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
+    # # Create a job object with client-python API. The job we
+    # # created is same as the `pi-job.yaml` in the /examples folder.
 
-    print("Listing pods with their IPs all namespaces")
+    # job = create_job_object_test()
 
-    ret = v1.list_pod_for_all_namespaces()
-    for i in ret.items:
-        print("%s\t%s\t%s" %
-              (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
+    # try:
+    #     print("Create job")
+    #     create_job(batch_v1, job, NAMEPACE)
+    # except:
+    #     print("Failed to create job")
 
-    batch_v1 = client.BatchV1Api()
+    # try:
+    #     print("Update job")
+    #     update_job(batch_v1, job, JOB_NAME, NAMEPACE)
+    # except:
+    #     print("Failed to update job")
 
-    print("Job demo")
+    # try:
+    #     print("Delete job")
+    #     delete_job(batch_v1, JOB_NAME, NAMEPACE)
+    # except:
+    #     print("Failed to delete job")
 
-    jobs_list = batch_v1.list_job_for_all_namespaces()
-    # print(jobs_list)
+    # try:
+    #     print("create_from_yaml")
+    #     yml_path = path.join(path.dirname(__file__), f'{YML_JOB_NAME}.yml')
+    #     utils.create_from_yaml(api, yml_path, namespace=NAMEPACE)
+    # except:
+    #     print("Failed to create job from yml")
 
-    # Create a job object with client-python API. The job we
-    # created is same as the `pi-job.yaml` in the /examples folder.
+    # try:
+    #     print("delete_job_yaml")
+    #     delete_job(batch_v1, YML_JOB_NAME, NAMEPACE)
+    # except:
+    #     print("Failed to delete job from yml")
 
-    job = create_job_object_test()
+    #     print("Listing pods with their IPs all namespaces")
 
-    try:
-        print("Create job")
-        create_job(batch_v1, job, NAMEPACE)
-    except:
-        print("Failed to create job")
-
-    try:
-        print("Update job")
-        update_job(batch_v1, job, JOB_NAME, NAMEPACE)
-    except:
-        print("Failed to update job")
-
-    try:
-        print("Delete job")
-        delete_job(batch_v1, JOB_NAME, NAMEPACE)
-    except:
-        print("Failed to delete job")
-
-    try:
-        print("create_from_yaml")
-        yml_path = path.join(path.dirname(__file__), f'{YML_JOB_NAME}.yml')
-        utils.create_from_yaml(api, yml_path, namespace=NAMEPACE)
-    except:
-        print("Failed to create job from yml")
-
-    try:
-        print("delete_job_yaml")
-        delete_job(batch_v1, YML_JOB_NAME, NAMEPACE)
-    except:
-        print("Failed to delete job from yml")
-
-        print("Listing pods with their IPs all namespaces")
-
-    args = {'namespace': NAMEPACE,
-            'job_name': JOB_NAME,
-            'job_body': job}
+    # args = {'namespace': NAMEPACE,
+    #         'job_name': JOB_NAME,
+    #         'job_body': job}
 
     flask_api.add_resource(K8s_api, '/')
-    k8s_api_obj = K8s_api()
+    # k8s_api_obj = K8s_api()
     # k8s_api_obj.delete(args)
     app.run(host='0.0.0.0', debug=True, port=80)
     app.run(debug=True)
