@@ -33,18 +33,23 @@ class K8s_api(Resource):
 
     def post(self):
         """# POST with create jobs"""
-        create_job(client.BatchV1Api(), *(parser.parse_args()))
-        # yml_path = path.join(path.dirname(__file__), f'{YML_JOB_NAME}.yml')
-        # utils.create_from_yaml(client.BatchV1Api(), job_body)
-        return f"Created job {args['job_name']}", 200
-        return args
+        try:
+            args = parser.parse_args()
+            create_job(client.BatchV1Api(), *args)
+            # yml_path = path.join(path.dirname(__file__), f'{YML_JOB_NAME}.yml')
+            # utils.create_from_yaml(client.BatchV1Api(), job_body)
+            return f"Created job {args['job_name']}", 200
+        except:
+            return args, 400
 
     def put(self):
         """# PUT will update a job, if empty it will restart the job?"""
-        args = parser.parse_args()
-        update_job(client.BatchV1Api(), *args)
+        try:
+            args = parser.parse_args()
+            update_job(client.BatchV1Api(), *args)
         return f"Updated job {args['job_name']}", 200
-        return args
+            return args, 400
+
 
     def get(self):
         """ GET will get description of job maybe """
@@ -60,7 +65,7 @@ class K8s_api(Resource):
             return f"Deleted job {args['job_name']}", 200
         except e:
             return args, 400
-        return args, 400
+        # return args, 400
 
 
 def create_job_object_test():
@@ -154,8 +159,6 @@ def main():
     # k8s_api_obj = K8s_api()
     # k8s_api_obj.delete(args)
     app.run(host='0.0.0.0', debug=True, port=80)
-    app.run(debug=True)
-
 
 if __name__ == '__main__':
     main()

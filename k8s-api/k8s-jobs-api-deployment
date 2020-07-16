@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: k8s-jobs-api-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        ms: k8s-jobs-api
+    spec:
+      containers:
+      - name: k8s-jobs-api
+        image: nginx
+        volumeMounts:
+          - name: data
+            mountPath: /git
+          - name: config
+            mountPath: /etc/nginx/conf.d
+            readOnly: true
+        ports:
+        - containerPort: 80
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
+        - name: config
+          configMap:
+            name: nginx-config
