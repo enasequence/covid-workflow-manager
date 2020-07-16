@@ -129,7 +129,7 @@ def get_namespace_of_this():
     try:
         current_namespace = open(
             "/var/run/secrets/kubernetes.io/serviceaccount/namespace").read()
-    except e:
+    except IOError:
         print("Can't open secrets")
     return current_namespace
 
@@ -142,7 +142,7 @@ def main():
 
     try:
         config.load_kube_config()
-    except e:
+    except ConfigException:
         """# load_kube_config throws if there is no config,
         but does not document what it throws,
         so I can't rely on any particular type here"""
