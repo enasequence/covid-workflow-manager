@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ont-inputdata-cronjob
+spec:
+  schedule: "* 0 * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        ms: ont-inputdata-cronjob
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: alexeyebi/vcf-inputdata-cronjob
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: wms
+            mountPath: /wms
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: sars-cov2-sequence-analysis-pvc
+        - name: wms
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
