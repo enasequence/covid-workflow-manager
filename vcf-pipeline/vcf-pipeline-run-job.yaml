@@ -1,26 +1,27 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: vcf-inputdata-cronjob
+  name: vcf-pipeline-run-job
 spec:
   template:
     metadata:
       labels:
-        ms: vcf-inputdata-cronjob
+        ms: vcf-pipeline-run-job
     spec:
-      restartPolicy: OnFailure
+      restartPolicy: Never
       containers:
-      - name: main
-        image: alexeyebi/vcf-inputdata-cronjob
+      - image: alexeyebi/vcf-pipeline-run-job
+        name: vcf-pipeline-run-job
+        args: ["ERR4164785"]
         volumeMounts:
           - name: data
             mountPath: /data
-          - name: wms
-            mountPath: /wms
+          - name: sourcecode
+            mountPath: /git
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: sars-cov2-sequence-analysis-pvc
-        - name: wms
+        - name: sourcecode
           persistentVolumeClaim:
-            claimName: ena-wms-pvc
+            claimName: vcf-sourcecode-pvc
