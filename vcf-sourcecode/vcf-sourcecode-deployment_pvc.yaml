@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vcf-sourcecode-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ms: vcf-sourcecode
+  template:
+    metadata:
+      labels:
+        ms: vcf-sourcecode
+    spec:
+      containers:
+      - image: openweb/git-sync
+        name: vcf-sourcecode
+        env:
+        - name: GIT_SYNC_REPO
+          valueFrom:
+            configMapKeyRef:
+              name: vcf-sourcecode-config
+              key: git-sync-repo
+        - name: GIT_SYNC_DEST
+          valueFrom:
+            configMapKeyRef:
+              name: vcf-sourcecode-config
+              key: git-sync-dest
+        - name: GIT_SYNC_BRANCH
+          valueFrom:
+            configMapKeyRef:
+              name: vcf-sourcecode-config
+              key: git-sync-branch
+        - name: GIT_SYNC_REV
+          valueFrom:
+            configMapKeyRef:
+              name: vcf-sourcecode-config
+              key: git-sync-rev
+        - name: GIT_SYNC_WAIT
+          valueFrom:
+            configMapKeyRef:
+              name: vcf-sourcecode-config
+              key: git-sync-wait
+        volumeMounts:
+          - name: data
+            mountPath: /git
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vcf-sourcecode-pvc
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vcf-sourcecode-pvc
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteMany
