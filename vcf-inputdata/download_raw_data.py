@@ -45,10 +45,10 @@ def main():
             write_sample_status(sample, 'starting to submit pipeline job')
 
             # Converting yaml to json as required by k8s api server
-            with open('/wms/ont-pipeline/ont-pipeline-run-job.yaml', 'r') as f:
+            with open('/wms/vcf-pipeline/vcf-pipeline-run-job.yaml', 'r') as f:
                 job_to_submit = yaml.load(f.read(), Loader=yaml.FullLoader)
                 # Assigning unit id to job (id of run)
-                job_to_submit['metadata']['name'] = f"ont-pipeline-run-job-" \
+                job_to_submit['metadata']['name'] = f"vcf-pipeline-run-job-" \
                                                     f"{file_name.lower()}"
                 # Submitting run id as arg to job
                 job_to_submit['spec']['template']['spec']['containers'][0][
