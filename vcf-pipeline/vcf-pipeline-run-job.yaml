@@ -7,8 +7,11 @@ spec:
     metadata:
       labels:
         ms: vcf-pipeline-run-job
+      annotations:
+        scheduling.k8s.io/group-name: vcf-podgroup
     spec:
       restartPolicy: Never
+      schedulerName: kube-batch
       containers:
       - image: alexeyebi/vcf-pipeline-run-job
         name: vcf-pipeline-run-job
