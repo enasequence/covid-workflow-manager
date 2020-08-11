@@ -1,0 +1,39 @@
+# apiVersion: batch/v1
+# kind: Job
+# metadata:
+#   name: test-pipeline-run-job-0012
+# spec:
+#   template:
+#     metadata:
+#       labels:
+#         ms: test-pipeline-run-job
+#       annotations:
+#         scheduling.k8s.io/group-name: qj-1
+#     spec:
+#       restartPolicy: Never
+#       containers:
+#         - image: hello-world
+#           name: vcf-pipeline-run-job
+#           # args: ["ERR4164785"]
+#       schedulerName: kube-batch
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-pipeline-run-job-000001
+spec:
+  template:
+    metadata:
+      labels:
+        ms: test-pipeline-run-job
+      annotations:
+        scheduling.k8s.io/group-name: test-podgroup
+    spec:
+      containers:
+        - name: test-pipeline-run-job
+          image: bash
+          # command: ["perl", "-Mbignum=bpi", "-wle", "print bpi(200000)"]
+          command: ["sleep", "30"]
+      restartPolicy: Never
+      schedulerName: kube-batch
+  backoffLimit: 4
