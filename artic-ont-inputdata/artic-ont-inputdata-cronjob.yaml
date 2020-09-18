@@ -12,7 +12,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: main
-          image: ctr26/artic-inputdata-cronjob
+          image: ctr26/artic-ont-inputdata-cronjob
           env:
             - name: DATA_HUB
               valueFrom:
@@ -32,7 +32,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: artic-data-pvc
+            claimName: artic-ont-data-pvc
         - name: wms
           persistentVolumeClaim:
             claimName: ena-wms-pvc
