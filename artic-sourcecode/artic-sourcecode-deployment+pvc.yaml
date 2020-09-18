@@ -13,41 +13,51 @@ spec:
         ms: artic-sourcecode
     spec:
       containers:
-        - image: openweb/git-sync
-          name: artic-sourcecode
-          env:
-            - name: GIT_SYNC_REPO
-              valueFrom:
-                configMapKeyRef:
-                  name: artic-sourcecode-config
-                  key: git-sync-repo
-            - name: GIT_SYNC_DEST
-              valueFrom:
-                configMapKeyRef:
-                  name: artic-sourcecode-config
-                  key: git-sync-dest
-            - name: GIT_SYNC_BRANCH
-              valueFrom:
-                configMapKeyRef:
-                  name: artic-sourcecode-config
-                  key: git-sync-branch
-            - name: GIT_SYNC_REV
-              valueFrom:
-                configMapKeyRef:
-                  name: artic-sourcecode-config
-                  key: git-sync-rev
-            - name: GIT_SYNC_WAIT
-              valueFrom:
-                configMapKeyRef:
-                  name: artic-sourcecode-config
-                  key: git-sync-wait
-          volumeMounts:
-            - name: data
-              mountPath: /git
+      - image: openweb/git-sync
+        name: artic-sourcecode
+        env:
+        - name: GIT_SYNC_REPO
+          valueFrom:
+            configMapKeyRef:
+              name: artic-sourcecode-config
+              key: git-sync-repo
+        - name: GIT_SYNC_DEST
+          valueFrom:
+            configMapKeyRef:
+              name: artic-sourcecode-config
+              key: git-sync-dest    
+        - name: GIT_SYNC_BRANCH
+          valueFrom:
+            configMapKeyRef:
+              name: artic-sourcecode-config
+              key: git-sync-branch
+        - name: GIT_SYNC_REV
+          valueFrom:
+            configMapKeyRef:
+              name: artic-sourcecode-config
+              key: git-sync-rev
+        - name: GIT_SYNC_WAIT
+          valueFrom:
+            configMapKeyRef:
+              name: artic-sourcecode-config
+              key: git-sync-wait
+        volumeMounts:
+          - name: git
+            mountPath: /git
+          - name: wms
+            mountPath: /wms
+          - name: data
+            mountPath: /data
       volumes:
-        - name: data
+        - name: git
           persistentVolumeClaim:
             claimName: artic-sourcecode-pvc
+        - name: wms
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: artic-ont-data-pvc
 
 ---
 apiVersion: v1

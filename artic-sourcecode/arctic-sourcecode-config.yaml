@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: artic-sourcecode-config
-  namespace: covid
+  namespace: default
   # labels:
   # annotations:
 data:
