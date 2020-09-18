@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: artic-illumina-data-pvc
+spec:
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteMany
