@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {throwError} from 'rxjs';
-import { catchError, retry, map } from 'rxjs/operators';
+import { throwError, of } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 import { apiUrl } from '@services/api-url';
+import data from './jovian-mock.json';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class ApiDataService {
       retry(3),
       catchError(this.handleError),
     );
+  }
+
+  getMockJovianSamples() {
+    return of(data);
   }
 
   getSampleJovian(id: string) {
