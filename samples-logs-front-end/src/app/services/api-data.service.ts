@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {throwError} from 'rxjs';
 import { catchError, retry, map } from 'rxjs/operators';
 
+import { apiUrl } from '@services/api-url';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,42 +13,40 @@ export class ApiDataService {
   constructor(private http: HttpClient) { }
 
   getAllSamplesJovian() {
-    return this.http.get<any>('http://193.62.54.246/api/jovian').pipe(
+    return this.http.get<any>(apiUrl('jovian')).pipe(
       retry(3),
       catchError(this.handleError),
     );
   }
 
   getSampleJovian(id: string) {
-    const url = `http://193.62.54.246/api/jovian/${id}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<any>(apiUrl('jovian', id)).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
 
   getAllSamplesONT() {
-    return this.http.get<any>('http://193.62.54.246/api/ont').pipe(
+    return this.http.get<any>(apiUrl('ont')).pipe(
       retry(3),
       catchError(this.handleError),
     );
   }
 
   getFilteredSamplesONT(stage: string, status: string) {
-    const url = `http://193.62.54.246/api/ont/${stage}/${status}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<any>(apiUrl('ont', stage, status)).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
 
   getSampleONT(id: string) {
-    const url = `http://193.62.54.246/api/ont/${id}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<any>(apiUrl('ont', id)).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

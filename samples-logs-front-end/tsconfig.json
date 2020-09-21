@@ -10,6 +10,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "@services/*": ["src/app/services/*"],
+    },
     "target": "es2015",
     "typeRoots": [
       "node_modules/@types"

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {DomSanitizer, Title} from '@angular/platform-browser';
-import {ApiDataService} from '../api-data.service';
+import {ApiDataService} from '@services/api-data.service';
 
 @Component({
   selector: 'app-ont-samples-details',
