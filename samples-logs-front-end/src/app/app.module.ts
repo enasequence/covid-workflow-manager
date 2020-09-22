@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { OntSamplesComponent } from './ont-samples/ont-samples.component';
 import { OntSamplesDetailsComponent } from './ont-samples-details/ont-samples-details.component';
 import { OntSamplesFiltersComponent } from './ont-samples-filters/ont-samples-filters.component';
+import { SamplesNavigationComponent } from './samples-navigation/samples-navigation.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { OntSamplesFiltersComponent } from './ont-samples-filters/ont-samples-fi
     SamplesComponent,
     OntSamplesComponent,
     OntSamplesDetailsComponent,
-    OntSamplesFiltersComponent
+    OntSamplesFiltersComponent,
+    SamplesNavigationComponent
   ],
   imports: [
     BrowserModule,

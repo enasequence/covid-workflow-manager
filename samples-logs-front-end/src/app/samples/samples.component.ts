@@ -29,7 +29,7 @@ export class SamplesComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Samples Logs');
-    this.dataService.getMockJovianSamples().subscribe(
+    this.dataService.getAllSamplesJovian().subscribe(
       data => {
         this.data = data.results;
       },
