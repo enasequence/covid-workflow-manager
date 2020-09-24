@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: artic-illumina-pipeline-run-job
+spec:
+  template:
+    metadata:
+      labels:
+        ms: artic-illumina-pipeline-run-job
+    spec:
+      restartPolicy: Never
+      containers:
+        - image: ctr26/artic-pipeline-run-job
+          name: artic-illumina-pipeline-run-pod
+          args: ["ERR4164785", "illumina"]
+          env:
+            - name: USER
+              valueFrom:
+                configMapKeyRef:
+                  name: artic-pipeline-config
+                  key: user
+            - name: PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: artic-pipeline-config
+                  key: password
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: sourcecode
+              mountPath: /git
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: artic-illumina-data-pvc
+        - name: sourcecode
+          persistentVolumeClaim:
+            claimName: artic-sourcecode-pvc

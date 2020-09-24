@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: artic-ont-pipeline-run-job
+spec:
+  template:
+    metadata:
+      labels:
+        ms: artic-ont-pipeline-run-job
+    spec:
+      restartPolicy: Never
+      containers:
+        - image: ctr26/artic-ont-pipeline-run-job
+          name: artic-ont-pipeline-run-pod
+          args: ["ERR4164785", "ont"]
+          env:
+            - name: USER
+              valueFrom:
+                configMapKeyRef:
+                  name: artic-pipeline-config
+                  key: user
+            - name: PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: artic-pipeline-config
+                  key: password
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: sourcecode
+              mountPath: /git
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: artic-ont-data-pvc
+        - name: sourcecode
+          persistentVolumeClaim:
+            claimName: artic-sourcecode-pvc
