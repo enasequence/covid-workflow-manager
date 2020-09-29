@@ -40,12 +40,12 @@ mkdir -p "/output/${RUN_ID}"
 cd "/output/${RUN_ID}" || exit
 cp /root/.ncbirc ./
 
-bash /git/bin/includes/Make_samplesheet
 cp -r /git/bin ./
 cp -r /git/config ./
 cp -r /git/files ./
 cp -r /git/.git ./
 cp /git/Illumina_RA_report.ipynb ./
+bash /git/bin/includes/Make_samplesheet
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
 set +ue
