@@ -1,4 +1,4 @@
-RUN_ID="ERR4422712"
+RUN_ID="$1"
 
 source /git/bin/includes/functions
 
@@ -55,7 +55,7 @@ eval $(parse_yaml "config/variables.yaml" "config_")
 snakemake -s bin/Illumina_vir_Ref.smk --conda-frontend conda --profile "${PROFILE}"
 set -ue
 
-sed -i "s/${HOSTNAME}:8083\//193.62.54.246\/notebooks\/${RUN_ID}/g" results/igv.html
+sed -i "s/${HOSTNAME}:8083\/${UNIQUE_ID}/193.62.54.246\/notebooks\/${RUN_ID}/g" results/igv.html
 jupyter nbconvert --to notebook --execute Illumina_RA_report.ipynb
 jupyter nbconvert --to HTML Illumina_RA_report.nbconvert.ipynb
 conda deactivate
