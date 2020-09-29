@@ -1,10 +1,12 @@
-RUN_ID="$1"
+RUN_ID="ERR4422712"
 
 source /git/bin/includes/functions
 
 #python update_samples_status.py "$FILENAME" "pipeline started"
 
 set +ue
+conda init bash
+source /root/.bashrc
 conda activate /output
 ${CONDA_PREFIX}/bin/python -m ipykernel install --user --name Jovian_master --display-name "Jovian"
 ${CONDA_PREFIX}/bin/jupyter nbextension enable collapsible_headings/main --sys-prefix
