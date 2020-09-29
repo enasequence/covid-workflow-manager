@@ -12,6 +12,7 @@ spec:
       containers:
       - name: main
         image: alexeyebi/jovian-pipeline-reference-alignment-run-job
+        args: ["jovian-pipeline-reference-alignment-run-job"]
         resources:
           limits:
             cpu: "19"
@@ -23,7 +24,7 @@ spec:
           - name: sourcecode
             mountPath: /git
           - name: databases
-            mountPath: /mnt/database
+            mountPath: /databases
           - name: data
             mountPath: /raw_data
           - name: results
@@ -42,7 +43,7 @@ spec:
             claimName: jovian-inputdata-pvc
         - name: results
           persistentVolumeClaim:
-            claimName: jovian-outputdata-pvc
+            claimName: jovian-outputdata-pvc-new
         - name: wms
           persistentVolumeClaim:
             claimName: ena-wms-pvc

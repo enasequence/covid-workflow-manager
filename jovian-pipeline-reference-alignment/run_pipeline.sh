@@ -1,15 +1,27 @@
-REFERENCE_FASTA=/mnt/database/reference.fasta
+RUN_ID="$1"
 
 source /git/bin/includes/functions
 
 #python update_samples_status.py "$FILENAME" "pipeline started"
 
 set +ue
-conda config --set channel_priority false
-conda env create -f /git/bin/envs/Jovian_master_environment.yaml
-conda init bash
-source /root/.bashrc
-conda activate Jovian_master
+conda activate /output
+${CONDA_PREFIX}/bin/python -m ipykernel install --user --name Jovian_master --display-name "Jovian"
+${CONDA_PREFIX}/bin/jupyter nbextension enable collapsible_headings/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable highlight_selected_word/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable codefolding/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable execute_time/ExecuteTime --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable spellchecker/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable toggle_all_line_numbers/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable freeze/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable code_font_size/code_font_size --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable hide_input_all/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable toc2/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable varInspector/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable splitcell/splitcell --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable init_cell/main --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable tree-filter/index --sys-prefix
+${CONDA_PREFIX}/bin/jupyter nbextension enable codefolding/edit --sys-prefix
 set -ue
 
 PROFILE="config"
@@ -19,33 +31,31 @@ HOSTNAME=$(hostname)
 
 
 
-INPUT_DIR="/raw_data/test_jovian_ra"
-mkdir -p "/output/test_jovian_ra"
+export INPUT_DIR="/raw_data/${RUN_ID}"
+export workflow="ILM_REF"
+mkdir -p "/output/${RUN_ID}"
 
-cd "/output/test_jovian_ra" || exit
+cd "/output/${RUN_ID}" || exit
 cp /root/.ncbirc ./
 
-python /git/bin/scripts/generate_sample_sheet.py "${INPUT_DIR}" > "sample_sheet.yaml"
+bash /git/bin/includes/Make_samplesheet
 cp -r /git/bin ./
 cp -r /git/config ./
-cp -r /git/docs ./
 cp -r /git/files ./
 cp -r /git/.git ./
-
-
-###> Check the reads and change pipeline parameters acccordingly
-if ! bash bin/includes/Preflight_readlength-counter; then
-exit 1
-fi
+cp /git/Illumina_RA_report.ipynb ./
 
 # turn off bash strict mode because snakemake and conda can't work with it properly
 set +ue
 echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > "config/variables.yaml"
 echo -e "Server_host:\n    hostname: http://${HOSTNAME}" >> "config/variables.yaml"
 eval $(parse_yaml "config/variables.yaml" "config_")
-snakemake -s bin/Ref_alignment.smk --profile "${PROFILE}" --config reference="${REFERENCE_FASTA}"
+snakemake -s bin/Illumina_vir_Ref.smk --conda-frontend conda --profile "${PROFILE}"
 set -ue
 
+sed -i "s/${HOSTNAME}:8083\//193.62.54.246\/notebooks\/${RUN_ID}/g" results/igv.html
+jupyter nbconvert --to notebook --execute Illumina_RA_report.ipynb
+jupyter nbconvert --to HTML Illumina_RA_report.nbconvert.ipynb
 conda deactivate
 
 #if [ -e results/snakemake_report.html ]; then
