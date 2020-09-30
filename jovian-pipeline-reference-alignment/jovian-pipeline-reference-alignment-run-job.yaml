@@ -15,11 +15,11 @@ spec:
         args: ["jovian-pipeline-reference-alignment-run-job"]
         resources:
           limits:
-            cpu: "19"
-            memory: "90Gi"
+            cpu: "15"
+            memory: "50Gi"
           requests:
-            cpu: "19"
-            memory: "90Gi"
+            cpu: "15"
+            memory: "50Gi"
         volumeMounts:
           - name: sourcecode
             mountPath: /git
