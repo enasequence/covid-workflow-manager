@@ -40,7 +40,7 @@ spec:
             claimName: jovian-databases-pvc
         - name: data
           persistentVolumeClaim:
-            claimName: jovian-inputdata-pvc
+            claimName: jovian-inputdata-pvc2
         - name: results
           persistentVolumeClaim:
             claimName: jovian-outputdata-pvc-new2
