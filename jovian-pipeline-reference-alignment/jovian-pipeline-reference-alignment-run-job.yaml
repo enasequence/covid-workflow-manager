@@ -43,7 +43,7 @@ spec:
             claimName: jovian-inputdata-pvc2
         - name: results
           persistentVolumeClaim:
-            claimName: jovian-outputdata-pvc-new2
+            claimName: jovian-outputdata-pvc-new
         - name: wms
           persistentVolumeClaim:
             claimName: ena-wms-pvc
