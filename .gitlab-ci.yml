@@ -1,0 +1,31 @@
+# stages:
+#   - setup
+#   - deploy_images
+#   - staging
+#   - approval
+#   - production
+
+image: docker
+
+# variables:
+#   DOCKER_DRIVER: overlay2
+#   DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:19.03.0-dind
+
+deploy-images-master:
+  stage: deploy
+  image: docker/compose
+  # environment: prod
+  before_script:
+  # - docker info
+  # - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+    - docker login dockerhub.ebi.ac.uk -u $SECRET_GITLAB_DEPLOY_USER_K8S -p $SECRET_GITLAB_DEPLOY_TOKEN_K8S 
+  script:
+    - docker-compose build
+    - docker-compose push
+    # - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+
+
+  
