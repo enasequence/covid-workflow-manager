@@ -9,6 +9,8 @@ spec:
         ms: vcf-pipeline-run-job
     spec:
       restartPolicy: Never
+      nodeSelector:
+        analysis: vcf
       containers:
       - image: alexeyebi/vcf-pipeline-run-job
         name: vcf-pipeline-run-job

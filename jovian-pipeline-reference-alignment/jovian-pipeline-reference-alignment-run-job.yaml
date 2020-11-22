@@ -9,6 +9,8 @@ spec:
         ms: jovian-pipeline-run-job
     spec:
       restartPolicy: Never
+      nodeSelector:
+        analysis: jovian
       containers:
       - name: main
         image: alexeyebi/jovian-pipeline-reference-alignment-run-job
