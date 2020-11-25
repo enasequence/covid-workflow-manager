@@ -33,9 +33,9 @@ HOSTNAME=$(hostname)
 
 
 
-export INPUT_DIR="/raw_data/${RUN_ID}"
+export INPUT_DIR="/raw_data/${RUN_ID}_input"
 export workflow="ILM_REF"
-mkdir -p "/output/${RUN_ID}"
+mkdir -p "/output/${RUN_ID}_output"
 
 cd "/output/${RUN_ID}" || exit
 cp /root/.ncbirc ./

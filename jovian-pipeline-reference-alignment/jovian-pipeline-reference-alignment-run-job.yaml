@@ -42,10 +42,10 @@ spec:
             claimName: jovian-databases-pvc
         - name: data
           persistentVolumeClaim:
-            claimName: jovian-inputdata-pvc2
+            claimName: jovian-inputdata-pvc
         - name: results
           persistentVolumeClaim:
-            claimName: jovian-outputdata-pvc-new2
+            claimName: jovian-outputdata-pvc
         - name: wms
           persistentVolumeClaim:
             claimName: ena-wms-pvc
