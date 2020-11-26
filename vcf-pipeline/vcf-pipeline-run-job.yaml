@@ -20,10 +20,12 @@ spec:
             mountPath: /data
           - name: sourcecode
             mountPath: /git
+      imagePullSecrets:
+        - name: regcred
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: sars-cov2-sequence-analysis-pvc
+            claimName: jovian-inputdata-pvc
         - name: sourcecode
           persistentVolumeClaim:
             claimName: vcf-sourcecode-pvc
