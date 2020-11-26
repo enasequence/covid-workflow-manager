@@ -9,7 +9,6 @@ spec:
         ms: jovian-pipeline-run-job
     spec:
       restartPolicy: Never
-      priorityClassName: high-priority-nonpreempting
       nodeSelector:
         analysis: jovian
       containers:
