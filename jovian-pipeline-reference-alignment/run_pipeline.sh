@@ -55,9 +55,9 @@ eval $(parse_yaml "config/variables.yaml" "config_")
 snakemake -s bin/Illumina_vir_Ref.smk --conda-frontend conda --profile "${PROFILE}"
 set -ue
 
-sed -i "s/${HOSTNAME}:8083\/${UNIQUE_ID}/193.62.54.246\/notebooks\/${RUN_ID}/g" results/igv.html
-jupyter nbconvert --to notebook --execute Illumina_RA_report.ipynb
-jupyter nbconvert --to HTML Illumina_RA_report.nbconvert.ipynb
+#sed -i "s/${HOSTNAME}:8083\/${UNIQUE_ID}/193.62.54.246\/notebooks\/${RUN_ID}/g" results/igv.html
+#jupyter nbconvert --to notebook --execute Illumina_RA_report.ipynb
+#jupyter nbconvert --to HTML Illumina_RA_report.nbconvert.ipynb
 conda deactivate
 
 #if [ -e results/snakemake_report.html ]; then

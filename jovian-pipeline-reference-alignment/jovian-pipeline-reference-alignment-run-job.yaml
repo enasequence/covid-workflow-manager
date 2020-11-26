@@ -34,6 +34,8 @@ spec:
             mountPath: /output
           - name: wms
             mountPath: /wms
+      imagePullSecrets:
+        - name: regcred
       volumes:
         - name: sourcecode
           persistentVolumeClaim:
