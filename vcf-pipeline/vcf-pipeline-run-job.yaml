@@ -10,7 +10,7 @@ spec:
     spec:
       restartPolicy: Never
       nodeSelector:
-        analysis: vcf
+        vcf: primary
       containers:
       - image: alexeyebi/vcf-pipeline-run-job
         name: vcf-pipeline-run-job

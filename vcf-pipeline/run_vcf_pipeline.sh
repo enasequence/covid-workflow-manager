@@ -12,6 +12,6 @@ rm -rf ./work;
 fi
 
 cd /data || exit
-tar -zcvf "${RUN_ID}_input.tar.gz" "${RUN_ID}_input"
-mv "${RUN_ID}_input.tar.gz" /output
-rm -rf "${RUN_ID}_input"
+tar -zcvf "${RUN_ID}_output.tar.gz" "${RUN_ID}_output"
+mv "${RUN_ID}_output.tar.gz" /output
+rm -rf "${RUN_ID}_output"
