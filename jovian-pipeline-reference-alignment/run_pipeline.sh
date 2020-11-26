@@ -37,7 +37,7 @@ export INPUT_DIR="/raw_data/${RUN_ID}_input"
 export workflow="ILM_REF"
 mkdir -p "/output/${RUN_ID}_output"
 
-cd "/output/${RUN_ID}" || exit
+cd "/output/${RUN_ID}_output" || exit
 cp /root/.ncbirc ./
 
 cp -r /git/bin ./
