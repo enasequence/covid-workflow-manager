@@ -18,6 +18,8 @@ spec:
         volumeMounts:
           - name: data
             mountPath: /data
+          - name: output
+            mountPath: /output
           - name: sourcecode
             mountPath: /git
       imagePullSecrets:
@@ -29,3 +31,6 @@ spec:
         - name: sourcecode
           persistentVolumeClaim:
             claimName: vcf-sourcecode-pvc
+        - name: output
+            persistentVolumeClaim:
+              claimName: vcf-pipeline-pvc
