@@ -1,0 +1,6 @@
+apiVersion: scheduling.incubator.k8s.io/v1alpha1
+kind: PodGroup
+metadata:
+  name: test-podgroup
+spec:
+  minMember: 300
