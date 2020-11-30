@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: samples-cleanup-ont--cron-dry
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        ms: samples-cleanup-ont--cron-dry
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: ctr26/samples-cleanup-cron:latest
+        args: ["--dryrun", "--ont", "--verbose"]
+        # image: hello-world
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: data
+            mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ont-data-pvc

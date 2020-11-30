@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: samples-cleanup
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        ms: samples-cleanup-ont
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: main
+        image: ctr26/samples-cleanup
+        args: ["samples-cleanup --dryrun --ont --verbose"]
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: wms
+            mountPath: /wms
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ont-data-pvc
+        - name: wms
+          persistentVolumeClaim:
+            claimName: ena-wms-pvc
+        # - name: data
+        #   persistentVolumeClaim:
+        #     claimName: jovian-inputdata-pvc
+
