@@ -27,7 +27,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: jovian-inputdata-pvc
+            claimName: vcf-inputdata-pvc
         - name: sourcecode
           persistentVolumeClaim:
             claimName: vcf-sourcecode-pvc
