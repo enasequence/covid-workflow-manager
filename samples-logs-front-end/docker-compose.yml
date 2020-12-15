@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4242:4200"
+    command: ng serve --host 0.0.0.0 --watch --poll 1000 --proxy-config proxy.dev.conf.json
+    volumes:
+      - "./:/opt/src/"
+    depends_on:
+      - backend
+
+  backend:
+    build: ../samples-logs-back-end
+    ports: 
+      - "5000:80"
+    command: python main.py
+    volumes:
+      - "../samples-logs-back-end/app:/app"
+      - "../samples-logs-back-end/config/nginx.conf:/etc/nginx/conf.d/nginx.conf"
+    depends_on:
+      - samples-logs-db-svc
+
+  samples-logs-db-svc: 
+    image: mongo
+    ports:
+      - "27017:27017"
