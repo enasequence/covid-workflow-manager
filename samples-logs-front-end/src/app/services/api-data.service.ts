@@ -1,10 +1,56 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError, of } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
+import { get, map, includes, flow, split, head, cond, constant, stubTrue, countBy, eq, gte, identity, tap } from 'lodash/fp';
+
+import { JobStatus } from '@components/job-status/status';
 import { apiUrl } from '@services/api-url';
-import data from './jovian-mock.json';
+
+export interface ApiResponse {
+  results: ApiResult[]
+}
+
+export interface ApiResult {
+  id: string;
+  pipeline_name: string;
+  sample_id: string;
+  study_id: string;
+  import_from_ena: SampleLogCollection;
+  pipeline_analysis: SampleLogCollection;
+  export_to_ena: SampleLogCollection;
+}
+
+export interface SampleLogCollection {
+  date: string[];
+  status: string[];
+  errors: string[];
+}
+
+export interface SampleLog {
+  id: string;
+  sampleId?: string;
+  studyId?: string;
+  pipeline?: string;
+  date: string;
+  importStatus: JobStatus;
+  pipeStatus: JobStatus;
+  exportStatus: JobStatus;
+}
+
+export interface LogSummary {
+  import: JobStatusCounts;
+  pipeline: JobStatusCounts;
+  export: JobStatusCounts;
+}
+
+export interface JobStatusCounts {
+  Success?: number;
+  Processing?: number; 
+  Failed?: number;
+  Undefined?: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +60,57 @@ export class ApiDataService {
   constructor(private http: HttpClient) { }
 
   getAllSamplesJovian() {
-    return this.http.get<any>(apiUrl('jovian')).pipe(
+    return this.http.get<ApiResponse>(apiUrl('jovian_test')).pipe(
       retry(3),
       catchError(this.handleError),
     );
   }
 
-  getMockJovianSamples() {
-    return of(data);
+  extractJovianPipelineStatus(response: ApiResponse): SampleLog[] {
+    const otherwise = stubTrue;
+    const getDate = flow(
+      get('import_from_ena.date[0]'),
+      split(' - '),
+      head
+    );
+
+    const calculateImportStatus = flow(
+      get('import_from_ena.status'),
+      cond([
+        [includes('download finished'), constant(JobStatus.Success)],
+        [includes('download failed'), constant(JobStatus.Failed)],
+        [otherwise, constant(JobStatus.Undefined)]
+      ]));
+
+    const calculatePipelineStatus = flow(
+      get('pipeline_analysis.status'),
+      cond([
+        [includes('pipeline finished'), constant(JobStatus.Success)],
+        [includes('pipeline finished with errors'), constant(JobStatus.Failed)],
+        [otherwise, constant(JobStatus.Undefined)]
+      ]));
+
+    const calculateExportStatus = flow(
+      get('export_to_ena.status'),
+      cond([
+        [includes('submission to ENA finished'), constant(JobStatus.Success)],
+        [includes('submission to ENA failed'), constant(JobStatus.Failed)],
+        [otherwise, constant(JobStatus.Undefined)]
+      ]));
+
+    return flow(
+      get('results'),
+      map(result => ({
+        id: result.id,
+        sampleId: result.sample_id,
+        studyId: result.study_id,
+        pipeline: result.pipeline_name,
+        date: getDate(result),
+        importStatus: calculateImportStatus(result),
+        pipeStatus: calculatePipelineStatus(result),
+        exportStatus: calculateExportStatus(result),
+      }))
+    )(response);
   }
 
   getSampleJovian(id: string) {
@@ -36,6 +125,66 @@ export class ApiDataService {
       retry(3),
       catchError(this.handleError),
     );
+  }
+
+  extractOntPipelineStatus(response: ApiResponse): SampleLog[] {
+    const otherwise = stubTrue;
+    const hasPipelineErrors = flow(
+      countBy(eq('pipeline_started')),
+      gte(5));
+    const hasExportErrors = flow(
+      countBy(eq('export_started')),
+      gte(5));
+    const getDate = flow(
+      get('import_from_ena.date[0]'),
+      split(' - '),
+      head
+    );
+
+    const calculateImportStatus = flow(
+      get('import_from_ena.status'),
+      cond([
+        [includes('download finished'), constant(JobStatus.Success)],
+        [includes('download failed'), constant(JobStatus.Failed)],
+        [otherwise, constant(JobStatus.Undefined)]
+      ]));
+
+    const calculatePipelineStatus = flow(
+      get('pipeline_analysis.status'),
+      cond([
+        [includes('pipeline_finished'), constant(JobStatus.Success)],
+        [hasPipelineErrors, constant(JobStatus.Failed)],
+        [includes('pipeline_started'), constant(JobStatus.Processing)],
+        [otherwise, constant(JobStatus.Undefined)]
+      ]));
+
+    const calculateExportStatus = flow(
+      get('export_to_ena.status'),
+      cond([
+        [includes('export_finished'), constant(JobStatus.Success)],
+        [hasExportErrors, constant(JobStatus.Failed)],
+        [includes('export_started'), constant(JobStatus.Processing)],
+        [otherwise, constant(JobStatus.Undefined)]
+      ]));
+
+    return flow(
+      get('results'),
+      map(result => ({
+        id: result.id,
+        date: getDate(result),
+        importStatus: calculateImportStatus(result),
+        pipelineStatus: calculatePipelineStatus(result),
+        exportStatus: calculateExportStatus(result)
+      })))(response);
+  }
+
+  summariseStatuses(data: SampleLog[]) {
+    const countUniqueStrings = countBy(identity());
+    return {
+      import: flow(map('importStatus'), countUniqueStrings)(data),
+      pipeline: flow(map('pipelineStatus'), countUniqueStrings)(data),
+      export: flow(map('exportStatus'), countUniqueStrings)(data)
+    };
   }
 
   getFilteredSamplesONT(stage: string, status: string) {
@@ -55,8 +204,9 @@ export class ApiDataService {
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network errorSubject occurred. Handle it accordingly.
-      console.error('An errorSubject occurred:', error.error.message);
+      console.error(
+        'A client-side or network error occurred',
+         error.error.message);
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,

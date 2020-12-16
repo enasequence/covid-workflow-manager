@@ -12,6 +12,7 @@
     "importHelpers": true,
     "paths": {
       "@services/*": ["src/app/services/*"],
+      "@components/*": ["src/app/components/*"],
     },
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,

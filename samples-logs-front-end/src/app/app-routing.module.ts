@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from './app.component';
-import {SamplesDetailsComponent} from './samples-details/samples-details.component';
-import {SamplesComponent} from './samples/samples.component';
-import {OntSamplesComponent} from './ont-samples/ont-samples.component';
-import {OntSamplesDetailsComponent} from './ont-samples-details/ont-samples-details.component';
-import {OntSamplesFiltersComponent} from './ont-samples-filters/ont-samples-filters.component';
+import {SamplesDetailsComponent} from './pages/samples-details/samples-details.component';
+import {SamplesComponent} from './pages/samples/samples.component';
+import {OntSamplesComponent} from './pages/ont-samples/ont-samples.component';
+import {OntSamplesDetailsComponent} from './pages/ont-samples-details/ont-samples-details.component';
+import {FilteredSamplesComponent} from './pages/filtered-samples/filtered-samples.component';
 
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'jovian/:id', component: SamplesDetailsComponent},
   {path: 'ont', component: OntSamplesComponent},
   {path: 'ont/:id', component: OntSamplesDetailsComponent},
-  {path: 'ont/:stage/:status', component: OntSamplesFiltersComponent}
+  {path: 'ont/:stage/:status', component: FilteredSamplesComponent}
 ];
 
 @NgModule({

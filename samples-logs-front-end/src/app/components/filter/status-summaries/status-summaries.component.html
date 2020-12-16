@@ -1,0 +1,40 @@
+<div class="row mb-2">
+    
+    <div class="col">
+        <div class="btn-group mx-3">
+
+          <a href="" class="btn btn-outline btn-sm border text-left disabled" style="width: 12em;">
+            <b>{{ stage | titlecase }} Status </b>
+          </a>
+
+          <a href="#" [routerLink]="['import_from_ena', 'Success']" class="btn btn-light btn-sm border">
+          Success
+          <span class="badge badge-success badge-pill">
+            {{ summary.Success || 0 }}
+          </span>
+          </a>
+
+          <a href="#" [routerLink]="['import_from_ena', 'Processing']" class="btn btn-light btn-sm border">
+          Processing
+          <span class="badge badge-warning badge-pill">
+            {{ summary.Processing || 0 }}
+          </span>
+          </a>
+
+          <a href="#" [routerLink]="['import_from_ena', 'Success']" class="btn btn-light btn-sm border">
+          Undefined
+          <span class="badge badge-info badge-pill">
+            {{ summary.Undefined || 0 }}
+          </span>
+          </a>
+
+          <a href="#" [routerLink]="['import_from_ena', 'Success']" class="btn btn-light btn-sm border">
+          Failed
+          <span class="badge badge-danger badge-pill">
+            {{ summary.Failed || 0 }}
+          </span>
+          </a>
+
+        </div>
+    </div>
+</div>

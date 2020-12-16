@@ -1,0 +1,180 @@
+{
+  "results": [
+    {
+      "export_to_ena": {
+        "date": [],
+        "errors": [],
+        "status": []
+      },
+      "id": "Only_Import",
+      "import_from_ena": {
+        "date": [
+          "28 July, 2020 - 14:59:21"
+        ],
+        "errors": [],
+        "status": [
+          "download finished"
+        ]
+      },
+      "pipeline_analysis": {
+        "date": [],
+        "errors": [],
+        "status": []
+      },
+      "pipeline_name": "ONT",
+      "sample_id": "SAMEA6847752",
+      "study_id": "PRJEB38388"
+    },
+    {
+      "export_to_ena": {
+        "date": [],
+        "errors": [],
+        "status": []
+      },
+      "id": "Import_Failed",
+      "import_from_ena": {
+        "date": [
+          "28 July, 2020 - 14:59:21"
+        ],
+        "errors": [],
+        "status": [
+          "download failed"
+        ]
+      },
+      "pipeline_analysis": {
+        "date": [],
+        "errors": [],
+        "status": []
+      },
+      "pipeline_name": "ONT",
+      "sample_id": "SAMEA6847753",
+      "study_id": "PRJEB38388"
+    },
+    {
+      "export_to_ena": {
+        "date": [],
+        "errors": [],
+        "status": []
+      },
+      "id": "Analysis_Processing",
+      "import_from_ena": {
+        "date": [
+          "28 July, 2020 - 15:00:50"
+        ],
+        "errors": [],
+        "status": [
+          "download finished"
+        ]
+      },
+      "pipeline_analysis": {
+        "date": [],
+        "errors": [],
+        "status": [
+          "pipeline_started"
+        ]
+      },
+      "pipeline_name": "ONT",
+      "sample_id": "SAMEA6847754",
+      "study_id": "PRJEB38388"
+    },
+    {
+      "export_to_ena": {
+        "date": [],
+        "errors": [],
+        "status": [
+          "export_started"
+        ]
+      },
+      "id": "Export_Processing",
+      "import_from_ena": {
+        "date": [
+          "28 July, 2020 - 15:00:51"
+        ],
+        "errors": [],
+        "status": [
+          "download finished"
+        ]
+      },
+      "pipeline_analysis": {
+        "date": [],
+        "errors": [],
+        "status": [
+          "pipeline_started",
+          "pipeline_finished"
+        ]
+      },
+      "pipeline_name": "ONT",
+      "sample_id": "SAMEA6847755",
+      "study_id": "PRJEB38388"
+    },
+    {
+      "export_to_ena": {
+        "date": [],
+        "errors": [],
+        "status": []
+      },
+      "id": "Failed_Analysis",
+      "import_from_ena": {
+        "date": [
+          "28 July, 2020 - 15:01:08"
+        ],
+        "errors": [],
+        "status": [
+          "download finished"
+        ]
+      },
+      "pipeline_analysis": {
+        "date": [],
+        "errors": [],
+        "status": [
+          "export_started",
+          "export_started",
+          "export_started",
+          "export_started",
+          "export_started",
+          "export_started"
+        ]
+      },
+      "pipeline_name": "ONT",
+      "sample_id": "SAMEA6847756",
+      "study_id": "PRJEB38388"
+    },
+    {
+      "export_to_ena": {
+        "date": [],
+        "errors": [],
+        "status": [
+          "export_started",
+          "export_started",
+          "export_started",
+          "export_started",
+          "export_started",
+          "export_started"
+        ]
+      },
+      "id": "Failed_Export",
+      "import_from_ena": {
+        "date": [
+          "28 July, 2020 - 15:01:41"
+        ],
+        "errors": [],
+        "status": [
+          "download finished"
+        ]
+      },
+      "pipeline_analysis": {
+        "date": [],
+        "errors": [],
+        "status": [
+          "pipeline_started",
+          "Something went wrong, restarting...",
+          "pipeline_started",
+          "pipeline_finished"
+        ]
+      },
+      "pipeline_name": "ONT",
+      "sample_id": "SAMEA6847757",
+      "study_id": "PRJEB38388"
+    }
+  ]
+}

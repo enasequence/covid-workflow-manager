@@ -15,6 +15,30 @@ def jovian_samples():
         results.append(sample)
     return {'results': results}
 
+@app.route("/jovian_test")
+def jovian_test():
+    return {
+        'results': [{
+            'id': 'run 1',
+            'pipeline_name': 'Jovian',
+            'study_id': 'SAME000000',
+            'import_from_ena': {
+                'status': ['download finished'],
+                'errors': [],
+                'date': ['13 Dec, 2020 - 8:30'],
+            },
+            'pipeline_analysis': {
+                'status': ['pipeline finished'],
+                'errors': [],
+                'date':  ['13 Dec, 2020 - 8:30'],
+            },
+            'export_to_ena': {
+                'status': [],
+                'errors': [],
+                'date':  [],
+            }
+        }]
+    }
 
 @app.route("/jovian/<run_id>")
 def jovian_samples_details(run_id):

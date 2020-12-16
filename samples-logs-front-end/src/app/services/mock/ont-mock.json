@@ -1,0 +1,367 @@
+{
+    "results": [
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164778",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 14:59:47",
+            "28 July, 2020 - 15:00:48",
+            "28 July, 2020 - 15:00:48",
+            "28 July, 2020 - 15:00:48"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847752",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164779",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:00:48",
+            "28 July, 2020 - 15:00:48",
+            "28 July, 2020 - 15:00:48",
+            "28 July, 2020 - 15:00:49"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847753",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164785",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:00:49",
+            "28 July, 2020 - 15:00:49",
+            "28 July, 2020 - 15:00:49",
+            "28 July, 2020 - 15:00:50"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847754",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164773",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:00:50",
+            "28 July, 2020 - 15:00:51",
+            "28 July, 2020 - 15:00:51",
+            "28 July, 2020 - 15:00:51"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847755",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164777",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:00:51",
+            "28 July, 2020 - 15:01:08",
+            "28 July, 2020 - 15:01:08",
+            "28 July, 2020 - 15:01:08"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847756",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164763",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:01:08",
+            "28 July, 2020 - 15:01:41",
+            "28 July, 2020 - 15:01:41",
+            "28 July, 2020 - 15:01:41"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847757",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164765",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:01:41",
+            "28 July, 2020 - 15:01:44",
+            "28 July, 2020 - 15:01:44",
+            "28 July, 2020 - 15:01:45"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847758",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164775",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:01:45",
+            "28 July, 2020 - 15:02:14",
+            "28 July, 2020 - 15:02:14",
+            "28 July, 2020 - 15:02:14"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847759",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164884",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:02:14",
+            "28 July, 2020 - 15:02:21",
+            "28 July, 2020 - 15:02:21",
+            "28 July, 2020 - 15:02:22"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847760",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164879",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:02:22",
+            "28 July, 2020 - 15:02:47",
+            "28 July, 2020 - 15:02:47",
+            "28 July, 2020 - 15:02:47"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847761",
+        "study_id": "PRJEB38388"
+      },
+      {
+        "export_to_ena": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "id": "ERR4164802",
+        "import_from_ena": {
+          "date": [
+            "28 July, 2020 - 14:59:21",
+            "28 July, 2020 - 15:02:47",
+            "28 July, 2020 - 15:02:51",
+            "28 July, 2020 - 15:02:51",
+            "28 July, 2020 - 15:02:51"
+          ],
+          "errors": [],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [],
+          "errors": [],
+          "status": []
+        },
+        "pipeline_name": "ONT",
+        "sample_id": "SAMEA6847762",
+        "study_id": "PRJEB38388"
+      }
+    ]
+}

@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg navbar-light border shadow-sm">
+  <a class="navbar-brand" [routerLink]="['']">ENA Workflow Management System</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Samples logs <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"
+           href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/" target="_blank">K8s Dashboard</a>
+      </li>
+    </ul>
+  </div>
+</nav>

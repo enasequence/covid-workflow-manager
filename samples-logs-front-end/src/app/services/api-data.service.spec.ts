@@ -9,4 +9,9 @@ describe('ApiDataService', () => {
     const service: ApiDataService = TestBed.get(ApiDataService);
     expect(service).toBeTruthy();
   });
+
+  it('parses test response correctly', () => {
+
+  });
+
 });

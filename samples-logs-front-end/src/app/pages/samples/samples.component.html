@@ -1,0 +1,57 @@
+<div class="bg-light pb-5 min-vh-100">
+
+<app-header></app-header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <app-samples-navigation></app-samples-navigation>
+      </div>
+    </div>
+
+    <div class="content-container card px-4 py-4">
+
+      <div class="row">
+        <div class="col-md-12 border-bottom">
+          <h3>Jovian</h3>
+        </div>
+      </div>
+
+      <div class="row my-4">
+        <app-filter-pane [summary]="summary"></app-filter-pane>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <table class="table">
+            <thead class="thead-light">
+            <tr>
+              <th>Sample ID</th>
+              <th scope="col">Date</th>
+              <th scope="col">Import status</th>
+              <th scope="col">Pipeline status</th>
+              <th>Export status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of data | paginate: { itemsPerPage: 10, currentPage: p }">
+              <td><a [routerLink]="item?.id">{{ item?.id }}</a></td>
+              <td>{{ item?.date }}</td>
+              <td>
+                <app-job-status [status]="item?.importStatus"></app-job-status>
+              </td>
+              <td>
+                <app-job-status [status]="item?.pipelineStatus"></app-job-status>
+              </td>
+              <td>
+                <app-job-status [status]="item?.exportStatus"></app-job-status>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+  </div>
+
+  </div>
+</div>
