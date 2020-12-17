@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ApiDataService } from '@services/api-data.service';
-import { MockApiDataService } from '@services/mock-api-data.service';
+import { SampleLog } from '@models/sample-log';
+import { LogSummary } from '@models/log-summary';
+import { ApiService } from '@services/api.service';
+import { MockApiService } from '@services/mock-api.service';
 import { map, tap } from 'rxjs/operators';
-import { JobStatus } from '@components/job-status/status';
 
 @Component({
   selector: 'app-ont-samples',
@@ -12,13 +13,13 @@ import { JobStatus } from '@components/job-status/status';
 })
 export class OntSamplesComponent implements OnInit {
   p = 1;
-  data: any;
-  public summary;
+  data: SampleLog[];
+  summary: LogSummary;
 
   constructor(
     private title: Title,
-    private dataService: ApiDataService,
-    private mock: MockApiDataService,
+    private dataService: ApiService,
+    private mock: MockApiService,
   ) { }
 
   ngOnInit() {

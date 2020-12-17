@@ -11,8 +11,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
-      "@services/*": ["src/app/services/*"],
       "@components/*": ["src/app/components/*"],
+      "@services/*": ["src/app/services/*"],
+      "@models/*": ["src/app/models/*"]
     },
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,

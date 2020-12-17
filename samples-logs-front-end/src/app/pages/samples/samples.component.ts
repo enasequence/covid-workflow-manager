@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ApiDataService } from '@services/api-data.service';
-import { MockApiDataService } from '@services/mock-api-data.service';
+import { ApiService } from '@services/api.service';
+import { MockApiService } from '@services/mock-api.service';
 import { map, tap } from 'rxjs/operators';
 
 @Component({
@@ -16,8 +16,8 @@ export class SamplesComponent implements OnInit {
 
   constructor(
     private title: Title,
-    private dataService: ApiDataService,
-    private mock: MockApiDataService,
+    private dataService: ApiService,
+    private mock: MockApiService,
   ) { }
 
   ngOnInit() {
@@ -42,8 +42,8 @@ export class SamplesComponent implements OnInit {
     //   parsedData => {
     //   sdata = parsedData;
     //     this.summaryi.dataService.summariseStatuses(parsedData);
-    //   
- // //
+    //  }
+
   }
 
 }

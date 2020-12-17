@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {ApiDataService} from '@services/api-data.service';
+import {ApiService} from '@services/api.service';
 
 @Component({
   selector: 'app-filtered-samples',
@@ -29,7 +29,7 @@ export class FilteredSamplesComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private title: Title,
-              private dataService: ApiDataService) { }
+              private dataService: ApiService) { }
 
   ngOnInit() {
     this.title.setTitle('ONT Samples Logs filtered');
@@ -39,7 +39,6 @@ export class FilteredSamplesComponent implements OnInit {
       this.dataService.getFilteredSamplesONT(this.stage, this.status).subscribe(
         data => {
           this.data = data.results;
-          console.log(data);
         },
         error => {
           console.log(error);

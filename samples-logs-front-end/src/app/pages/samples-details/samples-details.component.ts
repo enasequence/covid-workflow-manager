@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {ApiDataService} from '@services/api-data.service';
+import {ApiService} from '@services/api.service';
 
 @Component({
   selector: 'app-samples-details',
@@ -14,7 +14,7 @@ export class SamplesDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private title: Title,
-              private dataService: ApiDataService) { }
+              private dataService: ApiService) { }
 
   ngOnInit() {
     this.title.setTitle('Sample Logs details');

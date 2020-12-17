@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {DomSanitizer, Title} from '@angular/platform-browser';
-import {ApiDataService} from '@services/api-data.service';
+import {ApiService} from '@services/api.service';
 
 @Component({
   selector: 'app-ont-samples-details',
@@ -15,7 +15,7 @@ export class OntSamplesDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private title: Title,
-              private dataService: ApiDataService, private sanitizer: DomSanitizer) { }
+              private dataService: ApiService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.title.setTitle('ONT Sample Logs details');

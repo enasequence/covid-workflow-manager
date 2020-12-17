@@ -1,6 +1,6 @@
 <div class="col">
     <h4>Filters</h4>
-    <app-status-summaries [stage]="'import'" [summary]="summary.import" ></app-status-summaries>
-    <app-status-summaries [stage]="'pipeline'" [summary]="summary.pipeline" ></app-status-summaries>
-    <app-status-summaries [stage]="'export'" [summary]="summary.export" ></app-status-summaries>
+    <app-status-filter [stage]="'import_from_ena'" [summary]="summary.import" ></app-status-filter>
+    <app-status-filter [stage]="'pipeline_analysis'" [summary]="summary.pipeline" ></app-status-filter>
+    <app-status-filter [stage]="'export_to_ena'" [summary]="summary.export" ></app-status-filter>
 </div>
