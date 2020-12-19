@@ -1,7 +1,7 @@
 <div class="row mt-3 mb-3">
     <div class="col-md-12">
 
-        <button type="button" class="btn btn-info mr-3 disabled" [routerLink]="['/']">
+        <button type="button" class="btn btn-info mr-3" [routerLink]="['/artic']">
           ARTIC
         </button>
 
@@ -12,7 +12,7 @@
           </button>
           <div class="dropdown-menu dropdown-menu-left">
             <button class="dropdown-item" href="#" [routerLink]="['/jovian']">Reference Alignment</button>
-            <button class="dropdown-item disabled" href="#" [routerLink]="['/jovian']">Metagenomics</button>
+            <button class="dropdown-item disabled" href="#" [routerLink]="['/jovian']" [routerLinkActive]="'active'">Metagenomics</button>
           </div>
         </div>
 
@@ -20,7 +20,7 @@
           Nanopore
         </button>
 
-        <button type="button" class="btn btn-dark mr-3 disabled" [routerLink]="['/']">
+        <button type="button" class="btn btn-dark mr-3" [routerLink]="['/vcf']">
           VCF
         </button>
 

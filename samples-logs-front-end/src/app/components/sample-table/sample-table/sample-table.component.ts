@@ -8,8 +8,13 @@ import { SampleLog } from '@models/sample-log';
 })
 export class SampleTableComponent implements OnInit {
 
-  @Input()
-  data: SampleLog[];
+  @Input() data: SampleLog[];
+  @Input() filters;
+  page = 1;
+
+  sampleCount() {
+    return this.data ? this.data.length : 0;
+  }
 
   constructor() { }
 

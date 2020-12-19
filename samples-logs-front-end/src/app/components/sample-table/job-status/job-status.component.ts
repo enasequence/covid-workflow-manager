@@ -23,10 +23,8 @@ export class JobStatusComponent implements OnInit {
         return 'badge badge-pill badge-warning';
       case JobStatus.Failed:
         return 'badge badge-pill badge-danger';
-      case JobStatus.Undefined:
-        return 'badge badge-pill badge-info';
       default:
-        return 'badge badge-pill badge-secondary';
+        return 'badge badge-pill badge-info';
     }
   }
 

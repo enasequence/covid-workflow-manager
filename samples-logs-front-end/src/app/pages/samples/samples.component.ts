@@ -1,8 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ApiService } from '@services/api.service';
-import { MockApiService } from '@services/mock-api.service';
+import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
+
+import { get } from 'lodash/fp';
+
+import { ApiService } from '@services/api-mock.service';
+import { TransformService } from '@services/transform.service';
+import { ApiResponse } from '@models/api';
+import { SampleLog } from '@models/sample-log';
+import { LogSummary } from '@models/log-summary';
 
 @Component({
   selector: 'app-samples',
@@ -10,40 +17,59 @@ import { map, tap } from 'rxjs/operators';
   styleUrls: ['./samples.component.css']
 })
 export class SamplesComponent implements OnInit {
-  p = 1;
-  data: any;
-  summary;
+  data: SampleLog[];
+  pipeline: string;
+  filters: {};
+  summary: LogSummary = {
+    import: {},
+    pipeline: {},
+    export: {}
+  };
 
   constructor(
+    private route: ActivatedRoute,
     private title: Title,
-    private dataService: ApiService,
-    private mock: MockApiService,
+    private apiService: ApiService,
+    private transformService: TransformService,
   ) { }
 
   ngOnInit() {
 
-    this.title.setTitle('Jovian Samples Logs');
-    this.dataService.getAllSamplesJovian().pipe(
-      map(this.dataService.extractJovianPipelineStatus),
-    ).subscribe(
-      parsedData => {
-        this.data = parsedData;
-        this.summary = this.dataService.summariseStatuses(parsedData);
-      },
-      error => {
-        console.log(error);
+    this.route.params.subscribe(
+      (params) => {
+        this.pipeline = params.pipeline;
+        this.title.setTitle(`${this.pipeline} Logs`);
+        this.getSamples(this.pipeline);
       }
     );
 
-    // this.mock.getMockJovianSamples()
-    //   .pipe(
-    //     map(this.dataService.extractJovianPipelineStatus)
-    //   ).subscribe(
-    //   parsedData => {
-    //   sdata = parsedData;
-    //     this.summaryi.dataService.summariseStatuses(parsedData);
-    //  }
-
   }
+
+    getSamples(pipeline: string) {
+
+      const extractPipeline = (x: ApiResponse): SampleLog[] => {
+        switch (pipeline) {
+          case 'jovian':
+          case 'jovian_test':
+            return this.transformService.extractJovianPipelineStatus(x);
+          case 'ont':
+            return this.transformService.extractOntPipelineStatus(x);
+          default:
+            return get('results')(x);
+        }
+      };
+
+      this.apiService.get(pipeline).pipe(
+        tap(console.log),
+        map(extractPipeline),
+        tap(console.log),
+      ).subscribe(
+        parsedData => {
+          this.data = parsedData;
+          this.summary = this.transformService.summarise(parsedData);
+        },
+        console.error
+      );
+    }
 
 }

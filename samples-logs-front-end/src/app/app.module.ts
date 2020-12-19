@@ -7,17 +7,15 @@ import { SamplesDetailsComponent } from './pages/samples-details/samples-details
 import { HeaderComponent } from './components/header/header.component';
 import { SamplesComponent } from './pages/samples/samples.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
-import { OntSamplesComponent } from './pages/ont-samples/ont-samples.component';
 import { OntSamplesDetailsComponent } from './pages/ont-samples-details/ont-samples-details.component';
 import { FilteredSamplesComponent } from './pages/filtered-samples/filtered-samples.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { MockApiService } from '@services/mock-api.service';
 import { JobStatusComponent } from './components/sample-table/job-status/job-status.component';
 import { StatusFilterComponent } from './components/filter/status-filter/status-filter.component';
 import { FilterPaneComponent } from './components/filter/filter-pane/filter-pane.component';
 import { SampleTableComponent } from './components/sample-table/sample-table/sample-table.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -25,7 +23,6 @@ import { SampleTableComponent } from './components/sample-table/sample-table/sam
     SamplesDetailsComponent,
     HeaderComponent,
     SamplesComponent,
-    OntSamplesComponent,
     OntSamplesDetailsComponent,
     FilteredSamplesComponent,
     NavigationComponent,
@@ -41,8 +38,7 @@ import { SampleTableComponent } from './components/sample-table/sample-table/sam
     HttpClientModule
   ],
   providers: [
-    ApiService,
-    MockApiService,
+    ...environment.providers,
   ],
   bootstrap: [AppComponent]
 })

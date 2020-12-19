@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
-  envName: 'dev',
-  host: '/api/'
+  name: 'development',
+  apiUrl: '/api/',
+  providers: [],
 };
