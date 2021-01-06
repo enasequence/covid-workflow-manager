@@ -16,6 +16,7 @@ import { StatusFilterComponent } from './components/filter/status-filter/status-
 import { FilterPaneComponent } from './components/filter/filter-pane/filter-pane.component';
 import { SampleTableComponent } from './components/sample-table/sample-table/sample-table.component';
 import { environment } from 'src/environments/environment';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { environment } from 'src/environments/environment';
     JobStatusComponent,
     StatusFilterComponent,
     FilterPaneComponent,
-    SampleTableComponent
+    SampleTableComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
