@@ -1,6 +1,8 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { Observable, of } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 
 import { ApiResponse } from '@models/api';
 import { DataProvider } from './data-provider';
@@ -16,7 +18,9 @@ import job from './mock-data/job-mock.json';
 })
 export class ApiService implements DataProvider {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<ApiResponse> {
     switch (path) {
@@ -24,6 +28,8 @@ export class ApiService implements DataProvider {
         return of(jovian);
       case 'ont':
         return of(ont);
+      case 'jovian_test':
+        return this.http.get<any>(environment.apiUrl + path, { params });
       default:
         return of(ont2);
     }

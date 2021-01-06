@@ -1,8 +1,10 @@
 from pymongo import MongoClient
 
 from flask import Flask
-app = Flask(__name__)
+from flask_cors import CORS
 
+app = Flask(__name__)
+CORS(app)
 
 @app.route("/jovian")
 def jovian_samples():

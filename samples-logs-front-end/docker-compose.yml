@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "4242:4200"
-    command: ng serve --host 0.0.0.0 --watch --poll 1000 --proxy-config proxy.dev.conf.json
+    command: ng serve --host 0.0.0.0
     volumes:
       - "./:/opt/src/"
     depends_on:
