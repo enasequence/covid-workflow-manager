@@ -14,7 +14,7 @@ spec:
         image: alexeyebi/jovian-databases-job
         volumeMounts:
           - name: data
-            mountPath: /mnt/database
+            mountPath: /database
           - name: code
             mountPath: /git
       volumes:

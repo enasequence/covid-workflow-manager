@@ -9,6 +9,8 @@ spec:
         ms: vcf-pipeline-run-job
     spec:
       restartPolicy: Never
+      nodeSelector:
+        vcf: primary
       containers:
       - image: alexeyebi/vcf-pipeline-run-job
         name: vcf-pipeline-run-job
@@ -16,12 +18,19 @@ spec:
         volumeMounts:
           - name: data
             mountPath: /data
+          - name: output
+            mountPath: /output
           - name: sourcecode
             mountPath: /git
+      imagePullSecrets:
+        - name: regcred
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: sars-cov2-sequence-analysis-pvc
+            claimName: vcf-inputdata-pvc
         - name: sourcecode
           persistentVolumeClaim:
             claimName: vcf-sourcecode-pvc
+        - name: output
+          persistentVolumeClaim:
+            claimName: vcf-pipeline-pvc

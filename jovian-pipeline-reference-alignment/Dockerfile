@@ -4,3 +4,4 @@ ADD .ncbirc /root/.ncbirc
 RUN pip install pymongo pandas pyyaml
 ADD run_pipeline.sh /run_pipeline.sh
 ENTRYPOINT ["bash", "run_pipeline.sh"]
+#ENTRYPOINT ["sleep", "9999999999"]

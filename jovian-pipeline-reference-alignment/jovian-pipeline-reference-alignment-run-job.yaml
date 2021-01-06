@@ -9,27 +9,32 @@ spec:
         ms: jovian-pipeline-run-job
     spec:
       restartPolicy: Never
+      nodeSelector:
+        analysis: jovian
       containers:
       - name: main
         image: alexeyebi/jovian-pipeline-reference-alignment-run-job
+        args: ["jovian-pipeline-reference-alignment-run-job"]
         resources:
           limits:
-            cpu: "19"
-            memory: "90Gi"
+            cpu: "15"
+            memory: "50Gi"
           requests:
-            cpu: "19"
-            memory: "90Gi"
+            cpu: "15"
+            memory: "50Gi"
         volumeMounts:
           - name: sourcecode
             mountPath: /git
           - name: databases
-            mountPath: /mnt/database
+            mountPath: /databases
           - name: data
             mountPath: /raw_data
           - name: results
             mountPath: /output
           - name: wms
             mountPath: /wms
+      imagePullSecrets:
+        - name: regcred
       volumes:
         - name: sourcecode
           persistentVolumeClaim:
