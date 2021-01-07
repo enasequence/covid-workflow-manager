@@ -5,7 +5,6 @@ import { catchError, retry } from 'rxjs/operators';
 
 
 import { environment } from '../../environments/environment';
-import { ApiResponse } from '@models/api';
 import { DataProvider } from './data-provider';
 
 @Injectable({
@@ -28,28 +27,6 @@ export class ApiService implements DataProvider {
       catchError(this.handleError)
     );
   }
-
-  getSampleJovian(id: string) {
-    return this.get(`jovian/${id}`).pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
-  }
-
-  getFilteredSamplesONT(stage: string, status: string): Observable<ApiResponse> {
-    return this.get(`ont/${stage}/${status}`).pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
-  }
-
-  getSampleONT(id: string) {
-    return this.get(`ont/${id}`).pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
-  }
-
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

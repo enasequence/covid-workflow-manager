@@ -2,9 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, of } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 
-import { ApiResponse } from '@models/api';
 import { DataProvider } from './data-provider';
 
 import jovian from './mock-data/jovian-mock.json';
@@ -22,7 +20,7 @@ export class ApiService implements DataProvider {
     private http: HttpClient
   ) { }
 
-  get(path: string, params: HttpParams = new HttpParams()): Observable<ApiResponse> {
+  get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     switch (path) {
       case 'jovian':
         return of(jovian);

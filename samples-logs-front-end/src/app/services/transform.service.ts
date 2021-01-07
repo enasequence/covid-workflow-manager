@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { get, map, includes, flow, split, head, cond, constant, stubTrue, countBy, eq, gte, identity, tap } from 'lodash/fp';
-import { curry } from 'lodash/fp';
+import { get, map, includes, flow, split, head, cond, constant, stubTrue, countBy, eq, gte, identity } from 'lodash/fp';
 
 import { ApiResponse } from '@models/api';
 import { SampleLog } from '@models/sample-log';
 import { JobStatus } from '@models/job-status';
-import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +12,6 @@ import { CurrencyPipe } from '@angular/common';
 export class TransformService {
 
   constructor() { }
-
-  // extractPipelinStatus = curry();
 
   extractJovianPipelineStatus(response: ApiResponse): SampleLog[] {
     const otherwise = stubTrue;
