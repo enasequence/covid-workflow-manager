@@ -22,6 +22,13 @@ export class ApiService implements DataProvider {
     );
   }
 
+  getSample(pipeline: string, id: string) {
+    return this.get(`${pipeline}/${id}`).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   getSampleJovian(id: string) {
     return this.get(`jovian/${id}`).pipe(
       retry(3),

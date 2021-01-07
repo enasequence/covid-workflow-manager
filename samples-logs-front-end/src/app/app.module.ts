@@ -17,6 +17,7 @@ import { FilterPaneComponent } from './components/filter/filter-pane/filter-pane
 import { SampleTableComponent } from './components/sample-table/sample-table/sample-table.component';
 import { environment } from 'src/environments/environment';
 import { FooterComponent } from './components/footer/footer.component';
+import { LogListComponent } from './components/log-list/log-list.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FooterComponent } from './components/footer/footer.component';
     StatusFilterComponent,
     FilterPaneComponent,
     SampleTableComponent,
-    FooterComponent
+    FooterComponent,
+    LogListComponent
   ],
   imports: [
     BrowserModule,

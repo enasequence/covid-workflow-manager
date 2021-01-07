@@ -1,83 +1,73 @@
+<div class="bg-light pb-5 min-vh-100">
+
 <app-header></app-header>
-<div class="container">
-
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">{{sampleId}}</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <app-navigation></app-navigation>
+      </div>
     </div>
+
+    <div class="content-container card shadow-sm px-4 py-4">
+
+      <h1 class="display-4 text-center">{{ sampleId }}</h1>
+
+      <h2>Import</h2>
+
+      <app-log-list 
+        [title]="'Logs'" 
+        [logs]="data?.import_from_ena?.status"
+        [dates]="data?.import_from_ena?.date"
+        [type]="'success'"
+      ></app-log-list>
+
+      <app-log-list
+        [title]="'Errors'"
+        [logs]="data?.import_from_ena?.errors"
+        [type]="'danger'"
+      >
+      </app-log-list>
+
+    </div>
+
+    <div class="content-container card shadow-sm px-4 py-4 mt-3">
+      <h2>Pipeline</h2>
+
+      <app-log-list
+        [title]="'Logs'"
+        [logs]="data?.pipeline_analysis?.status"
+        [dates]="data?.pipeline_analysis?.date"
+        [type]="'success'"
+      ></app-log-list>
+
+      <app-log-list
+        [title]="'errors'"
+        [logs]="data?.pipeline_analysis?.errors"
+        [type]="'danger'"
+      >
+      </app-log-list>
+
+    </div>
+
+    <div class="content-container card shadow-sm px-4 py-4 mt-3">
+      <h2>Export</h2>
+
+      <app-log-list
+        [title]="'Logs'"
+        [logs]="data?.export_to_ena?.status"
+        [dates]="data?.export_to_ena?.date"
+        [type]="'success'"
+      ></app-log-list>
+
+      <app-log-list
+        [title]="'errors'"
+        [logs]="data?.export_to_ena?.errors"
+        [type]="'danger'"
+      >
+      </app-log-list>
+
+    </div>
+
   </div>
 
-  <div class="row" *ngIf="data">
-    <div class="col-md-12">
-      <h3>1. ENA import</h3>
-      <h5 *ngIf="data['import_from_ena']['status'].length>0">Logs:</h5>
-      <ul class="list-group">
-        <li
-          class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
-          *ngFor="let date of data['import_from_ena']['date']; let i=index">
-          {{data['import_from_ena']['status'][i]}}
-          <span class="badge badge-primary badge-pill">{{date}}</span>
-        </li>
-      </ul>
-      <h5 *ngIf="data['import_from_ena']['errors'].length>0">Errors:</h5>
-      <ul class="list-group">
-        <li
-          class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
-          *ngFor="let error of data['import_from_ena']['errors']">
-          {{error}}
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row" *ngIf="data">
-    <div class="col-md-12">
-      <h3>2. Pipeline run
-      </h3>
-      <h5 *ngIf="data['pipeline_analysis']['status'].length>0">Logs:</h5>
-      <ul class="list-group">
-        <li
-          class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
-          *ngFor="let date of data['pipeline_analysis']['date']; let i=index">
-          {{data['pipeline_analysis']['status'][i]}}
-          <span class="badge badge-primary badge-pill">{{date}}</span>
-        </li>
-      </ul>
-      <h5 *ngIf="data['pipeline_analysis']['errors'].length>0">Errors:</h5>
-      <ul class="list-group">
-        <li
-          class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
-          *ngFor="let error of data['pipeline_analysis']['errors']">
-          {{error}}
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row" *ngIf="data">
-    <div class="col-md-12">
-      <h3>3. ENA export</h3>
-      <h5 *ngIf="data['export_to_ena']['status'].length>0">Logs:</h5>
-      <ul class="list-group">
-        <li
-          class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
-          *ngFor="let date of data['export_to_ena']['date']; let i=index">
-          {{data['export_to_ena']['status'][i]}}
-          <span class="badge badge-primary badge-pill">{{date}}</span>
-        </li>
-      </ul>
-      <h5 *ngIf="data['export_to_ena']['errors'].length>0">Errors:</h5>
-      <ul class="list-group">
-        <li
-          class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center"
-          *ngFor="let error of data['export_to_ena']['errors']">
-          {{error}}
-        </li>
-      </ul>
-    </div>
-  </div>
 </div>

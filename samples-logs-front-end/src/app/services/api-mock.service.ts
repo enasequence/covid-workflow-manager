@@ -35,6 +35,10 @@ export class ApiService implements DataProvider {
     }
   }
 
+  getSample(pipeline: string, id: string): Observable<any> {
+    return of(job);
+  }
+
   getMockSample(): Observable<any> {
     return of(job);
   }
