@@ -27,10 +27,10 @@ export class SamplesDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.title.setTitle('Sample Logs details');
     this.route.params.subscribe((params: Params) => {
       this.pipeline = params.pipeline;
       this.sampleId = params.id;
+      this.title.setTitle(`${this.sampleId} details`);
       this.apiService.getSample(this.pipeline, this.sampleId).subscribe(
       data => {
         console.log(data);

@@ -8,7 +8,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { SamplesComponent } from './pages/samples/samples.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpClientModule } from '@angular/common/http';
-import { OntSamplesDetailsComponent } from './pages/ont-samples-details/ont-samples-details.component';
 import { FilteredSamplesComponent } from './pages/filtered-samples/filtered-samples.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { JobStatusComponent } from './components/sample-table/job-status/job-status.component';
@@ -22,18 +21,17 @@ import { LogListComponent } from './components/log-list/log-list.component';
 @NgModule({
   declarations: [
     AppComponent,
+    SamplesComponent,
+    FilteredSamplesComponent,
     SamplesDetailsComponent,
     HeaderComponent,
-    SamplesComponent,
-    OntSamplesDetailsComponent,
-    FilteredSamplesComponent,
-    NavigationComponent,
-    JobStatusComponent,
-    StatusFilterComponent,
-    FilterPaneComponent,
-    SampleTableComponent,
     FooterComponent,
-    LogListComponent
+    SampleTableComponent,
+    NavigationComponent,
+    FilterPaneComponent,
+    StatusFilterComponent,
+    JobStatusComponent,
+    LogListComponent,
   ],
   imports: [
     BrowserModule,
