@@ -25,14 +25,14 @@ export class FilteredSamplesComponent implements OnInit {
       (params: Params) => {
         this.stage = params.stage;
         this.status = params.status;
-        this.dataService.getFilteredSamplesONT(this.stage, this.status).subscribe(
-          data => {
-            this.data = data.results;
-          },
-          error => {
-            console.log(error);
-          }
-        );
+        // this.dataService.getFilteredSamplesONT(this.stage, this.status).subscribe(
+        //   data => {
+        //     this.data = data.results;
+        //   },
+        //   error => {
+        //     console.log(error);
+        //   }
+        // );
     });
   }
 
