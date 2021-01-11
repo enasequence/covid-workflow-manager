@@ -11,7 +11,6 @@ const routes: Routes = [
   { path: ':pipeline', component: SamplesComponent },
   { path: ':pipeline/:id', component: SamplesDetailsComponent },
   { path: ':pipeline/:stage/:status', component: FilteredSamplesComponent },
-  { path: 'ont/:stage/:status', component: FilteredSamplesComponent },
 ];
 
 @NgModule({

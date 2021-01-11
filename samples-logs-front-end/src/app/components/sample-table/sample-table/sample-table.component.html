@@ -16,7 +16,7 @@
   <tbody>
 
   <tr *ngFor="let item of data | paginate: { itemsPerPage: 10, currentPage: page }">
-    <td><a [routerLink]="item?.id">{{ item?.id }}</a></td>
+    <td><a [routerLink]="'/' + pipeline + '/' + item?.id">{{ item?.id }}</a></td>
     <td>{{ item?.date }}</td>
     <td>
       <app-job-status [status]="item?.importStatus"></app-job-status>

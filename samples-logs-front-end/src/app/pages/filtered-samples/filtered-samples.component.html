@@ -11,15 +11,15 @@
 
     <div class="content-container card shadow-sm px-4 py-4">
 
-      <div class="row mb-4">
+      <div class="row mb-5">
         <div class="col-md-12 border-bottom">
-          <h3>Jovian / <code>{{ stage }}</code> / <code>{{ status }}</code></h3>
+          <h3>{{ pipeline | async | titlecase }} Runs <span style="color: silver;">»</span> {{ stage | async }}: {{ status | async }}</h3>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-12 table-responsive">
-          <app-sample-table [data]="data"></app-sample-table>
+          <app-sample-table [pipeline]="pipeline" [data]="sampleRuns | async"></app-sample-table>
         </div>
       </div>
   </div>

@@ -1,17 +1,56 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { get, map, includes, flow, split, head, cond, constant, stubTrue, countBy, eq, gte, identity } from 'lodash/fp';
+import { map as _map, get, includes, flow, split, head, cond, constant, stubTrue, countBy, eq, gte, identity, filter } from 'lodash/fp';
 
 import { ApiResponse } from '@models/api';
 import { SampleLog } from '@models/sample-log';
 import { JobStatus } from '@models/job-status';
+import { ApiService } from './api-mock.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransformService {
 
-  constructor() { }
+  constructor(
+    private apiService: ApiService,
+  ) { }
+
+  getSamples(pipeline: string): Observable<SampleLog[]> {
+    switch (pipeline) {
+      case 'jovian':
+        return this.apiService.get(pipeline).pipe(
+          map(this.extractJovianPipelineStatus),
+        );
+      case ('ont'):
+        return this.apiService.get(pipeline).pipe(
+          map(this.extractOntPipelineStatus),
+        );
+      default:
+        return this.apiService.get(pipeline).pipe(
+          map(_map('results')),
+        );
+    }
+  }
+
+  getFilteredSamples(pipeline: string, stage: string, status: string): Observable<SampleLog[]> {
+
+    const parse = cond([
+      [eq('import_from_ena'), constant('importStatus')],
+      [eq('pipeline_analysis'), constant('pipelineStatus')],
+      [eq('export_to_ena'), constant('exportStatus')],
+      [eq('success'), constant('Success')],
+      [eq('processing'), constant('Processing')],
+      [eq('failed'), constant('Failed')],
+      [eq('undefined'), constant('Undefined')]
+    ]);
+
+    return this.getSamples(pipeline).pipe(
+      map(filter([parse(stage), parse(status)])),
+    );
+  }
 
   extractJovianPipelineStatus(response: ApiResponse): SampleLog[] {
     const otherwise = stubTrue;
@@ -47,14 +86,14 @@ export class TransformService {
 
     return flow(
       get('results'),
-      map(result => ({
+      _map(result => ({
         id: result.id,
         sampleId: result.sample_id,
         studyId: result.study_id,
         pipeline: result.pipeline_name,
         date: getDate(result),
         importStatus: calculateImportStatus(result),
-        pipeStatus: calculatePipelineStatus(result),
+        pipelineStatus: calculatePipelineStatus(result),
         exportStatus: calculateExportStatus(result),
       }))
     )(response);
@@ -102,7 +141,7 @@ export class TransformService {
 
     return flow(
       get('results'),
-      map(result => ({
+      _map(result => ({
         id: result.id,
         date: getDate(result),
         importStatus: calculateImportStatus(result),
@@ -114,9 +153,9 @@ export class TransformService {
   summarise(data: SampleLog[]) {
     const countUniqueStrings = countBy(identity());
     return {
-      import: flow(map('importStatus'), countUniqueStrings)(data),
-      pipeline: flow(map('pipelineStatus'), countUniqueStrings)(data),
-      export: flow(map('exportStatus'), countUniqueStrings)(data)
+      import: flow(_map('importStatus'), countUniqueStrings)(data),
+      pipeline: flow(_map('pipelineStatus'), countUniqueStrings)(data),
+      export: flow(_map('exportStatus'), countUniqueStrings)(data)
     };
   }
 

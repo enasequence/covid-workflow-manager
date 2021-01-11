@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { concatMap, tap } from 'rxjs/operators';
+
 import { ApiService } from '@services/api-mock.service';
 
 @Component({
@@ -13,13 +15,6 @@ export class SamplesDetailsComponent implements OnInit {
   sampleId: string;
   data: any;
 
-  importLogs;
-  importErrors;
-  pipelineLogs;
-  pipelineErrors;
-  exportLogs;
-  exportErrors;
-
   constructor(
     private route: ActivatedRoute,
     private title: Title,
@@ -27,20 +22,18 @@ export class SamplesDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.pipeline = params.pipeline;
-      this.sampleId = params.id;
-      this.title.setTitle(`${this.sampleId} details`);
-      this.apiService.getSample(this.pipeline, this.sampleId).subscribe(
-      data => {
-        console.log(data);
-        this.data = data.results;
-      },
-      error => {
-        console.log(error);
-      }
+    this.route.params.pipe(
+      tap(params => {
+        this.pipeline = params.pipeline;
+        this.sampleId = params.id;
+        this.title.setTitle(`${params.id} details`);
+      }),
+      concatMap(params => this.apiService.getSample(params.pipeline, params.id))
+    ).subscribe(
+      data => this.data = data.results,
+      console.error
     );
-    });
+
   }
 
 }

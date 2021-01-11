@@ -8,6 +8,7 @@ import { SampleLog } from '@models/sample-log';
 })
 export class SampleTableComponent implements OnInit {
 
+  @Input() pipeline: string;
   @Input() data: SampleLog[];
   @Input() filters;
   page = 1;
