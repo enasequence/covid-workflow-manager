@@ -7,31 +7,31 @@
             <b>{{ shortName(stage) | titlecase }} Status </b>
           </a>
 
-          <a href="#" [routerLink]="[stage, 'success' ]" class="btn btn-light btn-sm border">
+          <a href="#" [routerLink]="[stage, 'success' ]" routerLinkActive="btn-dark" class="btn btn-light btn-sm border">
           Success
           <span class="badge badge-success badge-pill">
-            {{ summary.Success || 0 }}
+            {{ getStatusCount('Success') }}
           </span>
           </a>
 
           <a href="#" [routerLink]="[stage, 'processing']" class="btn btn-light btn-sm border">
           Processing
           <span class="badge badge-warning badge-pill">
-            {{ summary.Processing || 0 }}
+            {{ getStatusCount('Processing') }}
           </span>
           </a>
 
           <a href="#" [routerLink]="[stage, 'undefined']" class="btn btn-light btn-sm border">
           Undefined
           <span class="badge badge-info badge-pill">
-            {{ summary.Undefined || 0 }}
+            {{ getStatusCount('Undefined') }}
           </span>
           </a>
 
           <a href="#" [routerLink]="[stage, 'failed']" class="btn btn-light btn-sm border">
           Failed
           <span class="badge badge-danger badge-pill">
-            {{ summary.Failed || 0 }}
+            {{ getStatusCount('Failed') }}
           </span>
           </a>
 

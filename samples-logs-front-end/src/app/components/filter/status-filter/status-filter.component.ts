@@ -11,7 +11,11 @@ export class StatusFilterComponent implements OnInit {
   @Input() public stage: RunStage;
   @Input() public summary: LogSummary;
 
-  shortName(stage): string {
+  getStatusCount(stage): number {
+    return this.summary[stage] || 0;
+  }
+
+  shortName(stage: RunStage): string {
     const xref = {
       import_from_ena: 'import',
       pipeline_analysis: 'pipeline',

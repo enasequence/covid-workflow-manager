@@ -39,17 +39,17 @@ export class SamplesComponent implements OnInit {
         this.title.setTitle(`${pipeline} Samples`);
       }),
       concatMap(pipeline => this.apiService.get(pipeline)),
-      map(x => {
+      map(response => {
         switch (this.pipeline) {
           case 'jovian':
           case 'jovian_test':
-            return this.transformService.extractJovianPipelineStatus(x);
+            return this.transformService.extractJovianPipelineStatus(response);
           case 'ont':
-            return this.transformService.extractOntPipelineStatus(x);
+            return this.transformService.extractOntPipelineStatus(response);
         }
       }),
     ).subscribe(
-      (parsedData) => {
+      parsedData => {
         this.data = parsedData;
         this.summary = this.transformService.summarise(parsedData);
       },
