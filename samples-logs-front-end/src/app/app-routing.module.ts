@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { SamplesDetailsComponent } from './pages/samples-details/samples-details.component';
 import { SamplesComponent } from './pages/samples/samples.component';
 import { FilteredSamplesComponent } from './pages/filtered-samples/filtered-samples.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: ':pipeline', component: SamplesComponent },
   { path: ':pipeline/:id', component: SamplesDetailsComponent },
   { path: ':pipeline/:stage/:status', component: FilteredSamplesComponent },
+  { path: '**', component: ErrorComponent },
 ];
 
 @NgModule({

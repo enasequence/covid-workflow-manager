@@ -17,6 +17,7 @@ import { SampleTableComponent } from './components/sample-table/sample-table/sam
 import { environment } from 'src/environments/environment';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogListComponent } from './components/log-list/log-list.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LogListComponent } from './components/log-list/log-list.component';
     StatusFilterComponent,
     JobStatusComponent,
     LogListComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
