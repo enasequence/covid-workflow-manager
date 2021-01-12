@@ -15,7 +15,7 @@ export class JobStatusComponent implements OnInit {
   ngOnInit() {
   }
 
-  public getStatusClass(status: JobStatus): string {
+  public getStylesFor(status: JobStatus): string {
     switch (status as JobStatus) {
       case JobStatus.Success:
         return 'badge badge-pill badge-success';

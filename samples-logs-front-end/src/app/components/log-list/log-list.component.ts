@@ -9,7 +9,7 @@ export class LogListComponent implements OnInit {
   @Input() title = 'Logs';
   @Input() logs = [];
   @Input() dates = [];
-  @Input() type: 'success'|'danger';
+  @Input() styling: 'success'|'danger';
 
   constructor() { }
 

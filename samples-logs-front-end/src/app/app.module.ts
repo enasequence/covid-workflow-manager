@@ -25,6 +25,7 @@ import { ErrorComponent } from './pages/error/error.component';
     SamplesComponent,
     FilteredSamplesComponent,
     SamplesDetailsComponent,
+    ErrorComponent,
     HeaderComponent,
     FooterComponent,
     SampleTableComponent,
@@ -33,7 +34,6 @@ import { ErrorComponent } from './pages/error/error.component';
     StatusFilterComponent,
     JobStatusComponent,
     LogListComponent,
-    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +42,7 @@ import { ErrorComponent } from './pages/error/error.component';
     HttpClientModule
   ],
   providers: [
+    // Use the mock API service when running development environment
     ...environment.providers,
   ],
   bootstrap: [AppComponent]

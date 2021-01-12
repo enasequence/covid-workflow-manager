@@ -1,31 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-
+import { map, catchError, retry, shareReplay } from 'rxjs/operators';
+import { get } from 'lodash/fp';
 
 import { environment } from '../../environments/environment';
 import { DataProvider } from './data-provider';
+import { SampleLog } from '@models/sample-log';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService implements DataProvider {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-    return this.http.get<any>(environment.apiUrl + path, { params }).pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
+  private get(path: string, params: HttpParams = new HttpParams()): Observable<unknown> {
+    return this.http.get(environment.apiUrl + path, { params })
+      .pipe(
+        retry(3),
+        catchError(this.handleError),
+      );
   }
 
-  getSample(pipeline: string, id: string) {
-    return this.get(`${pipeline}/${id}`).pipe(
-      retry(3),
-      catchError(this.handleError)
-    );
+  getSamples(pipeline: string): Observable<any> {
+    return this.get(pipeline)
+      .pipe(
+        map(get('results')),
+        shareReplay(),
+      );
+  }
+
+  getSample(pipeline: string, id: string): Observable<any> {
+    return this.get(`${pipeline}/${id}`)
+      .pipe(
+        map(get('results')),
+        shareReplay(),
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

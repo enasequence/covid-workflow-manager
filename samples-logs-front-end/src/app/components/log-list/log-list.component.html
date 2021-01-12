@@ -1,15 +1,15 @@
 <div class="card mt-4">
     <div class="card-header">
         {{ title }}
-        <span class="badge badge-pill badge-{{ type }}">
+        <span class="badge badge-pill badge-{{ styling }}">
             {{ logs.length }}
         </span>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item list-group-item-{{ type }} d-flex justify-content-between align-items-center mono"
+        <li class="list-group-item list-group-item-{{ styling }} d-flex justify-content-between align-items-center mono"
             *ngFor="let log of logs; let i=index">
             {{ log }}
-            <span *ngIf="dates" class="badge badge-primary badge-pill badge-{{ type }}">{{ dates[i] }}</span>
+            <span *ngIf="dates" class="badge badge-primary badge-pill badge-{{ styling }}">{{ dates[i] }}</span>
         </li>
     </ul>
 </div>

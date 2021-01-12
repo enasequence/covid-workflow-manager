@@ -18,13 +18,13 @@
         [title]="'Logs'" 
         [logs]="(sampleRun | async)?.import_from_ena?.status"
         [dates]="(sampleRun | async)?.import_from_ena?.date"
-        [type]="'success'"
+        [styling]="'success'"
       ></app-log-list>
 
       <app-log-list
         [title]="'Errors'"
         [logs]="(sampleRun | async)?.import_from_ena?.errors"
-        [type]="'danger'"
+        [styling]="'danger'"
       >
       </app-log-list>
 
@@ -37,13 +37,13 @@
         [title]="'Logs'"
         [logs]="(sampleRun | async)?.pipeline_analysis?.status"
         [dates]="(sampleRun | async)?.pipeline_analysis?.date"
-        [type]="'success'"
+        [styling]="'success'"
       ></app-log-list>
 
       <app-log-list
         [title]="'errors'"
         [logs]="(sampleRun | async)?.pipeline_analysis?.errors"
-        [type]="'danger'"
+        [styling]="'danger'"
       >
       </app-log-list>
 
@@ -56,13 +56,13 @@
         [title]="'Logs'"
         [logs]="(sampleRun | async)?.export_to_ena?.status"
         [dates]="(sampleRun | async)?.export_to_ena?.date"
-        [type]="'success'"
+        [styling]="'success'"
       ></app-log-list>
 
       <app-log-list
         [title]="'errors'"
         [logs]="(sampleRun | async)?.export_to_ena?.errors"
-        [type]="'danger'"
+        [styling]="'danger'"
       >
       </app-log-list>
 

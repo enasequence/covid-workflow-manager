@@ -1,4 +1,3 @@
-import { summaryFileName } from '@angular/compiler/src/aot/util';
 import { Component, Input, OnInit } from '@angular/core';
 import { LogSummary } from '@models/log-summary';
 import RunStage from '@models/run-stage';

@@ -20,7 +20,7 @@ export class StatusFilterComponent implements OnInit {
       import_from_ena: 'import',
       pipeline_analysis: 'pipeline',
       export_to_ena: 'export'
-    }
+    };
     return xref[stage];
   }
 

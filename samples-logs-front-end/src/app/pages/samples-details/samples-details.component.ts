@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { concatMap, switchMap, map, tap, shareReplay } from 'rxjs/operators';
+import { switchMap, map, shareReplay } from 'rxjs/operators';
 import { get } from 'lodash/fp';
 
 import { ApiService } from '@services/api-mock.service';
-import { SampleLog } from '@models/sample-log';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -24,23 +23,16 @@ export class SamplesDetailsComponent implements OnInit {
     private apiService: ApiService
   ) { }
 
-  getImportLogs(log: SampleLog): string[] {
-    return get('import_from_ena.status')(log);
-  }
-
-  getImportDates(log: SampleLog): string[] {
-    return get('import_from_ena.date')(log);
-  }
-
   ngOnInit() {
 
     this.sampleRun = this.route.paramMap.pipe(
       switchMap(params => {
-        this.title.setTitle(`${params.get('id')} details`);
-        return this.apiService.getSample(params.get('pipeline'), params.get('id'));
+        const pipeline = params.get('pipeline');
+        const id = params.get('id');
+
+        this.title.setTitle(`${pipeline} details`);
+        return this.apiService.getSample(pipeline, id);
       }),
-      map(get('results')),
-      shareReplay(),
     );
 
     this.sampleId = this.route.paramMap.pipe(

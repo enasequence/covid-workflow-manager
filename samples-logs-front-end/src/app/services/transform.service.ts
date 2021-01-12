@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 
 import { map as _map, get, includes, flow, split, head, cond, constant, stubTrue, countBy, eq, gte, identity, filter } from 'lodash/fp';
 
-import { ApiResponse } from '@models/api';
 import { SampleLog } from '@models/sample-log';
 import { JobStatus } from '@models/job-status';
 import { ApiService } from './api-mock.service';
@@ -22,15 +21,15 @@ export class TransformService {
     switch (pipeline) {
       case 'jovian':
       case 'jovian_test':
-        return this.apiService.get(pipeline).pipe(
+        return this.apiService.getSamples(pipeline).pipe(
           map(this.extractJovianPipelineStatus),
         );
       case ('ont'):
-        return this.apiService.get(pipeline).pipe(
+        return this.apiService.getSamples(pipeline).pipe(
           map(this.extractOntPipelineStatus),
         );
       default:
-        return this.apiService.get(pipeline).pipe(
+        return this.apiService.getSamples(pipeline).pipe(
           map(this.extractOntPipelineStatus),
         );
     }
@@ -53,7 +52,7 @@ export class TransformService {
     );
   }
 
-  extractJovianPipelineStatus(response: ApiResponse): SampleLog[] {
+  extractJovianPipelineStatus(response: any): SampleLog[] {
     const otherwise = stubTrue;
     const getDate = flow(
       get('import_from_ena.date[0]'),
@@ -85,9 +84,7 @@ export class TransformService {
         [otherwise, constant(JobStatus.Undefined)]
       ]));
 
-    return flow(
-      get('results'),
-      _map(result => ({
+    return response.map(result => ({
         id: result.id,
         sampleId: result.sample_id,
         studyId: result.study_id,
@@ -96,11 +93,10 @@ export class TransformService {
         importStatus: calculateImportStatus(result),
         pipelineStatus: calculatePipelineStatus(result),
         exportStatus: calculateExportStatus(result),
-      }))
-    )(response);
+      }));
   }
 
-  extractOntPipelineStatus(response: ApiResponse): SampleLog[] {
+  extractOntPipelineStatus(response: any): SampleLog[] {
     const otherwise = stubTrue;
     const hasPipelineErrors = flow(
       countBy(eq('pipeline_started')),
@@ -140,15 +136,13 @@ export class TransformService {
         [otherwise, constant(JobStatus.Undefined)]
       ]));
 
-    return flow(
-      get('results'),
-      _map(result => ({
+    return response.map(result => ({
         id: result.id,
         date: getDate(result),
         importStatus: calculateImportStatus(result),
         pipelineStatus: calculatePipelineStatus(result),
         exportStatus: calculateExportStatus(result)
-      })))(response);
+      }));
   }
 
   summarise(data: SampleLog[]) {
