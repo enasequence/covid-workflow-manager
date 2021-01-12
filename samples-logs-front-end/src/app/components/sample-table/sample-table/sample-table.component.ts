@@ -10,11 +10,10 @@ export class SampleTableComponent implements OnInit {
 
   @Input() pipeline: string;
   @Input() data: SampleLog[];
-  @Input() filters;
   page = 1;
 
   sampleCount() {
-    return this.data ? this.data.length : 0;
+    return this.data.filter(Boolean) ? this.data.length : 0;
   }
 
   constructor() { }

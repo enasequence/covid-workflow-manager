@@ -21,6 +21,7 @@ export class TransformService {
   getSamples(pipeline: string): Observable<SampleLog[]> {
     switch (pipeline) {
       case 'jovian':
+      case 'jovian_test':
         return this.apiService.get(pipeline).pipe(
           map(this.extractJovianPipelineStatus),
         );
@@ -30,7 +31,7 @@ export class TransformService {
         );
       default:
         return this.apiService.get(pipeline).pipe(
-          map(_map('results')),
+          map(this.extractOntPipelineStatus),
         );
     }
   }

@@ -12,17 +12,17 @@
 
       <div class="row">
         <div class="col-md-12 border-bottom">
-          <h3>{{ pipeline | titlecase }} Runs </h3>
+          <h3>{{ pipeline | async | titlecase }} Runs </h3>
         </div>
       </div>
 
       <div class="row my-4">
-        <app-filter-pane [summary]="summary"></app-filter-pane>
+        <app-filter-pane [summary]="summary | async "></app-filter-pane>
       </div>
 
       <div class="row">
         <div class="col-md-12 table-responsive">
-          <app-sample-table [pipeline]="pipeline" [data]="data" [filters]="filters"></app-sample-table>
+          <app-sample-table [pipeline]="pipeline | async " [data]="sampleRuns | async "></app-sample-table>
         </div>
       </div>
   </div>
