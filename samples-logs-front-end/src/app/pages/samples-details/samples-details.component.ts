@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { concatMap, tap } from 'rxjs/operators';
+import { concatMap, switchMap, map, tap, shareReplay } from 'rxjs/operators';
+import { get } from 'lodash/fp';
 
 import { ApiService } from '@services/api-mock.service';
+import { SampleLog } from '@models/sample-log';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-samples-details',
@@ -11,9 +14,9 @@ import { ApiService } from '@services/api-mock.service';
   styleUrls: ['./samples-details.component.css']
 })
 export class SamplesDetailsComponent implements OnInit {
-  pipeline: string;
-  sampleId: string;
-  data: any;
+  pipeline: Observable<string>;
+  sampleId: Observable<string>;
+  sampleRun: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,17 +24,31 @@ export class SamplesDetailsComponent implements OnInit {
     private apiService: ApiService
   ) { }
 
+  getImportLogs(log: SampleLog): string[] {
+    return get('import_from_ena.status')(log);
+  }
+
+  getImportDates(log: SampleLog): string[] {
+    return get('import_from_ena.date')(log);
+  }
+
   ngOnInit() {
-    this.route.params.pipe(
-      tap(params => {
-        this.pipeline = params.pipeline;
-        this.sampleId = params.id;
-        this.title.setTitle(`${params.id} details`);
+
+    this.sampleRun = this.route.paramMap.pipe(
+      switchMap(params => {
+        this.title.setTitle(`${params.get('id')} details`);
+        return this.apiService.getSample(params.get('pipeline'), params.get('id'));
       }),
-      concatMap(params => this.apiService.getSample(params.pipeline, params.id))
-    ).subscribe(
-      data => this.data = data.results,
-      console.error
+      map(get('results')),
+      shareReplay(),
+    );
+
+    this.sampleId = this.route.paramMap.pipe(
+      map(x => x.get('id'))
+    );
+
+    this.pipeline = this.route.paramMap.pipe(
+      map(x => x.get('pipeline'))
     );
 
   }

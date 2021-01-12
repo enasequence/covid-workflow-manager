@@ -10,20 +10,20 @@
 
     <div class="content-container card shadow-sm px-4 py-4">
 
-      <h1 class="display-4 text-center">{{ sampleId }}</h1>
+      <h1 class="display-4 text-center">{{ sampleId | async }}</h1>
 
       <h2>Import</h2>
 
       <app-log-list 
         [title]="'Logs'" 
-        [logs]="data?.import_from_ena?.status"
-        [dates]="data?.import_from_ena?.date"
+        [logs]="(sampleRun | async)?.import_from_ena?.status"
+        [dates]="(sampleRun | async)?.import_from_ena?.date"
         [type]="'success'"
       ></app-log-list>
 
       <app-log-list
         [title]="'Errors'"
-        [logs]="data?.import_from_ena?.errors"
+        [logs]="(sampleRun | async)?.import_from_ena?.errors"
         [type]="'danger'"
       >
       </app-log-list>
@@ -31,18 +31,18 @@
     </div>
 
     <div class="content-container card shadow-sm px-4 py-4 mt-3">
-      <h2>Pipeline ({{ pipeline }})</h2>
+      <h2>Pipeline ({{ pipeline | async | titlecase }})</h2>
 
       <app-log-list
         [title]="'Logs'"
-        [logs]="data?.pipeline_analysis?.status"
-        [dates]="data?.pipeline_analysis?.date"
+        [logs]="(sampleRun | async)?.pipeline_analysis?.status"
+        [dates]="(sampleRun | async)?.pipeline_analysis?.date"
         [type]="'success'"
       ></app-log-list>
 
       <app-log-list
         [title]="'errors'"
-        [logs]="data?.pipeline_analysis?.errors"
+        [logs]="(sampleRun | async)?.pipeline_analysis?.errors"
         [type]="'danger'"
       >
       </app-log-list>
@@ -54,14 +54,14 @@
 
       <app-log-list
         [title]="'Logs'"
-        [logs]="data?.export_to_ena?.status"
-        [dates]="data?.export_to_ena?.date"
+        [logs]="(sampleRun | async)?.export_to_ena?.status"
+        [dates]="(sampleRun | async)?.export_to_ena?.date"
         [type]="'success'"
       ></app-log-list>
 
       <app-log-list
         [title]="'errors'"
-        [logs]="data?.export_to_ena?.errors"
+        [logs]="(sampleRun | async)?.export_to_ena?.errors"
         [type]="'danger'"
       >
       </app-log-list>
