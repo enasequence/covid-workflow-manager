@@ -1,7 +1,35 @@
 from pymongo import MongoClient
-
-from flask import Flask
+from flask_cors import CORS, cross_origin
+from flask import Flask, request
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+@app.route("/phylogeny")
+@cross_origin()
+def phylogenetic_tree():
+    args = request.args
+    client = MongoClient('mongodb://samples-logs-db-svc')
+    db = client.samples
+    size = None
+    start = None
+    if 'size' in args:
+        size = int(args['size'])
+    if 'start' in args:
+        start = int(args['start'])
+    if size and start:
+        return {'results': list(db.phylo.find({}, {'_id': 0}).skip(start).limit(size))}
+    elif size and not start:
+        return {'results': list(db.phylo.find({}, {'_id': 0}).limit(size))}
+    else:
+        return {'results': []}
+
+
+@app.route("/phylogeny_suspended")
+def phylogenetic_tree_suspended():
+    client = MongoClient('mongodb://samples-logs-db-svc')
+    db = client.samples
+    return {'results': list(db.suspended.find({}, {'_id': 0}))}
 
 
 @app.route("/jovian")

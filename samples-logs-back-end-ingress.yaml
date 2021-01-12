@@ -4,10 +4,13 @@ metadata:
   name: samples-logs-back-end-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
+  tls:
+  - hosts:
+    - phylogeny.covid19dataportal.org
+    secretName: tls-secret
   rules:
-  - host:
+  - host: phylogeny.covid19dataportal.org
     http:
       paths:
       - path: /api(/|$)(.*)
