@@ -27,8 +27,8 @@ docker-compose up -d
 
 Hot reloading for both front- and back-end services are available:
 
-- Angular [http://localhost:4242](localhost:4242)
-- Flask [http://localhost:5000](localhost:5000)
+- Angular ([localhost:4242](http://localhost:4242))
+- Flask ([localhost:5000](http://localhost:5000))
 
 ### Only Front-end
 
