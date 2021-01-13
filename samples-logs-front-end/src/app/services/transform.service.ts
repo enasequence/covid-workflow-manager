@@ -37,14 +37,12 @@ export class TransformService {
 
   getFilteredSamples(pipeline: string, stage: string, status: string): Observable<SampleLog[]> {
 
+    const otherwise = stubTrue;
     const parse = cond([
       [eq('import_from_ena'), constant('importStatus')],
       [eq('pipeline_analysis'), constant('pipelineStatus')],
       [eq('export_to_ena'), constant('exportStatus')],
-      [eq('success'), constant('Success')],
-      [eq('processing'), constant('Processing')],
-      [eq('failed'), constant('Failed')],
-      [eq('undefined'), constant('Undefined')]
+      [otherwise, identity]
     ]);
 
     return this.getSamples(pipeline).pipe(
