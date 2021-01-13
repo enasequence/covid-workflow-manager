@@ -23,8 +23,12 @@ spec:
       labels:
         ms: samples-logs-back-end
     spec:
+      nodeSelector:
+        samples_logs: be
+      imagePullSecrets:
+        - name: regcred
       containers:
       - name: samples-logs-back-end
-        image: alexeyebi/jovian-samples-logs-back-end
+        image: alexeyebi/samples-logs-back-end
         ports:
         - containerPort: 80

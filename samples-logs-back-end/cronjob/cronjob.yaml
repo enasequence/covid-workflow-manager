@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: phylogeny-cronjob
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            ms: phylogeny-cronjob
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: main
+              image: alexeyebi/phylogeny-cronjob
