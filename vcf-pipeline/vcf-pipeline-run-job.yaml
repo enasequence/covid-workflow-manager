@@ -13,7 +13,7 @@ spec:
       nodeSelector:
         vcf: primary
       containers:
-      - image: alexeyebi/vcf-pipeline-run-job
+      - image: rmwthorne/vcf-pipeline-run-job
         name: vcf-pipeline-run-job
         volumeMounts:
           - name: data
