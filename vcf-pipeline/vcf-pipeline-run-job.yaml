@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: vcf-pipeline-run-job
 spec:
-  parallelism: 50
+  parallelism: 5
   template:
     metadata:
       labels:
