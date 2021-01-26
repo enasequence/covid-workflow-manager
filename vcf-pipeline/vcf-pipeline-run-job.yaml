@@ -3,15 +3,13 @@ kind: Job
 metadata:
   name: vcf-pipeline-run-job
 spec:
-  parallelism: 5
+  parallelism: 2
   template:
     metadata:
       labels:
         ms: vcf-pipeline-run-job
     spec:
       restartPolicy: Never
-      nodeSelector:
-        vcf: primary
       containers:
       - image: rmwthorne/vcf-pipeline-run-job
         name: vcf-pipeline-run-job

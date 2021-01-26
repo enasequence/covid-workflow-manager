@@ -6,4 +6,4 @@ COPY ./worker.py /worker.py
 COPY ./rediswq.py /rediswq.py
 COPY ./workflow.nf /workflow.nf
 COPY ./nextflow.config /nextflow.config
-ENTRYPOINT ["python", "worker.py"]
+CMD ["python", "worker.py"]

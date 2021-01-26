@@ -20,7 +20,12 @@ def main():
         if item is not None:
             run_id = item.decode("utf-8")
             print(f"Working on {run_id}")
-            sample = DB.samples.find_one({'id': run_id})
+
+            try:
+                sample = get_sample(run_id, DB)
+            except TypeError as e:
+                log_error(e)
+
             # Download data
             os.system(f"mkdir /data/{run_id}_input")
             os.system(f"wget -P /data/{run_id}_input ftp://{sample['links'][0]}")
@@ -66,18 +71,14 @@ def main():
     print("Queue empty, exiting")
     return
 
-def write_sample_status(sample, status):
-    """
-    This function will write date and log message to sample dict
-    :param sample: sample to write log to
-    :param status: status message
-    :return:
-    """
-    sample['pipeline_analysis']['date'].append(
-        datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S"))
-    sample['pipeline_analysis']['status'].append(status)
+def get_sample(run_id, db):
+    sample = db.samples.find_one({'id': run_id})
+    if sample is None:
+        raise TypeError("Sample not found in database, aborting")
+    return sample
 
-
+def log_error(message):
+    print(f"Error: {message}")
 
 if __name__ == "__main__":
     main()
