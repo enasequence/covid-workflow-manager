@@ -30,13 +30,22 @@ def process_item(item):
 
     try:
         sample = get_sample(run_id, DB)
+        links = sample.get('links')
     except TypeError as e:
         log_error(e)
+        return
+    except KeyError:
+        log_error('No links in sample entry')
+        return
+    
+    try:
+        subprocess.run(f"mkdir -p /data/{run_id}_input", shell=True)
+        for link in links:
+            subprocess.run(f"wget -P /data/{run_id}_input ftp://{link}", shell=True, check=True)
+    except Exception as e:
+        log_error(e)
+        return
 
-    # Download data
-    os.system(f"mkdir /data/{run_id}_input")
-    os.system(f"wget -P /data/{run_id}_input ftp://{sample['links'][0]}")
-    os.system(f"wget -P /data/{run_id}_input ftp://{sample['links'][1]}")
     # Start nextflow
     create_dir_process = subprocess.run(
         f"mkdir -p /data/{run_id}_output", shell=True,
