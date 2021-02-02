@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: vcf-pipeline-run-job
 spec:
-  parallelism: 2
+  parallelism: 50
   template:
     metadata:
       labels:
@@ -11,13 +11,13 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-      - image: rmwthorne/vcf-pipeline-run-job
-        name: vcf-pipeline-run-job
-        volumeMounts:
-          - name: data
-            mountPath: /data
-          - name: output
-            mountPath: /output
+        - image: alexeyebi/vcf-pipeline-run-job
+          name: vcf-pipeline-run-job
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: output
+              mountPath: /output
       imagePullSecrets:
         - name: regcred
       volumes:
