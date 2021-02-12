@@ -51,7 +51,7 @@ def download_files(run_id, sample):
         links = sample.get("links")
     except KeyError:
         log_error(run_id, "No links in sample entry")
-        raise
+        q.retry(run_id)
 
     try:
         subprocess.run(f"mkdir -p /data/{run_id}_input", shell=True)
@@ -65,7 +65,7 @@ def download_files(run_id, sample):
             subprocess.run(f"wget {wget_args} ftp://{link}", shell=True, check=True)
     except Exception:
         log_error(run_id, "Download failed")
-        raise
+        q.retry(run_id)
 
 
 def run_pipeline(run_id):
@@ -81,6 +81,7 @@ def run_pipeline(run_id):
         subprocess.run(nextflow_command, shell=True, check=True)
     except Exception:
         log_error(run_id, "Pipeline failed")
+        q.retry(run_id)
         raise
 
 

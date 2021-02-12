@@ -38,6 +38,9 @@ class RedisWQ(object):
         self._processing_q_key = name + ":processing"
         self._lease_key_prefix = name + ":leased_by_session:"
 
+        self._max_retries = 3
+        self._item_retries = name + ":retries"
+
     def sessionID(self):
         """Return the ID for this session."""
         return self._session
@@ -49,6 +52,18 @@ class RedisWQ(object):
     def _processing_qsize(self):
         """Return the size of the main queue."""
         return self._db.llen(self._processing_q_key)
+
+    def _get_retries(self, value):
+        """Return the number of retries that have been attempted for an item"""
+        return self._db.hget(self._item_retries, value)
+
+    def _increment_retries(self, value):
+        """Increments the retry counter for the item by 1. Returns the new count"""
+        return self._db.hincrby(self._item_retries, value, 1)
+
+    def reset_retries(self, value):
+        """Resets the retry counter to 0"""
+        return self._db.hset(self._item_retries, value, 0)
 
     def empty(self):
         """Return True if the queue is empty, including work being done, False otherwise.
@@ -90,8 +105,9 @@ class RedisWQ(object):
         If optional args block is true and timeout is None (the default), block
         if necessary until an item is available."""
         if block:
-            item = self._db.brpoplpush(self._main_q_key, self._processing_q_key,
-                                       timeout=timeout)
+            item = self._db.brpoplpush(
+                self._main_q_key, self._processing_q_key, timeout=timeout
+            )
         else:
             item = self._db.rpoplpush(self._main_q_key, self._processing_q_key)
         if item:
@@ -100,8 +116,15 @@ class RedisWQ(object):
             # Note: if we crash at this line of the program, then GC will see no lease
             # for this item a later return it to the main queue.
             itemkey = self._itemkey(item)
-            self._db.setex(self._lease_key_prefix + itemkey, lease_secs,
-                           self._session)
+            self._db.setex(self._lease_key_prefix + itemkey, lease_secs, self._session)
+        return item
+
+    def enqueue(self, item):
+        # TODO: add a function to add an item to the queue.  Atomically
+        # check if the queue is empty and if so fail to add the item
+        # since other workers might think work is done and be in the process
+        # of exiting.
+        self._db.add(self._main_q_key, item)
         return item
 
     def complete(self, value):
@@ -117,13 +140,17 @@ class RedisWQ(object):
         itemkey = self._itemkey(value)
         self._db.delete(self._lease_key_prefix + itemkey)
 
+    def retry(self, value):
+        """Complete and requeue the item with 'value' to the main work queue"""
+        # TODO: Add function to reset the retry count for reschuduling a failed job
+        self.complete(value)
+        if self._get_retries(value) < self._max_retries or self._max_retries == 0:
+            self._increment_retries(value)
+            self.enqueue(value)
+
+
 # TODO: add functions to clean up all keys associated with "name" when
 # processing is complete.
-
-# TODO: add a function to add an item to the queue.  Atomically
-# check if the queue is empty and if so fail to add the item
-# since other workers might think work is done and be in the process
-# of exiting.
 
 # TODO(etune): move to my own github for hosting, e.g. github.com/erictune/rediswq-py and
 # make it so it can be pip installed by anyone (see
