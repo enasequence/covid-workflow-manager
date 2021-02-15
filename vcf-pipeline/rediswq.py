@@ -55,7 +55,10 @@ class RedisWQ(object):
 
     def _get_retries(self, value):
         """Return the number of retries that have been attempted for an item"""
-        return self._db.hget(self._item_retries, value)
+        retries = self._db.hget(self._item_retries, value)
+        if retries is None:
+            retries = 0
+        return int(retries)
 
     def _increment_retries(self, value):
         """Increments the retry counter for the item by 1. Returns the new count"""
@@ -124,7 +127,7 @@ class RedisWQ(object):
         # check if the queue is empty and if so fail to add the item
         # since other workers might think work is done and be in the process
         # of exiting.
-        self._db.add(self._main_q_key, item)
+        self._db.rpush(self._main_q_key, item)
         return item
 
     def complete(self, value):
@@ -143,8 +146,9 @@ class RedisWQ(object):
     def retry(self, value):
         """Complete and requeue the item with 'value' to the main work queue"""
         # TODO: Add function to reset the retry count for reschuduling a failed job
+        value = value.encode('utf-8')
         self.complete(value)
-        if self._get_retries(value) < self._max_retries or self._max_retries == 0:
+        if  (self._get_retries(value) < self._max_retries) or (self._max_retries == 0):
             self._increment_retries(value)
             self.enqueue(value)
 

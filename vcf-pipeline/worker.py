@@ -38,7 +38,7 @@ def process_item(item):
 
 
 def get_sample(run_id, db):
-    print(f"Fetching {run_id} record from the database")
+    print(f"Fetching record with id:'{run_id}' from the database")
     sample = db.samples.find_one({"id": run_id})
     if sample is None:
         raise TypeError("Sample not found in database, aborting")
@@ -50,7 +50,7 @@ def download_files(run_id, sample):
     try:
         links = sample.get("links")
     except KeyError:
-        log_error(run_id, "No links in sample entry")
+        log_error(run_id, "No links in sample entry, retrying")
         q.retry(run_id)
 
     try:
@@ -64,13 +64,13 @@ def download_files(run_id, sample):
             )
             subprocess.run(f"wget {wget_args} ftp://{link}", shell=True, check=True)
     except Exception:
-        log_error(run_id, "Download failed")
+        log_error(run_id, "Download failed, retrying")
         q.retry(run_id)
 
 
 def run_pipeline(run_id):
     subprocess.run(f"mkdir -p /data/{run_id}_output", shell=True, check=True)
-    os.chdir(f"/data/{run_id}_output", check=True)
+    os.chdir(f"/data/{run_id}_output")
     reads = clean_read_path(f"/data/{run_id}_input/{run_id}_{1, 2}.fastq.gz")
     nextflow_command = (
         f"../nextflow -C ../nextflow.config run "
@@ -79,8 +79,9 @@ def run_pipeline(run_id):
     )
     try:
         subprocess.run(nextflow_command, shell=True, check=True)
+        log_status(run_id, "Pipeline finished")
     except Exception:
-        log_error(run_id, "Pipeline failed")
+        log_error(run_id, "Pipeline failed, retrying")
         q.retry(run_id)
         raise
 
@@ -93,6 +94,7 @@ def clean_read_path(path):
 
 
 def clean_up(run_id):
+    log_status(run_id, "Clean up started")
     if os.path.exists(
         f"/data/{run_id}_output/results/" f"{run_id}.annot.n.filtered_freq.vcf"
     ):
@@ -106,6 +108,7 @@ def clean_up(run_id):
         os.chdir("/data")
         subprocess.run("rm -rf {run_id}_output", shell=True)
         subprocess.run("rm -rf {run_id}_input", shell=True)
+    log_status(run_id, "Clean up finished")
 
 
 def log_status(run_id, status):
