@@ -5,7 +5,6 @@ metadata:
 data:
   git-sync-repo: "https://github.com/enasequence/covid-workflow-manager.git"
   git-sync-dest: "/git"
-  git-sync-branch: "vcf-log-and-retry"
+  git-sync-branch: "master"
   git-sync-rev: "FETCH_HEAD"
   git-sync-wait: "10"
-
