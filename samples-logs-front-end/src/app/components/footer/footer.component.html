@@ -1,0 +1,8 @@
+<footer class="footer bg-white w-100 py-4 position-aboslute fixed-bottom">
+    <div class="container">
+        <ng-container *ngIf="environment.production === false">
+            <span class="text-muted">Environment: </span>
+            <span class="badge badge-pill badge-success">{{ environment?.name }}</span>
+        </ng-container>
+    </div>
+</footer>

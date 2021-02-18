@@ -1,0 +1,400 @@
+{
+    "results": [
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:38:02",
+            "14 May, 2020 - 08:38:08",
+            "14 May, 2020 - 08:38:09",
+            "14 May, 2020 - 08:38:09",
+            "14 May, 2020 - 08:39:07",
+            "14 May, 2020 - 08:39:07",
+            "14 May, 2020 - 08:40:05",
+            "14 May, 2020 - 08:40:05",
+            "14 May, 2020 - 08:41:03",
+            "14 May, 2020 - 08:41:03",
+            "14 May, 2020 - 08:42:00",
+            "14 May, 2020 - 08:42:00",
+            "14 May, 2020 - 08:42:58",
+            "14 May, 2020 - 08:42:58",
+            "14 May, 2020 - 08:42:58",
+            "14 May, 2020 - 08:42:58",
+            "14 May, 2020 - 08:42:59"
+          ],
+          "errors": [],
+          "status": [
+            "submission to ENA started",
+            "started to render notebook",
+            "back-up created successfully",
+            "starting to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "finishing to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "starting to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "finishing to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "starting to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "finishing to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "starting to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "finishing to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "starting to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "finishing to upload /output/ERR3482174/ERR3482174-1589445482_SAMEA5867184_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "creating analysis xml",
+            "creating submission xml",
+            "starting to submit xml files to ENA",
+            "submission to ENA finished"
+          ]
+        },
+        "id": "ERR3482174",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:39:12",
+            "13 May, 2020 - 08:39:12",
+            "13 May, 2020 - 08:39:19",
+            "13 May, 2020 - 08:39:19",
+            "13 May, 2020 - 08:39:19"
+          ],
+          "errors": [
+            "--2020-05-13 08:39:15--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/004/ERR3482174/ERR3482174_2.fastq.gz\n           => ‘/raw_data/ERR3482174/ERR3482174_2.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n"
+          ],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 08:39:33",
+            "13 May, 2020 - 08:44:01",
+            "13 May, 2020 - 09:39:18"
+          ],
+          "errors": [],
+          "status": [
+            "pipeline started",
+            "pipeline started",
+            "pipeline finished"
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867184",
+        "study_id": "PRJEB34029"
+      },
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:31:16",
+            "14 May, 2020 - 08:31:16",
+            "14 May, 2020 - 08:31:23",
+            "14 May, 2020 - 08:31:23",
+            "14 May, 2020 - 08:32:22",
+            "14 May, 2020 - 08:32:22",
+            "14 May, 2020 - 08:33:20",
+            "14 May, 2020 - 08:33:20",
+            "14 May, 2020 - 08:34:18",
+            "14 May, 2020 - 08:34:18",
+            "14 May, 2020 - 08:35:16",
+            "14 May, 2020 - 08:35:16",
+            "14 May, 2020 - 08:36:15",
+            "14 May, 2020 - 08:36:15",
+            "14 May, 2020 - 08:36:15",
+            "14 May, 2020 - 08:36:15",
+            "14 May, 2020 - 08:36:17"
+          ],
+          "errors": [],
+          "status": [
+            "submission to ENA started",
+            "started to render notebook",
+            "back-up created successfully",
+            "starting to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "finishing to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "starting to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "finishing to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "starting to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "finishing to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "starting to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "finishing to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "starting to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "finishing to upload /output/ERR3482177/ERR3482177-1589445076_SAMEA5867197_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "creating analysis xml",
+            "creating submission xml",
+            "starting to submit xml files to ENA",
+            "submission to ENA finished"
+          ]
+        },
+        "id": "ERR3482177",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:39:12",
+            "13 May, 2020 - 08:39:19",
+            "13 May, 2020 - 08:39:54",
+            "13 May, 2020 - 08:39:54",
+            "13 May, 2020 - 08:39:54"
+          ],
+          "errors": [
+            "--2020-05-13 08:39:19--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/007/ERR3482177/ERR3482177_1.fastq.gz\n           => ‘/raw_data/ERR3482177/ERR3482177_1.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n",
+            "--2020-05-13 08:39:21--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/007/ERR3482177/ERR3482177_1.fastq.gz\n           => ‘/raw_data/ERR3482177/ERR3482177_1.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n",
+            "--2020-05-13 08:39:24--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/007/ERR3482177/ERR3482177_1.fastq.gz\n           => ‘/raw_data/ERR3482177/ERR3482177_1.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n"
+          ],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 08:40:04",
+            "13 May, 2020 - 14:38:30"
+          ],
+          "errors": [],
+          "status": [
+            "pipeline started",
+            "pipeline finished"
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867197",
+        "study_id": "PRJEB34030"
+      },
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:44:51",
+            "14 May, 2020 - 08:44:53",
+            "14 May, 2020 - 08:45:00",
+            "14 May, 2020 - 08:45:00",
+            "14 May, 2020 - 08:45:59",
+            "14 May, 2020 - 08:45:59",
+            "14 May, 2020 - 08:46:56",
+            "14 May, 2020 - 08:46:56",
+            "14 May, 2020 - 08:47:55",
+            "14 May, 2020 - 08:47:55",
+            "14 May, 2020 - 08:48:53",
+            "14 May, 2020 - 08:48:53",
+            "14 May, 2020 - 08:49:51",
+            "14 May, 2020 - 08:49:51",
+            "14 May, 2020 - 08:49:51",
+            "14 May, 2020 - 08:49:51",
+            "14 May, 2020 - 08:49:52"
+          ],
+          "errors": [],
+          "status": [
+            "submission to ENA started",
+            "started to render notebook",
+            "back-up created successfully",
+            "starting to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "finishing to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "starting to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "finishing to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "starting to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "finishing to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "starting to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "finishing to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "starting to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "finishing to upload /output/ERR3482180/ERR3482180-1589445891_SAMEA5867200_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "creating analysis xml",
+            "creating submission xml",
+            "starting to submit xml files to ENA",
+            "submission to ENA finished"
+          ]
+        },
+        "id": "ERR3482180",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:39:12",
+            "13 May, 2020 - 08:39:54",
+            "13 May, 2020 - 08:40:53",
+            "13 May, 2020 - 08:40:53",
+            "13 May, 2020 - 08:40:53"
+          ],
+          "errors": [
+            "--2020-05-13 08:39:54--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/000/ERR3482180/ERR3482180_1.fastq.gz\n           => ‘/raw_data/ERR3482180/ERR3482180_1.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n",
+            "--2020-05-13 08:40:23--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/000/ERR3482180/ERR3482180_2.fastq.gz\n           => ‘/raw_data/ERR3482180/ERR3482180_2.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n"
+          ],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 08:41:03",
+            "13 May, 2020 - 15:01:57"
+          ],
+          "errors": [],
+          "status": [
+            "pipeline started",
+            "pipeline finished"
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867200",
+        "study_id": "PRJEB34031"
+      },
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:50:56",
+            "14 May, 2020 - 08:50:57",
+            "14 May, 2020 - 08:51:04",
+            "14 May, 2020 - 08:51:04",
+            "14 May, 2020 - 08:52:01",
+            "14 May, 2020 - 08:52:01",
+            "14 May, 2020 - 08:52:59",
+            "14 May, 2020 - 08:52:59",
+            "14 May, 2020 - 08:53:58",
+            "14 May, 2020 - 08:53:58",
+            "14 May, 2020 - 08:54:57",
+            "14 May, 2020 - 08:54:57",
+            "14 May, 2020 - 08:55:55",
+            "14 May, 2020 - 08:55:55",
+            "14 May, 2020 - 08:55:55",
+            "14 May, 2020 - 08:55:55",
+            "14 May, 2020 - 08:55:57"
+          ],
+          "errors": [],
+          "status": [
+            "submission to ENA started",
+            "started to render notebook",
+            "back-up created successfully",
+            "starting to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "finishing to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "starting to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "finishing to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "starting to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "finishing to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "starting to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "finishing to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "starting to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "finishing to upload /output/ERR3482181/ERR3482181-1589446256_SAMEA5867201_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "creating analysis xml",
+            "creating submission xml",
+            "starting to submit xml files to ENA",
+            "submission to ENA finished"
+          ]
+        },
+        "id": "ERR3482181",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:39:12",
+            "13 May, 2020 - 08:40:53",
+            "13 May, 2020 - 08:41:01",
+            "13 May, 2020 - 08:41:01",
+            "13 May, 2020 - 08:41:01"
+          ],
+          "errors": [
+            "--2020-05-13 08:40:53--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/001/ERR3482181/ERR3482181_1.fastq.gz\n           => ‘/raw_data/ERR3482181/ERR3482181_1.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n",
+            "--2020-05-13 08:40:56--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/001/ERR3482181/ERR3482181_1.fastq.gz\n           => ‘/raw_data/ERR3482181/ERR3482181_1.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n"
+          ],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 08:41:20",
+            "13 May, 2020 - 09:46:18"
+          ],
+          "errors": [],
+          "status": [
+            "pipeline started",
+            "pipeline finished"
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867201",
+        "study_id": "PRJEB34031"
+      },
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:56:11",
+            "14 May, 2020 - 08:56:11",
+            "14 May, 2020 - 08:56:17",
+            "14 May, 2020 - 08:56:17",
+            "14 May, 2020 - 08:57:16",
+            "14 May, 2020 - 08:57:16",
+            "14 May, 2020 - 08:58:14",
+            "14 May, 2020 - 08:58:14",
+            "14 May, 2020 - 08:59:12",
+            "14 May, 2020 - 08:59:12",
+            "14 May, 2020 - 09:00:10",
+            "14 May, 2020 - 09:00:10",
+            "14 May, 2020 - 09:01:10",
+            "14 May, 2020 - 09:01:10",
+            "14 May, 2020 - 09:01:10",
+            "14 May, 2020 - 09:01:10",
+            "14 May, 2020 - 09:01:11"
+          ],
+          "errors": [],
+          "status": [
+            "submission to ENA started",
+            "started to render notebook",
+            "back-up created successfully",
+            "starting to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "finishing to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_filtered_SNPs.tsv to ENA",
+            "starting to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "finishing to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_virusHost.tsv to ENA",
+            "starting to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "finishing to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_taxClassified.tsv to ENA",
+            "starting to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "finishing to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_all_taxUnclassified.tsv to ENA",
+            "starting to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "finishing to upload /output/ERR3482182/ERR3482182-1589446571_SAMEA5867202_analysis_Rivm_Jovian_results.tar.gz to ENA",
+            "creating analysis xml",
+            "creating submission xml",
+            "starting to submit xml files to ENA",
+            "submission to ENA finished"
+          ]
+        },
+        "id": "ERR3482182",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:39:12",
+            "13 May, 2020 - 08:41:01",
+            "13 May, 2020 - 08:41:08",
+            "13 May, 2020 - 08:41:08",
+            "13 May, 2020 - 08:41:08"
+          ],
+          "errors": [
+            "--2020-05-13 08:41:02--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/002/ERR3482182/ERR3482182_2.fastq.gz\n           => ‘/raw_data/ERR3482182/ERR3482182_2.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n",
+            "--2020-05-13 08:41:04--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/002/ERR3482182/ERR3482182_2.fastq.gz\n           => ‘/raw_data/ERR3482182/ERR3482182_2.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n"
+          ],
+          "status": [
+            "run added for download",
+            "download started",
+            "download finished",
+            "starting to submit pipeline job",
+            "submitting pipeline job succeed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 08:41:19",
+            "13 May, 2020 - 09:16:20",
+            "10 June, 2020 - 11:06:02",
+            "10 June, 2020 - 11:32:55"
+          ],
+          "errors": [],
+          "status": [
+            "pipeline started",
+            "pipeline finished",
+            "pipeline started",
+            "pipeline started"
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867202",
+        "study_id": "PRJEB34031"
+      }
+    ]
+  }

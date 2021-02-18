@@ -20,8 +20,11 @@
     "@angular/platform-browser-dynamic": "~8.2.11",
     "@angular/router": "~8.2.11",
     "bootstrap": "^4.4.1",
+    "bootstrap-icons": "^1.0.0",
     "jquery": "^3.5.0",
+    "lodash": "^4.17.20",
     "ngx-pagination": "^5.0.0",
+    "popper.js": "^1.16.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

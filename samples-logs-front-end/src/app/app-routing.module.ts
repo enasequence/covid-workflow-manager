@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AppComponent} from './app.component';
-import {SamplesDetailsComponent} from './samples-details/samples-details.component';
-import {SamplesComponent} from './samples/samples.component';
-import {OntSamplesComponent} from './ont-samples/ont-samples.component';
-import {OntSamplesDetailsComponent} from './ont-samples-details/ont-samples-details.component';
-import {OntSamplesFiltersComponent} from './ont-samples-filters/ont-samples-filters.component';
+import { AppComponent } from './app.component';
+import { SamplesDetailsComponent } from './pages/samples-details/samples-details.component';
+import { SamplesComponent } from './pages/samples/samples.component';
+import { FilteredSamplesComponent } from './pages/filtered-samples/filtered-samples.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'jovian', pathMatch: 'full'},
-  {path: 'jovian', component: SamplesComponent},
-  {path: 'jovian/:id', component: SamplesDetailsComponent},
-  {path: 'ont', component: OntSamplesComponent},
-  {path: 'ont/:id', component: OntSamplesDetailsComponent},
-  {path: 'ont/:stage/:status', component: OntSamplesFiltersComponent}
+  { path: '', redirectTo: 'jovian', pathMatch: 'full' },
+  { path: ':pipeline', component: SamplesComponent },
+  { path: ':pipeline/:id', component: SamplesDetailsComponent },
+  { path: ':pipeline/:stage/:status', component: FilteredSamplesComponent },
+  { path: '**', component: ErrorComponent },
 ];
 
 @NgModule({

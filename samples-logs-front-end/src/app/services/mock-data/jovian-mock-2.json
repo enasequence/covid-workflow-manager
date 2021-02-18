@@ -1,0 +1,104 @@
+{
+    "results": [
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:38:02"
+          ],
+          "errors": [],
+          "status": [
+            "submission to ENA finished"
+          ]
+        },
+        "id": "ERR3482174",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:39:12"
+          ],
+          "errors": [
+            "--2020-05-13 08:39:15--  ftp://dcc_byard:*password*@ftp.dcc-private.ebi.ac.uk/vol1/fastq/ERR348/004/ERR3482174/ERR3482174_2.fastq.gz\n           => ‘/raw_data/ERR3482174/ERR3482174_2.fastq.gz’\nResolving ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)... 193.62.193.6\nConnecting to ftp.dcc-private.ebi.ac.uk (ftp.dcc-private.ebi.ac.uk)|193.62.193.6|:21... connected.\nLogging in as dcc_byard ... \nLogin incorrect.\n"
+          ],
+          "status": [
+            "download finished"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 09:39:18"
+          ],
+          "errors": [],
+          "status": [
+            "pipeline finished"
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867184",
+        "study_id": "PRJEB34029"
+      },
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:31:16"
+          ],
+          "errors": [],
+          "status": [
+          ]
+        },
+        "id": "ERR3482177",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:39:12"
+          ],
+          "errors": [
+          ],
+          "status": [
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 08:40:04"
+          ],
+          "errors": [],
+          "status": [
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867197",
+        "study_id": "PRJEB34030"
+      },
+      {
+        "export_to_ena": {
+          "date": [
+            "14 May, 2020 - 08:44:51"
+          ],
+          "errors": [],
+          "status": [
+            "submission to ENA failed"
+          ]
+        },
+        "id": "ERR3482180",
+        "import_from_ena": {
+          "date": [
+            "13 May, 2020 - 08:40:53"
+          ],
+          "errors": [
+          ],
+          "status": [
+            "download failed"
+          ]
+        },
+        "pipeline_analysis": {
+          "date": [
+            "13 May, 2020 - 15:01:57"
+          ],
+          "errors": [],
+          "status": [
+            "pipeline finished with errors"
+          ]
+        },
+        "pipeline_name": "Jovian",
+        "sample_id": "SAMEA5867200",
+        "study_id": "PRJEB34031"
+      }
+    ]
+  }

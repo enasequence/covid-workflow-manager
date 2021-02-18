@@ -3,25 +3,37 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SamplesDetailsComponent } from './samples-details/samples-details.component';
-import { HeaderComponent } from './header/header.component';
-import { SamplesComponent } from './samples/samples.component';
-import {NgxPaginationModule} from "ngx-pagination";
-import {ApiDataService} from "./api-data.service";
-import {HttpClientModule} from '@angular/common/http';
-import { OntSamplesComponent } from './ont-samples/ont-samples.component';
-import { OntSamplesDetailsComponent } from './ont-samples-details/ont-samples-details.component';
-import { OntSamplesFiltersComponent } from './ont-samples-filters/ont-samples-filters.component';
+import { SamplesDetailsComponent } from './pages/samples-details/samples-details.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SamplesComponent } from './pages/samples/samples.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpClientModule } from '@angular/common/http';
+import { FilteredSamplesComponent } from './pages/filtered-samples/filtered-samples.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { JobStatusComponent } from './components/sample-table/job-status/job-status.component';
+import { StatusFilterComponent } from './components/filter/status-filter/status-filter.component';
+import { FilterPaneComponent } from './components/filter/filter-pane/filter-pane.component';
+import { SampleTableComponent } from './components/sample-table/sample-table/sample-table.component';
+import { environment } from 'src/environments/environment';
+import { FooterComponent } from './components/footer/footer.component';
+import { LogListComponent } from './components/log-list/log-list.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SamplesDetailsComponent,
-    HeaderComponent,
     SamplesComponent,
-    OntSamplesComponent,
-    OntSamplesDetailsComponent,
-    OntSamplesFiltersComponent
+    FilteredSamplesComponent,
+    SamplesDetailsComponent,
+    ErrorComponent,
+    HeaderComponent,
+    FooterComponent,
+    SampleTableComponent,
+    NavigationComponent,
+    FilterPaneComponent,
+    StatusFilterComponent,
+    JobStatusComponent,
+    LogListComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +41,10 @@ import { OntSamplesFiltersComponent } from './ont-samples-filters/ont-samples-fi
     NgxPaginationModule,
     HttpClientModule
   ],
-  providers: [ApiDataService],
+  providers: [
+    // Use the mock API service when running development environment
+    ...environment.providers,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,13 @@
+FROM node:15.3.0-alpine
+
+WORKDIR /opt/src/
+COPY package*.json ./
+RUN npm install
+RUN npm install @angular/cli
+
+ENV PATH="./node_modules/.bin:$PATH"
+
+COPY . ./
+EXPOSE 4200
+
+CMD ng serve --host 0.0.0.0 --watch --poll 1000
