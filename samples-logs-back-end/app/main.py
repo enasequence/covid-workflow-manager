@@ -32,6 +32,13 @@ def phylogenetic_tree_suspended():
     return {'results': list(db.suspended.find({}, {'_id': 0}))}
 
 
+@app.route("/lineages")
+def lineages():
+    client = MongoClient('mongodb://samples-logs-db-svc')
+    db = client.samples
+    return {'results': list(db.lineages_prod.find())}
+
+
 @app.route("/jovian")
 def jovian_samples():
     # Getting access to MongoDB
