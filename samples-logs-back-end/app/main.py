@@ -8,15 +8,10 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route("/phylogeny")
 @cross_origin()
 def phylogenetic_tree():
-    args = request.args
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
-    size = None
-    start = None
-    if 'size' in args:
-        size = int(args['size'])
-    if 'start' in args:
-        start = int(args['start'])
+    size = request.args.get('size')
+    start = request.args.get('start')
     if size and start:
         return {'results': list(db.phylo.find({}, {'_id': 0}).skip(start).limit(size))}
     elif size and not start:
@@ -36,7 +31,14 @@ def phylogenetic_tree_suspended():
 def lineages():
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
-    return {'results': list(db.lineages_prod.find())}
+    size = request.args.get('size')
+    start = request.args.get('start')
+    if size and start:
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).skip(start).limit(size))}
+    elif size and not start:
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).limit(size))}
+    else:
+        return {'results': []}
 
 
 @app.route("/jovian")

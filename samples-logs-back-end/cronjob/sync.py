@@ -24,7 +24,7 @@ def collect_table_data():
     This function will collect all records from
     https://www.covid19dataportal.org/sequences?db=embl-covid19 table
     :return: list of records to be added to DB in format eg.
-    [{'acc': 'MT947591', 'id': 'MT947591', 'source': 'embl-covid19'}, ...]
+    [{'acc': 'MN908947', 'id': 'MN908947', 'source': 'embl-covid19'}, ...]
     """
     first_response = requests.get(
         "https://www.ebi.ac.uk/ebisearch/ws/rest/embl-covid19/"
@@ -51,7 +51,7 @@ def update_tmp_phylo_collection():
     and copy new collections to prod
     """
     subprocess.run(
-        "wget http://45.86.170.46/coronavirus_sequence.tsv",
+        "wget --backups=1 http://45.86.170.46/coronavirus_sequence.tsv",
         shell=True,
         capture_output=True)
     with open('coronavirus_sequence.tsv', 'r') as f:
