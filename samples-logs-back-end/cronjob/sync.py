@@ -8,13 +8,10 @@ DB = CLIENT.samples
 
 def main():
     records = collect_table_data()
-    print(len(records))
-    print(records[0:5])
-
-    # create_tmp_collections(records)
-    # update_tmp_phylo_collection()
-    # update_tmp_lineage_collection()
-    # copy_to_prod_collections()
+    create_tmp_collections(records)
+    update_tmp_phylo_collection()
+    update_tmp_lineage_collection()
+    copy_to_prod_collections()
 
 
 def create_tmp_collections(records):
