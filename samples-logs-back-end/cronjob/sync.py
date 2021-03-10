@@ -23,27 +23,50 @@ def collect_table_data():
     """
     This function will collect all records from
     https://www.covid19dataportal.org/sequences?db=embl-covid19 table
+    To mirror the table, records MN908947 and LR991698 are shown first.
     :return: list of records to be added to DB in format eg.
     [{'acc': 'MN908947', 'id': 'MN908947', 'source': 'embl-covid19'}, ...]
     """
-    first_response = requests.get(
-        "https://www.ebi.ac.uk/ebisearch/ws/rest/embl-covid19/"
-        "?size=1000&format=JSON&facetcount=11&query=id%3A%5B*%20TO%20*%5D"
-    ).json()
-    results = list()
-    for i in range(0, first_response['hitCount'], 1000):
-        if i == 0:
-            for record in first_response['entries']:
-                results.append(record)
-        else:
-            response = requests.get(
-                f"https://www.ebi.ac.uk/ebisearch/ws/rest/embl-covid19/"
-                f"?start={i}&size=1000&format=JSON&facetcount=11"
-                f"&query=id%3A%5B*%20TO%20*%5D").json()
-            for record in response['entries']:
-                results.append(record)
-    return results
 
+    batch_size = 1000
+    single_sample = {
+        'size': '1',
+        'format': 'JSON',
+        'facetcount': '11',
+    }
+    batch_sample = {
+        'query': 'id:[* TO *]',
+        'size': str(batch_size),
+        'format': 'JSON',
+        'facetcount': '11',
+    }
+
+    url = "https://www.ebi.ac.uk/ebisearch/ws/rest/embl-covid19"
+    total_records = requests.get(url, params=batch_sample).json().get('hitCount')
+
+    request_parameters = [
+        {**single_sample, 'query': 'id:MN908947'},
+        {**single_sample, 'query': 'id:LR991698'},
+        {**batch_sample},
+        *[{**batch_sample, 'start': i} for i in range(batch_size, total_records, batch_size)]
+    ]
+    flatten = lambda t: [item for sublist in t for item in sublist]
+    records = [requests.get(url, params=p).json().get('entries') for p in request_parameters]
+    return deduplicate_dicts(flatten(records))
+
+
+def deduplicate_dicts(l):
+    """
+    Removes duplicate dicts from a list of dicts, preserving order
+    """
+    seen = set()
+    new_l = []
+    for d in l:
+        t = tuple(d.items())
+        if t not in seen:
+            seen.add(t)
+            new_l.append(d)
+    return new_l
 
 def update_tmp_phylo_collection():
     """
