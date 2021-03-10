@@ -8,10 +8,13 @@ DB = CLIENT.samples
 
 def main():
     records = collect_table_data()
-    create_tmp_collections(records)
-    update_tmp_phylo_collection()
-    update_tmp_lineage_collection()
-    copy_to_prod_collections()
+    print(len(records))
+    print(records[0:5])
+
+    # create_tmp_collections(records)
+    # update_tmp_phylo_collection()
+    # update_tmp_lineage_collection()
+    # copy_to_prod_collections()
 
 
 def create_tmp_collections(records):
@@ -29,12 +32,7 @@ def collect_table_data():
     """
 
     batch_size = 1000
-    single_sample = {
-        'size': '1',
-        'format': 'JSON',
-        'facetcount': '11',
-    }
-    batch_sample = {
+    parameters = {
         'query': 'id:[* TO *]',
         'size': str(batch_size),
         'format': 'JSON',
@@ -42,17 +40,19 @@ def collect_table_data():
     }
 
     url = "https://www.ebi.ac.uk/ebisearch/ws/rest/embl-covid19"
-    total_records = requests.get(url, params=batch_sample).json().get('hitCount')
+    total_records = requests.get(url, params=parameters).json().get('hitCount')
 
     request_parameters = [
-        {**single_sample, 'query': 'id:MN908947'},
-        {**single_sample, 'query': 'id:LR991698'},
-        {**batch_sample},
-        *[{**batch_sample, 'start': i} for i in range(batch_size, total_records, batch_size)]
+        {**parameters},
+        *[{**parameters, 'start': i} for i in range(batch_size, total_records, batch_size)]
+    ]
+    top_records = [
+        {'acc': 'MN908947', 'id': 'MN908947', 'source': 'embl-covid19'},
+        {'acc': 'LR991698', 'id': 'LR991698', 'source': 'embl-covid19'},
     ]
     flatten = lambda t: [item for sublist in t for item in sublist]
-    records = [requests.get(url, params=p).json().get('entries') for p in request_parameters]
-    return deduplicate_dicts(flatten(records))
+    records = flatten([requests.get(url, params=p).json().get('entries') for p in request_parameters])
+    return deduplicate_dicts([*top_records, *records])
 
 
 def deduplicate_dicts(l):
