@@ -2,28 +2,18 @@
 import subprocess, wget, pandas as pd
 from pymongo import MongoClient
 
-DOWNLOAD = False
-ANALYSE = False
+DOWNLOAD = True
+ANALYSE = True
 PARSE = True
-SAVE_TO_DB = False
-DB_URI = "mongodb://localhost"
+SAVE_TO_DB = True
+DB_URI = "mongodb://samples-logs-db-svc"
 
 
 def main():
-    # https://www.ebi.ac.uk/ena/browser/api/fasta/textsearch?domain=embl-covid19&query=id%3A%5B*%20TO%20*%5D&limit=5
-
-    """
-    1. Download list of ids
-    2. Check each id, if in db, next, else download
-    3. Run pangolin
-    4. Open tsv output and save to db
-    """
 
     seq_file = "/data/sequences_fasta_latest.fa"
     if DOWNLOAD:
         wget.download(
-            # f"ftp://ftp.ebi.ac.uk/pub/databases/covid19dataportal/"
-            # f"viral_sequences/README.md",
             f"ftp://ftp.ebi.ac.uk/pub/databases/covid19dataportal/"
             f"viral_sequences/sequences/{seq_file}.gz",
             out="/data/",
@@ -49,7 +39,7 @@ def main():
         if SAVE_TO_DB:
             client = MongoClient(DB_URI)
             db = client.samples
-            db.pangolin.insert_many(records)
+            db.pangolin2.insert_many(records)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pangolin-cronjob
+spec:
+  schedule: "* 0 * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        ms: pangolin-cronjob
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: main
+          image: rmwthorne/pangolin-cronjob
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: output
+              mountPath: /output
+            - name: temp
+              mountPath: /temp
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pangolin-pvc
