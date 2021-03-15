@@ -117,7 +117,11 @@ def update_tmp_lineage_collection():
     """
     for record in DB.pangolin.find():
         DB.lineage_tmp.update(
-            {"id": record["accession"]}, {"$set": {"lineage": record["has_lineage"]}}
+            {"id": record["accession"]},
+            {"$set": {
+                "has_lineage": record["has_lineage"], 
+                "lineage": record["lineage"]
+            }}
         )
 
 
