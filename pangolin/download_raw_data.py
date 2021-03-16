@@ -22,7 +22,7 @@ def main():
 
     if ANALYSE:
         subprocess.run(
-            f"pangolin -o /output --tempdir /temp --min-length 1000 {seq_file}",
+            f"pangolin -o /data/output --tempdir /data/temp --min-length 1000 {seq_file}",
             shell=True,
         )
 
