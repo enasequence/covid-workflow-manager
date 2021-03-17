@@ -10,11 +10,11 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def phylogenetic_tree():
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
-    size, start = (int(request.args.get(key)) for key in ['size', 'start'])
+    size, start = (request.args.get(key) for key in ['size', 'start'])
     if size and start:
-        return {'results': list(db.phylo.find({}, {'_id': 0}).skip(start).limit(size))}
+        return {'results': list(db.phylo.find({}, {'_id': 0}).skip(int(start)).limit(int(size)))}
     elif size and not start:
-        return {'results': list(db.phylo.find({}, {'_id': 0}).limit(size))}
+        return {'results': list(db.phylo.find({}, {'_id': 0}).limit(int(size)))}
     else:
         return {'results': []}
 
@@ -30,11 +30,11 @@ def phylogenetic_tree_suspended():
 def lineages():
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
-    size, start = (int(request.args.get(key)) for key in ['size', 'start'])
+    size, start = (request.args.get(key) for key in ['size', 'start'])
     if size and start:
-        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).skip(start).limit(size))}
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).skip(int(start)).limit(int(size)))}
     elif size and not start:
-        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).limit(size))}
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).limit(int(size)))}
     else:
         return {'results': []}
 
