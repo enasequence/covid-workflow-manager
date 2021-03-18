@@ -1,6 +1,10 @@
 FROM rmwthorne/pangolin
-RUN apt-get install gzip
+RUN apt-get update && apt-get install gzip
+
+RUN conda config --add channels bioconda
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY download_raw_data.py .
-CMD python download_raw_data.py
+RUN conda install --quiet --yes --file requirements.txt
+
+COPY annotate_lineages.py .
+
+CMD python annotate_lineages.py
