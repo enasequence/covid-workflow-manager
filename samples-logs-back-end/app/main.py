@@ -16,7 +16,7 @@ def phylogenetic_tree():
     elif size and not start:
         return {'results': list(db.phylo.find({}, {'_id': 0}).limit(int(size)))}
     else:
-        return {'results': []}
+        return {'results': list(db.phylo.find({}, {'_id': 0}))}
 
 
 @app.route("/phylogeny_suspended")
@@ -36,7 +36,7 @@ def lineages():
     elif size and not start:
         return {'results': list(db.lineages_prod.find({}, {'_id': 0}).limit(int(size)))}
     else:
-        return {'results': []}
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}))}
 
 
 @app.route("/jovian")
