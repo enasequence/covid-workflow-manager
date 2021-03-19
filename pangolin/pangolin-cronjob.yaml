@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: pangolin-cronjob
 spec:
-  schedule: "@midnight"
+  schedule: "0 0 * * 1" # At 00:00 on Monday
   jobTemplate:
     metadata:
       labels:
@@ -22,3 +22,4 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: pangolin-pvc
+
