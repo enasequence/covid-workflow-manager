@@ -18,6 +18,7 @@ def phylogenetic_tree():
     else:
         return {'results': list(db.phylo.find({}, {'_id': 0}))}
 
+
 @app.route("/phylogeny_suspended")
 def phylogenetic_tree_suspended():
     client = MongoClient('mongodb://samples-logs-db-svc')
