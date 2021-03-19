@@ -40,7 +40,8 @@ def parse_results():
 def save_to_db(records):
     client = MongoClient(DB_URI)
     db = client.samples
-    db.pangolin2.insert_many(records)
+    db.pangolin.drop()
+    db.pangolin.insert_many(records)
 
 
 if __name__ == "__main__":
