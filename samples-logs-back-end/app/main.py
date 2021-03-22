@@ -39,6 +39,17 @@ def lineages():
         return {'results': list(db.lineages_prod.find({}, {'_id': 0}))}
 
 
+@app.route("/lineages/metadata")
+def lineages_metadata():
+    client = MongoClient('mongodb://samples-logs-db-svc')
+    db = client.samples
+    return {
+        "total_count": f"{db.lineages_prod.count_documents({})}",
+        "has_lineage_count": f"{db.lineages_prod.count_documents({"has_lineage": True})}"
+        "last_updated": f"{db.lineages_prod.find_one({}).get("_id").generation_time}",
+    }
+
+
 @app.route("/jovian")
 def jovian_samples():
     # Getting access to MongoDB
