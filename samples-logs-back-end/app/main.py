@@ -44,9 +44,9 @@ def lineages_metadata():
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
     return {
-        "total_count": f"{db.lineages_prod.count_documents({})}",
-        "has_lineage_count": f"{db.lineages_prod.count_documents({"has_lineage": True})}"
-        "last_updated": f"{db.lineages_prod.find_one({}).get("_id").generation_time}",
+        "total_count": db.lineages_prod.count_documents({}),
+        "has_lineage_count": db.lineages_prod.count_documents({'has_lineage': True}),
+        "last_updated": db.lineages_prod.find_one({}).get('_id').generation_time,
     }
 
 
