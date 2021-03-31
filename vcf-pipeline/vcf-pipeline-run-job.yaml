@@ -12,16 +12,16 @@ spec:
       restartPolicy: Never
       nodeSelector:
         vcf: primary
-      containers:
-      - image: alexeyebi/vcf-pipeline-run-job
-        name: vcf-pipeline-run-job
-        volumeMounts:
-          - name: data
-            mountPath: /data
-          - name: output
-            mountPath: /output
       imagePullSecrets:
-        - name: regcred
+        - name: ebi-registry-secret
+      containers:
+        - image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/vcf-pipeline-run-job
+          name: vcf-pipeline-run-job
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: output
+              mountPath: /output
       volumes:
         - name: data
           persistentVolumeClaim:

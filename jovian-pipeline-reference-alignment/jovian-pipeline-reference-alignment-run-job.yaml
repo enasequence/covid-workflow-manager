@@ -11,30 +11,30 @@ spec:
       restartPolicy: Never
       nodeSelector:
         analysis: jovian
-      containers:
-      - name: main
-        image: alexeyebi/jovian-pipeline-reference-alignment-run-job
-        args: ["jovian-pipeline-reference-alignment-run-job"]
-        resources:
-          limits:
-            cpu: "15"
-            memory: "50Gi"
-          requests:
-            cpu: "15"
-            memory: "50Gi"
-        volumeMounts:
-          - name: sourcecode
-            mountPath: /git
-          - name: databases
-            mountPath: /databases
-          - name: data
-            mountPath: /raw_data
-          - name: results
-            mountPath: /output
-          - name: wms
-            mountPath: /wms
       imagePullSecrets:
-        - name: regcred
+        - name: ebi-registry-secret
+      containers:
+        - name: main
+          image: alexeyebi/jovian-pipeline-reference-alignment-run-job
+          args: ["jovian-pipeline-reference-alignment-run-job"]
+          resources:
+            limits:
+              cpu: "15"
+              memory: "50Gi"
+            requests:
+              cpu: "15"
+              memory: "50Gi"
+          volumeMounts:
+            - name: sourcecode
+              mountPath: /git
+            - name: databases
+              mountPath: /databases
+            - name: data
+              mountPath: /raw_data
+            - name: results
+              mountPath: /output
+            - name: wms
+              mountPath: /wms
       volumes:
         - name: sourcecode
           persistentVolumeClaim:

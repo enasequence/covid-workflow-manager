@@ -26,9 +26,9 @@ spec:
       nodeSelector:
         samples_logs: be
       imagePullSecrets:
-        - name: regcred
+        - name: ebi-registry-secret
       containers:
-      - name: samples-logs-back-end
-        image: alexeyebi/samples-logs-back-end
-        ports:
-        - containerPort: 80
+        - name: samples-logs-back-end
+          image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/samples-logs-back-end
+          ports:
+          - containerPort: 80

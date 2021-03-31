@@ -10,9 +10,11 @@ spec:
         ms: artic-illumina-inputdata-cronjob
     spec:
       restartPolicy: OnFailure
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
         - name: main
-          image: ctr26/artic-illumina-inputdata-cronjob
+          image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/artic-illumina-inputdata-cronjob
           env:
             - name: DATA_HUB
               valueFrom:

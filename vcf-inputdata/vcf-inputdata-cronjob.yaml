@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: vcf-inputdata-cronjob
+  name: vcf-inputdata-cronjob-test
 spec:
   template:
     metadata:
@@ -9,14 +9,16 @@ spec:
         ms: vcf-inputdata-cronjob
     spec:
       restartPolicy: OnFailure
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
-      - name: main
-        image: alexeyebi/vcf-inputdata-cronjob
-        volumeMounts:
-          - name: data
-            mountPath: /data
-          - name: wms
-            mountPath: /wms
+        - name: main
+          image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/vcf-inputdata-cronjob
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: wms
+              mountPath: /wms
       volumes:
         - name: data
           persistentVolumeClaim:
