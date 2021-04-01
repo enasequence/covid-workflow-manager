@@ -9,9 +9,11 @@ spec:
         ms: artic-ont-pipeline-run-job
     spec:
       restartPolicy: Never
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
-        - image: ctr26/artic-ont-pipeline-run-job
-          name: artic-ont-pipeline-run-pod
+        - name: artic-ont-pipeline-run-pod
+          image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/artic-pipeline-run-job
           args: ["ERR4164785", "ont"]
           env:
             - name: USER

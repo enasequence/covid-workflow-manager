@@ -9,9 +9,11 @@ spec:
         ms: jovian-databases-job
     spec:
       restartPolicy: OnFailure
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
       - name: main
-        image: alexeyebi/jovian-databases-job
+        image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-databases-job
         volumeMounts:
           - name: data
             mountPath: /database

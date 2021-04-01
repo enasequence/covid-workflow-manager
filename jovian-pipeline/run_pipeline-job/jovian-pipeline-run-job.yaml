@@ -9,9 +9,11 @@ spec:
         ms: jovian-pipeline-run-job
     spec:
       restartPolicy: Never
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
       - name: main
-        image: alexeyebi/jovian-pipeline-run-job
+        image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-pipeline-run-job
         args: ["jovian-pipeline-run-job"]
         resources:
           limits:

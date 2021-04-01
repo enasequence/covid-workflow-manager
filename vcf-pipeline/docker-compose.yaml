@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  artic-illumina-inputdata:
+    build: ./artic-illumina-inputdata
+    image: ${CI_REGISTRY_IMAGE}/artic-illumina-inputdata-cronjob:${TAG}
+  artic-ont-inputdata:
+    build: ./artic-ont-inputdata
+    image: ${CI_REGISTRY_IMAGE}/artic-ont-inputdata-cronjob:${TAG}
+  artic-pipeline:
+    build: ./artic-pipeline
+    image: ${CI_REGISTRY_IMAGE}/artic-pipeline-run-job:${TAG}
+  jovian-databases-cronjob:
+    build: ./jovian-databases/cronjob
+    image: ${CI_REGISTRY_IMAGE}/jovian-databases-cronjob:${TAG}
+  jovian-databases-job:
+    build: ./jovian-databases/job
+    image: ${CI_REGISTRY_IMAGE}/jovian-databases-job:${TAG}
+  jovian-inputdata:
+    build: ./jovian-inputdata
+    image: ${CI_REGISTRY_IMAGE}/jovian-inputdata-cronjob:${TAG}
+  jovian-pipeline-installation-job:
+    build: ./jovian-pipeline/installation-job
+    image: ${CI_REGISTRY_IMAGE}/jovian-pipeline-installation-job:${TAG}
+  jovian-pipeline-run_pipeline-job:
+    build: ./jovian-pipeline/run_pipeline-job
+    image: ${CI_REGISTRY_IMAGE}/jovian-pipeline-run-job:${TAG}
+  jovian-pipeline-reference-alignment:
+    build: ./jovian-pipeline-reference-alignment
+    image: ${CI_REGISTRY_IMAGE}/jovian-pipeline-reference-alignment-run-job:${TAG}
+  jovian-submission:
+    build: ./jovian-submission
+    image: ${CI_REGISTRY_IMAGE}/jovian-outputdata-job:${TAG}
+  ont-inputdata:
+    build: ./ont-inputdata
+    image: ${CI_REGISTRY_IMAGE}/ont-inputdata-cronjob:${TAG}
+  ont-pipeline:
+    build: ./ont-pipeline
+    image: ${CI_REGISTRY_IMAGE}/ont-pipeline-run-job:${TAG}
+  pangolin:
+    build: ./panoglin
+    image: ${CI_REGISTRY_IMAGE}/pangolin-cronjob:${TAG}
+  samples-logs-back-end:
+    build: ./samples-logs-back-end
+    image: ${CI_REGISTRY_IMAGE}/samples-logs-back-end:${TAG}
+  samples-logs-back-end-cronjob:
+    build: ./samples-logs-back-end/cronjob
+    image: ${CI_REGISTRY_IMAGE}/samples-logs-back-end-cronjob:${TAG}
+  vcf-inputdata:
+    build: ./vcf-inputdata
+    image: ${CI_REGISTRY_IMAGE}/vcf-inputdata-cronjob:${TAG}
+  vcf-pipeline:
+    build: ./vcf-pipeline
+    image: ${CI_REGISTRY_IMAGE}/vcf-pipeline-run-job:${TAG}

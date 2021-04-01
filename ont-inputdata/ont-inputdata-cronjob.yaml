@@ -10,9 +10,11 @@ spec:
         ms: ont-inputdata-cronjob
     spec:
       restartPolicy: OnFailure
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
       - name: main
-        image: alexeyebi/ont-inputdata-cronjob
+        image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/ont-inputdata-cronjob
         env:
           - name: DATA_HUB
             valueFrom:
