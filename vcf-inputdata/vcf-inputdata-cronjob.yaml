@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: vcf-inputdata-cronjob-test
+  name: vcf-inputdata-cronjob
 spec:
   template:
     metadata:

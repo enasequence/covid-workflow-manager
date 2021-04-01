@@ -9,7 +9,7 @@ services:
 
 deploy_images:
   stage: deploy
-  image: docker/compose
+  image: docker/compose:1.28.6
   script:
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]
