@@ -13,13 +13,13 @@ spec:
       imagePullSecrets:
         - name: ebi-registry-secret
       containers:
-        - name: main
-          image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-databases-cronjob
-          volumeMounts:
-            - name: data
-              mountPath: /mnt/database
-            - name: code
-              mountPath: /git
+      - name: main
+        image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-databases-cronjob
+        volumeMounts:
+          - name: data
+            mountPath: /mnt/database
+          - name: code
+            mountPath: /git
       volumes:
         - name: data
           persistentVolumeClaim:

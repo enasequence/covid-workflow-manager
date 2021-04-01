@@ -12,27 +12,27 @@ spec:
       imagePullSecrets:
         - name: ebi-registry-secret
       containers:
-        - name: main
-          image: alexeyebi/jovian-outputdata-job
-          args: ["jovian-outputdata-job"]
-          env:
-            - name: USER
-              valueFrom:
-                configMapKeyRef:
-                  name: jovian-outputdata-config
-                  key: submission-user
-            - name: PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: jovian-outputdata-config
-                  key: submission-password
-          volumeMounts:
-            - name: aws-config
-              mountPath: /root/.aws
-            - name: results
-              mountPath: /output
-            - name: code
-              mountPath: /git
+      - name: main
+        image: alexeyebi/jovian-outputdata-job
+        args: ["jovian-outputdata-job"]
+        env:
+          - name: USER
+            valueFrom:
+              configMapKeyRef:
+                name: jovian-outputdata-config
+                key: submission-user
+          - name: PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: jovian-outputdata-config
+                key: submission-password
+        volumeMounts:
+          - name: aws-config
+            mountPath: /root/.aws
+          - name: results
+            mountPath: /output
+          - name: code
+            mountPath: /git
       volumes:
         - name: aws-config
           configMap:

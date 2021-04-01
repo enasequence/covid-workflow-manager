@@ -13,24 +13,24 @@ spec:
       imagePullSecrets:
         - name: ebi-registry-secret
       containers:
-        - name: main
-          image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/ont-inputdata-cronjob
-          env:
-            - name: DATA_HUB
-              valueFrom:
-                configMapKeyRef:
-                  name: ont-inputdata-config
-                  key: data-hub
-            - name: DATA_HUB_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: ont-inputdata-config
-                  key: data-hub-password
-          volumeMounts:
-            - name: data
-              mountPath: /data
-            - name: wms
-              mountPath: /wms
+      - name: main
+        image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/ont-inputdata-cronjob
+        env:
+          - name: DATA_HUB
+            valueFrom:
+              configMapKeyRef:
+                name: ont-inputdata-config
+                key: data-hub
+          - name: DATA_HUB_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: ont-inputdata-config
+                key: data-hub-password
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: wms
+            mountPath: /wms
       volumes:
         - name: data
           persistentVolumeClaim:

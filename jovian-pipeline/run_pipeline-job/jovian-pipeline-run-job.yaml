@@ -12,27 +12,27 @@ spec:
       imagePullSecrets:
         - name: ebi-registry-secret
       containers:
-        - name: main
-          image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-pipeline-run-job
-          args: ["jovian-pipeline-run-job"]
-          resources:
-            limits:
-              cpu: "19"
-              memory: "90Gi"
-            requests:
-              cpu: "19"
-              memory: "90Gi"
-          volumeMounts:
-            - name: sourcecode
-              mountPath: /git
-            - name: databases
-              mountPath: /mnt/database
-            - name: data
-              mountPath: /raw_data
-            - name: results
-              mountPath: /output
-            - name: wms
-              mountPath: /wms
+      - name: main
+        image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-pipeline-run-job
+        args: ["jovian-pipeline-run-job"]
+        resources:
+          limits:
+            cpu: "19"
+            memory: "90Gi"
+          requests:
+            cpu: "19"
+            memory: "90Gi"
+        volumeMounts:
+          - name: sourcecode
+            mountPath: /git
+          - name: databases
+            mountPath: /mnt/database
+          - name: data
+            mountPath: /raw_data
+          - name: results
+            mountPath: /output
+          - name: wms
+            mountPath: /wms
       volumes:
         - name: sourcecode
           persistentVolumeClaim:
