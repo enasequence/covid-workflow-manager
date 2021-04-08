@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ena-wms-config
+data:
+  git-sync-repo: "https://github.com/enasequence/covid-workflow-manager.git"
+  git-sync-dest: "/git"
+  git-sync-branch: "master"
+  git-sync-rev: "FETCH_HEAD"
+  git-sync-wait: "10"
