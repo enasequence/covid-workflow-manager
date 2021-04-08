@@ -1,0 +1,25 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pangolin-cronjob
+spec:
+  schedule: "0 0 * * 1" # At 00:00 on Monday
+  jobTemplate:
+    metadata:
+      labels:
+        ms: pangolin-cronjob
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: main
+              image: rmwthorne/pangolin-cronjob
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: pangolin-pvc
+
