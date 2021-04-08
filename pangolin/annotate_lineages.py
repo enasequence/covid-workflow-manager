@@ -24,7 +24,7 @@ def download():
         capture_output=True,
     )
     if download.returncode != 0:
-        log_message(
+        log_error(
             f"There was an error downloading viral sequences "
             f"for annotation: {download.stderr.decode('utf-8')}"
         )
@@ -55,7 +55,7 @@ def save_to_db(records):
     db.pangolin.insert_many(records)
 
 
-def log_message(message):
+def log_error(message):
     db = MongoClient(DB_URI).samples
     timestamp = datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S")
     db.samples.update_one(
