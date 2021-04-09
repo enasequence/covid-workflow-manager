@@ -1,0 +1,1 @@
+docker run -d -p 80:80 ctr26/k8s-jobs-api:latest
