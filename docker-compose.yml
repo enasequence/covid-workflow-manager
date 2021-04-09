@@ -1,0 +1,62 @@
+version: '3'
+services:
+  artic-illumina-inputdata:
+    build:
+      context: ./artic-illumina-inputdata
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/artic-illumina-inputdata-cronjob
+  artic-ont-inputdata:
+    build:
+      context: ./artic-ont-inputdata
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/artic-ont-inputdata-cronjob
+  artic-pipeline:
+    build:
+      context: ./artic-pipeline
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/artic-pipeline-run-job
+  jovian-databases-cronjob:
+    build:
+      context: ./jovian-databases/cronjob
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-databases-cronjob
+  jovian-databases-job:
+    build:
+      context: ./jovian-databases/job
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-databases-job
+  jovian-inputdata:
+    build:
+      context: ./jovian-inputdata
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-inputdata-cronjob
+  jovian-pipeline-installation-job:
+    build:
+      context: ./jovian-pipeline/installation-job
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-pipeline-installation-job
+  jovian-pipeline-run_pipeline-job:
+    build:
+      context: ./jovian-pipeline/run_pipeline-job
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-pipeline-run-job
+  jovian-pipeline-reference-alignment:
+    build:
+      context: ./jovian-pipeline-reference-alignment
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-pipeline-reference-alignment-run-job
+  jovian-submission:
+    build:
+      context: ./jovian-submission
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-outputdata-job
+  ont-inputdata:
+    build:
+      context: ./ont-inputdata
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/ont-inputdata-cronjob
+  ont-pipeline:
+    build:
+      context: ./ont-pipeline
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/ont-pipeline-run-job
+  samples-logs-back-end:
+    build:
+      context: ./samples-logs-back-end
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/jovian-samples-logs-back-end
+  vcf-inputdata:
+    build:
+      context: ./vcf-inputdata
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/vcf-inputdata-cronjob
+  vcf-pipeline:
+    build:
+      context: ./vcf-pipeline
+    image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/vcf-pipeline-run-job

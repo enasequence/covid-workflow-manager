@@ -1,0 +1,42 @@
+variables:
+  SSL_CERT_DIR: ''
+  # DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ''
+
+# services:
+#   - docker:19.03.0-dind
+
+stages:
+  - debug
+  - setup
+  - deploy_images
+  # - production
+
+debug:
+  stage: debug
+  script:
+    - export
+    
+setup:
+  stage: setup
+  image: docker
+  services:
+  - name: docker:19.03.0-dind
+  script:
+    - docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+
+deploy_images:
+  stage: deploy_images
+  image: docker/compose
+  script:
+    - docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" 
+    - docker-compose build
+    - docker-compose push
+  # except:
+  # - "master"
+
+# production:
+#   stage: production
+#   script:
+#   only:
+#   - "master"
