@@ -6,13 +6,13 @@ conda activate Jovian_helper
 set -ue
 
 # Set paths
-DB_PATH_NT="/database/NT_database"
-DB_PATH_TAX="/database/taxdb"
-DB_PATH_NTAX="/database/new_taxdump"
-DB_PATH_KRONA="/database/krona_taxonomy"
-DB_PATH_MGKIT="/database/mgkit_taxonomy"
-DB_PATH_VHOST="/database/Virus-Host_interaction_db"
-DB_PATH_HUGO="/database/Human_genome"
+DB_PATH_NT="/databases/NT_database"
+DB_PATH_TAX="/databases/taxdb"
+DB_PATH_NTAX="/databases/new_taxdump"
+DB_PATH_KRONA="/databases/krona_taxonomy"
+DB_PATH_MGKIT="/databases/mgkit_taxonomy"
+DB_PATH_VHOST="/databases/Virus-Host_interaction_db"
+DB_PATH_HUGO="/databases/Human_genome"
 
 # Make folders
 mkdir -p ${DB_PATH_NT}
@@ -22,6 +22,9 @@ mkdir -p ${DB_PATH_KRONA}
 mkdir -p ${DB_PATH_MGKIT}
 mkdir -p ${DB_PATH_VHOST}
 mkdir -p ${DB_PATH_HUGO}
+
+# Download SARS-CoV2 reference genome (NC_045512.2, ncbi_uidlist 1798174254) from NCBI
+wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=1798174254&db=nuccore&report=fasta&retmode=text&withmarkup=on&tool=portal&log$=seqview&maxdownloadsize=100000000" -O /databases/sequence.fasta
 
 # Downloading databases
 cd "${DB_PATH_TAX}" || exit
