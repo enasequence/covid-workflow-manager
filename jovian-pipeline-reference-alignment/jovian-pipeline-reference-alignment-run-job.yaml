@@ -9,12 +9,12 @@ spec:
         ms: jovian-pipeline-run-job
     spec:
       restartPolicy: Never
-      nodeSelector:
-        analysis: jovian
       containers:
       - name: main
-        image: alexeyebi/jovian-pipeline-reference-alignment-run-job
-        args: ["jovian-pipeline-reference-alignment-run-job"]
+        image: rmwthorne/jovian-pipeline-reference-alignment-run-job
+        command: ["bash", "run_pipeline.sh"]
+        args: ["ERR5423903"]
+        # command: ["sleep", "9999"]
         resources:
           limits:
             cpu: "15"

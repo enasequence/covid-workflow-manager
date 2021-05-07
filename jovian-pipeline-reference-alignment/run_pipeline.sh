@@ -7,7 +7,9 @@ source /git/bin/includes/functions
 set +ue
 conda init bash
 source /root/.bashrc
-conda activate /output
+conda env create -f /git/bin/envs/Jovian_master_environment.yaml -n Jovian_master
+conda info --envs
+conda activate Jovian_master
 ${CONDA_PREFIX}/bin/python -m ipykernel install --user --name Jovian_master --display-name "Jovian"
 ${CONDA_PREFIX}/bin/jupyter nbextension enable collapsible_headings/main --sys-prefix
 ${CONDA_PREFIX}/bin/jupyter nbextension enable highlight_selected_word/main --sys-prefix
@@ -53,11 +55,12 @@ echo -e "Jovian_run:\n    identifier: ${UNIQUE_ID}" > "config/variables.yaml"
 echo -e "Server_host:\n    hostname: http://${HOSTNAME}" >> "config/variables.yaml"
 eval $(parse_yaml "config/variables.yaml" "config_")
 snakemake -s bin/Illumina_vir_Ref.smk --conda-frontend conda --profile "${PROFILE}"
+echo "Snakemake pipeline complete"
 set -ue
 
-#sed -i "s/${HOSTNAME}:8083\/${UNIQUE_ID}/193.62.54.246\/notebooks\/${RUN_ID}/g" results/igv.html
-#jupyter nbconvert --to notebook --execute Illumina_RA_report.ipynb
-#jupyter nbconvert --to HTML Illumina_RA_report.nbconvert.ipynb
+sed -i "s/${HOSTNAME}:8083\/${UNIQUE_ID}/193.62.54.246\/notebooks\/${RUN_ID}/g" results/igv.html
+jupyter nbconvert --to notebook --execute Illumina_RA_report.ipynb
+jupyter nbconvert --to HTML Illumina_RA_report.nbconvert.ipynb
 conda deactivate
 
 #if [ -e results/snakemake_report.html ]; then
