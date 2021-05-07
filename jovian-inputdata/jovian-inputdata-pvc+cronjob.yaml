@@ -12,41 +12,40 @@ spec:
 
 ---
 
-apiVersion: batch/v1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: jovian-inputdata-cronjob
 spec:
-  schedule: "* 0 * * *"
+  schedule: "@weekly"
   jobTemplate:
-    metadata:
-      labels:
-        ms: jovian-inputdata-cronjob
     spec:
-      restartPolicy: OnFailure
-      containers:
-      - name: main
-        image: alexeyebi/jovian-inputdata-cronjob
-        env:
-          - name: DATA_HUB
-            valueFrom:
-              configMapKeyRef:
-                name: jovian-inputdata-config
-                key: data-hub
-          - name: DATA_HUB_PASSWORD
-            valueFrom:
-              configMapKeyRef:
-                name: jovian-inputdata-config
-                key: data-hub-password
-        volumeMounts:
-          - name: data
-            mountPath: /raw_data
-          - name: wms
-            mountPath: /wms
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: jovian-inputdata-pvc
-        - name: wms
-          persistentVolumeClaim:
-            claimName: ena-wms-pvc
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - image: rmwthorne/jovian-inputdata-cronjob
+            name: jovian-inputdata-job
+            env:
+              - name: DATA_HUB
+                valueFrom:
+                  configMapKeyRef:
+                    name: jovian-inputdata-config-greece
+                    key: data-hub
+              - name: DATA_HUB_PASSWORD
+                valueFrom:
+                  configMapKeyRef:
+                    name: jovian-inputdata-config-greece
+                    key: data-hub-password
+            volumeMounts:
+              - name: data
+                mountPath: /raw_data
+              - name: wms
+                mountPath: /wms
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: jovian-inputdata-pvc
+            - name: wms
+              persistentVolumeClaim:
+                claimName: ena-wms-pvc
