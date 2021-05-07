@@ -10,13 +10,13 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-      - name: main
-        image: alexeyebi/jovian-pipeline-installation-job
-        volumeMounts:
-          - name: sourcecode
-            mountPath: /git
-          - name: databases
-            mountPath: /mnt/database
+        - name: main
+          image: rmwthorne/jovian-pipeline-installation-job
+          volumeMounts:
+            - name: sourcecode
+              mountPath: /git
+            - name: databases
+              mountPath: /databases
       volumes:
         - name: sourcecode
           persistentVolumeClaim:

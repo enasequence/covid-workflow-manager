@@ -1,0 +1,5 @@
+cores: 19
+latency-wait: 60
+use-conda: true
+conda-prefix: /git/.snakemake/conda
+jobname: Jovian_{name}.jobid{jobid}

@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jovian-pipeline-run-job
+spec:
+  template:
+    metadata:
+      labels:
+        ms: jovian-pipeline-run-job
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: main
+        image: rmwthorne/jovian-reference-alignment
+        # command: ["bash", "run_pipeline.sh"]
+        # args: ["ERR5423903"]
+        command: ["sleep", "9999"]
+        resources:
+          limits:
+            cpu: "15"
+            memory: "50Gi"
+          requests:
+            cpu: "15"
+            memory: "50Gi"
+        volumeMounts:
+          - name: databases
+            mountPath: /databases
+          - name: data
+            mountPath: /raw_data
+          - name: results
+            mountPath: /output
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: databases
+          persistentVolumeClaim:
+            claimName: jovian-databases-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: jovian-inputdata-pvc
+        - name: results
+          persistentVolumeClaim:
+            claimName: jovian-outputdata-pvc
+        - name: config
+          configMap:
+            name: jovian-pipeline-config
