@@ -1,5 +1,5 @@
 FROM rmwthorne/pangolin
-RUN apt-get update && apt-get install gzip
+RUN apt-get update && apt-get -y install gzip
 
 RUN conda config --add channels bioconda
 COPY requirements.txt .
