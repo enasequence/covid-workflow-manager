@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: pangolin-cronjob
 spec:
-  schedule: "37 9 * * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     metadata:
       labels:
