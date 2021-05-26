@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: phylogeny-cronjob
 spec:
-  schedule: "0 * * * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
@@ -14,4 +14,4 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: main
-              image: alexeyebi/phylogeny-cronjob
+              image: rmwthorne/phylogeny-cronjob
