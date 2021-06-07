@@ -14,4 +14,12 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: main
-              image: alexeyebi/phylogeny-cronjob
+              image: rmwthorne/phylogeny-cronjob
+              env:
+                - name: MONGO_URI
+                  value: "mongodb://samples-logs-db-svc"
+                - name: DB_NAME
+                  value: "samples_testing"
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+
