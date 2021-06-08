@@ -19,7 +19,7 @@ spec:
                 - name: MONGO_URI
                   value: "mongodb://samples-logs-db-svc"
                 - name: DB_NAME
-                  value: "samples_testing"
+                  value: "samples"
                 - name: PYTHONUNBUFFERED
                   value: "1"
 
