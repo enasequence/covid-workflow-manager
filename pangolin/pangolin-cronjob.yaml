@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: pangolin-cronjob
 spec:
-  schedule: "0 0 * * *"
+  schedule: "40 11 * * *"
   jobTemplate:
     metadata:
       labels:
@@ -17,7 +17,7 @@ spec:
               image: rmwthorne/pangolin-cronjob
               env:
                 - name: SOURCE
-                  value: rest # 'rest' or 'ftp'
+                  value: rest
               volumeMounts:
                 - name: data
                   mountPath: /data

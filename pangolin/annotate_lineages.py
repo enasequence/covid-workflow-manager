@@ -1,28 +1,29 @@
 #!/usr/bin/python
 import os, subprocess, datetime, requests, glob, pandas as pd
-from pandas.core.arrays import boolean
-from pymongo.database import Database
 from urllib.request import urlretrieve
 from urllib.parse import urlencode
 from pymongo import MongoClient
 
 DB_URI = "mongodb://samples-logs-db-svc"
 SEQ_ENDPOINT = "https://www.ebi.ac.uk/ebisearch/ws/rest/embl-covid19"
-SOURCE = os.environ.get("SOURCE", "ftp") # Should be 'ftp' or 'rest'
+SOURCE = os.environ.get("SOURCE") # Should be 'ftp' or 'rest'
+debug = os.environ.get("DEBUG")
 
 
 def main():
     if SOURCE == "rest":
-        annotate_new_accessions()
+        annotate_new_accessions(remove_old=False)
     elif SOURCE == "ftp":
-        annotate_all_accessions()
+        annotate_all_accessions(remove_old=False)
+    else:
+        print(f"SOURCE environment variable is {SOURCE}. Should be one of 'ftp', 'rest'. Exiting")
 
 
-def annotate_new_accessions() -> None:
-    remove_old = False
+def annotate_new_accessions(remove_old: bool):
+    print("Annotating only new records found via REST API")
     dest_dir = "/data/new"
     subprocess.run(f"mkdir -p {dest_dir}", shell=True)
-    if remove_old: 
+    if remove_old:
         subprocess.run(f"rm -rf {dest_dir}/sequences/*", shell=True)
         subprocess.run(f"rm -rf {dest_dir}/output/*", shell=True)
 
@@ -35,23 +36,23 @@ def annotate_new_accessions() -> None:
     save_to_db(df, replace=False)
 
 
-def annotate_all_accessions() -> None:
-    remove_old = True
+def annotate_all_accessions(remove_old: bool):
+    print("Annotating bulk sequence download from FTP")
     dest_dir = "/data/bulk"
-    seq_file = "sequences_fasta_latest_temp.fa"
+    seq_file = "sequences_fasta_latest.fa" # Do not include .gz extension
     subprocess.run(f"mkdir -p {dest_dir}", shell=True)
     if remove_old:
         subprocess.run(f"rm -rf {dest_dir}/sequences/*", shell=True)
         subprocess.run(f"rm -rf {dest_dir}/output/*", shell=True)
+        download_ftp(f"{dest_dir}/sequences", seq_file)
 
-    download_ftp(dest_dir, seq_file)
     analyse(dest_dir, seq_file)
     df = parse_results(f"{dest_dir}/output/lineage_report.csv")
     print(f"Total new records to add: {len(df)}")
     save_to_db(df, replace=True)
 
 
-def download_ftp(dest_dir: str, filename: str) -> None:
+def download_ftp(dest_dir: str, filename: str):
     download = subprocess.run(
         f"wget ftp://ftp.ebi.ac.uk/pub/databases/covid19dataportal/"
         f"viral_sequences/sequences/{filename}.gz"
@@ -59,12 +60,15 @@ def download_ftp(dest_dir: str, filename: str) -> None:
         shell=True,
         capture_output=True,
     )
+    print(download.args)
     if download.returncode != 0:
+        print(download.stderr.decode('utf-8'))
         log_error(
             f"There was an error downloading viral sequences "
             f"for annotation: {download.stderr.decode('utf-8')}"
         )
-    subprocess.run(f"gunzip {dest_dir}/{filename}.gz", shell=True)
+    unzip = subprocess.run(f"gunzip {dest_dir}/{filename}.gz", shell=True)
+    print(unzip.args)
 
 
 def fetch_new_accessions(endpoint: str) -> list:
@@ -82,7 +86,7 @@ def fetch_new_accessions(endpoint: str) -> list:
     # fetch all available sequence accessions
     entries = get_paginated_results(endpoint, limit=rest_accession_count)
     all_accessions = [x.get("acc") for x in entries]
-    new_accessions = set(all_accessions).difference(annotated_accesions) 
+    new_accessions = set(all_accessions).difference(annotated_accesions)
     # Return accessions not already in database
     return list(new_accessions)
 
@@ -95,9 +99,9 @@ def get_annotated_accessions() -> list:
     return [x.get("accession") for x in records]
 
 
-def download_rest(accessions: list, directory: str, chunk_size: int = 400) -> None:
+def download_rest(accessions: list, directory: str, chunk_size: int = 400):
     # http errors from EBI search if we have more than 400 IDs per request
-    if not accessions: 
+    if not accessions:
         print("No new accessions to download, exiting")
         return
 
@@ -125,7 +129,7 @@ def download_from_rest(accessions: list, filename: str) -> str:
 
 def get_paginated_results(url: str, limit: int, batch_size: int =1000) -> list:
     parameter_list = [
-        {        
+        {
             "query": "id:[* TO *]",
             "size": str(batch_size),
             "format": "JSON",
@@ -137,22 +141,25 @@ def get_paginated_results(url: str, limit: int, batch_size: int =1000) -> list:
     return flatten(entry_list)
 
 
-def analyse(directory: str, seq_file: str) -> None:
+def analyse(directory: str, seq_file: str):
     process = subprocess.run(
         f"pangolin "
-        f"-outdir {directory}/output "
+        f"--outdir {directory}/output "
         f"--tempdir {directory}/temp "
         f"--min-length 1000 "
-        f"{directory}/{seq_file}",
+        f"{directory}/sequences/{seq_file}",
         shell=True,
     )
-    if process.returncode != 0:
-        print(process.stderr.decode('utf-8'))
+    print(process.args)
+    with open(f"{directory}/pangolin.log", 'rw') as f:
+        f.write(process.stderr.decode('utf-8'))
+    report_errors(process)
 
 
-def analyse_multiple(directory: str) -> None:
+def analyse_multiple(directory: str):
     for g in glob.glob(f"{directory}/sequences/seqs_*.gz"):
-        subprocess.run(f"gunzip {g}", shell=True)
+        gunzip = subprocess.run(f"gunzip {g}", shell=True)
+        report_errors(gunzip)
 
     for seq_file in glob.glob(f"{directory}/sequences/seqs_*.fa"):
         process = subprocess.run(
@@ -164,12 +171,12 @@ def analyse_multiple(directory: str) -> None:
             f"{seq_file}",
             shell=True
         )
-        if process.returncode != 0:
-            print(process.stderr.decode('utf-8'))
-
+        report_errors(process)
 
 def parse_results(csv_file: str) -> pd.DataFrame:
+    print(f"parsing {csv_file}")
     df = pd.read_csv(csv_file)[["taxon", "lineage"]]
+    print(f"Found {len(df)} rows")
     return (
         df.assign(accession=df.taxon.map(lambda x: x.split("|")[1] or ""))
         .drop(["taxon"], axis=1)
@@ -177,16 +184,18 @@ def parse_results(csv_file: str) -> pd.DataFrame:
     )
 
 
-def save_to_db(df: pd.DataFrame, replace: boolean) -> None:
+def save_to_db(df: pd.DataFrame, replace: bool):
     records = df.to_dict("records")
-    client = MongoClient(DB_URI)
-    db = client.samples
+    db = MongoClient(DB_URI).samples
     if replace:
         db.pangolin.drop()
     db.pangolin.insert_many(records)
 
+def report_errors(process: subprocess.CompletedProcess):
+    if process.returncode != 0:
+        print(process.stderr.decode("utf-8"))
 
-def log_error(message: str) -> None:
+def log_error(message: str):
     db = MongoClient(DB_URI).samples
     timestamp = datetime.datetime.now().strftime("%d %B, %Y - %H:%M:%S")
     db.samples.update_one(
@@ -197,7 +206,7 @@ def log_error(message: str) -> None:
                 "import.errors": message,
             }
         },
-        {"upsert": True}
+        upsert=True
     )
 
 
