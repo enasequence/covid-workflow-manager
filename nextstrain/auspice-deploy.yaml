@@ -4,9 +4,9 @@ metadata:
   name: auspice-svc
 spec:
   ports:
-  - port: 80
+  - port: 5000
     protocol: TCP
-    targetPort: 80
+    targetPort: 5000
   selector:
     ms: auspice
 
@@ -28,5 +28,5 @@ spec:
         image: staphb/auspice
         command: ["auspice", "view"]
         ports:
-        - containerPort: 80
+        - containerPort: 5000
 
