@@ -1,32 +1,37 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: auspice-svc
-spec:
-  ports:
-  - port: 5000
-    protocol: TCP
-    targetPort: 5000
-  selector:
-    ms: auspice
-
----
-
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auspice-deployment
+  name: auspice
+  labels:
+    app: auspice
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: auspice
   template:
     metadata:
       labels:
-        ms: auspice
+        app: auspice
     spec:
       containers:
       - name: auspice
-        image: staphb/auspice
-        command: ["auspice", "view"]
+        image: rmwthorne/test
+        command: ["auspice", "view", "--datasetDir", "/data/datasets"]
         ports:
-        - containerPort: 5000
+        - containerPort: 4000
+        volumeMounts:
+          - name: datasets
+            mountPath: /datasets
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+      volumes:
+        - name: datasets
+          persistentVolumeClaim:
+            claimName: nextstrain-data-pvc
 

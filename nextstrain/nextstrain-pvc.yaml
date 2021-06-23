@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextstrain-data-pvc
+spec:
+  resources:
+    requests:
+      storage: 50Gi
+  accessModes:
+  - ReadWriteMany
+
