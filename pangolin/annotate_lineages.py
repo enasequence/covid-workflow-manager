@@ -41,13 +41,13 @@ def annotate_new_accessions(remove_old: bool):
 
 
 def prep_workdir(path:str, remove_old: bool):
-    subprocess.run(f"mkdir -p {path}", shell=True)
+    subprocess.run(f"mkdir -p {path}", shell=True, capture_output=True)
     subdirs = ['sequences', 'output', 'temp']
     for subdir in subdirs:
-        subprocess.run(f"mkdir -p {path}/{subdir}", shell=True)
+        subprocess.run(f"mkdir -p {path}/{subdir}", shell=True, capture_output=True)
     if remove_old is True:
         for subdir in subdirs:
-            subprocess.run(f"rm -rf {path}/{subdir}/*", shell=True)
+            subprocess.run(f"rm -rf {path}/{subdir}/*", shell=True, capture_output=True)
 
 
 def fetch_new_accessions(endpoint: str) -> list:
@@ -122,7 +122,7 @@ def get_paginated_results(url: str, limit: int, batch_size: int = 1000) -> list:
 
 def analyse_multiple(directory: str):
     for g in glob.glob(f"{directory}/sequences/seqs_*.gz"):
-        gunzip = subprocess.run(f"gunzip -f {g}", shell=True)
+        gunzip = subprocess.run(f"gunzip -f {g}", shell=True, capture_output=True)
         gunzip.check_returncode()
 
     for seq_file in glob.glob(f"{directory}/sequences/seqs_*.fa"):
@@ -133,7 +133,8 @@ def analyse_multiple(directory: str):
             f"--outfile {os.path.basename(seq_file)}.csv "
             f"--min-length 1000 "
             f"{seq_file}",
-            shell=True
+            shell=True,
+            capture_output=True
         )
         process.check_returncode()
 
