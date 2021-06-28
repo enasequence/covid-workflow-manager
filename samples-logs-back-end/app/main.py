@@ -8,21 +8,15 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route("/phylogeny")
 @cross_origin()
 def phylogenetic_tree():
-    args = request.args
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
-    size = None
-    start = None
-    if 'size' in args:
-        size = int(args['size'])
-    if 'start' in args:
-        start = int(args['start'])
+    size, start = (request.args.get(key) for key in ['size', 'start'])
     if size and start:
-        return {'results': list(db.phylo.find({}, {'_id': 0}).skip(start).limit(size))}
+        return {'results': list(db.phylo.find({}, {'_id': 0}).skip(int(start)).limit(int(size)))}
     elif size and not start:
-        return {'results': list(db.phylo.find({}, {'_id': 0}).limit(size))}
+        return {'results': list(db.phylo.find({}, {'_id': 0}).limit(int(size)))}
     else:
-        return {'results': []}
+        return {'results': list(db.phylo.find({}, {'_id': 0}))}
 
 
 @app.route("/phylogeny_suspended")
@@ -30,6 +24,30 @@ def phylogenetic_tree_suspended():
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
     return {'results': list(db.suspended.find({}, {'_id': 0}))}
+
+
+@app.route("/lineages")
+def lineages():
+    client = MongoClient('mongodb://samples-logs-db-svc')
+    db = client.samples
+    size, start = (request.args.get(key) for key in ['size', 'start'])
+    if size and start:
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).skip(int(start)).limit(int(size)))}
+    elif size and not start:
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).limit(int(size)))}
+    else:
+        return {'results': list(db.lineages_prod.find({}, {'_id': 0}))}
+
+
+@app.route("/lineages/metadata")
+def lineages_metadata():
+    client = MongoClient('mongodb://samples-logs-db-svc')
+    db = client.samples
+    return {
+        "total_count": db.lineages_prod.count_documents({}),
+        "has_lineage_count": db.lineages_prod.count_documents({'has_lineage': True}),
+        "last_updated": db.lineages_prod.find_one({}).get('_id').generation_time,
+    }
 
 
 @app.route("/jovian")
