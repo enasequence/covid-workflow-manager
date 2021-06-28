@@ -17,6 +17,7 @@ kubectl apply -f ../samples-logs-db/
 To set up the service as a repeating CronJob on a kubernetes cluster, run the manifests in this directory.
 
 ```sh
-kubectl apply -f .
+kubectl apply -f pangolin-pvc.yaml
+kubectl apply -f pangolin-cronjob.yaml
 ```
 
