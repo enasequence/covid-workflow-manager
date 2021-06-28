@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: pangolin-cronjob
 spec:
-  schedule: "00 12 * * *"
+  schedule: "00 10 * * *" # 10:00am daily
   jobTemplate:
     metadata:
       labels:
@@ -11,13 +11,17 @@ spec:
     spec:
       template:
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           containers:
             - name: main
               image: rmwthorne/pangolin-cronjob
               env:
                 - name: SOURCE
                   value: rest
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+                - name: DEBUG
+                  value: "False"
               volumeMounts:
                 - name: data
                   mountPath: /data
