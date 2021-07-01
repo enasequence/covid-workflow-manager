@@ -32,11 +32,11 @@ def lineages():
     db = client.samples
     size, start = (request.args.get(key) for key in ['size', 'start'])
     if size and start:
-        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).skip(int(start)).limit(int(size)))}
+        return {'results': list(db.lineages.find({}, {'_id': 0}).skip(int(start)).limit(int(size)))}
     elif size and not start:
-        return {'results': list(db.lineages_prod.find({}, {'_id': 0}).limit(int(size)))}
+        return {'results': list(db.lineages.find({}, {'_id': 0}).limit(int(size)))}
     else:
-        return {'results': list(db.lineages_prod.find({}, {'_id': 0}))}
+        return {'results': list(db.lineages.find({}, {'_id': 0}))}
 
 
 @app.route("/lineages/metadata")
@@ -44,9 +44,9 @@ def lineages_metadata():
     client = MongoClient('mongodb://samples-logs-db-svc')
     db = client.samples
     return {
-        "total_count": db.lineages_prod.count_documents({}),
-        "has_lineage_count": db.lineages_prod.count_documents({'has_lineage': True}),
-        "last_updated": db.lineages_prod.find_one({}).get('_id').generation_time,
+        'total_count': db.lineages.count_documents({}),
+        'has_lineage_count': db.lineages.count_documents({'has_lineage': True}),
+        'last_updated': db.lineages.find_one({}).get('_id').generation_time,
     }
 
 
