@@ -1,4 +1,4 @@
-FROM staphb/auspice
+FROM staphb/auspice:2.12.0
 RUN cd /home/node/auspice && \
     npx browserslist@latest --update-db
 USER root

@@ -19,5 +19,5 @@ spec:
       containers:
         - name: augur
           command: ['augur', 'parse', '-h']
-          image: staphb/augur
+          image: staphb/augur:9.0.0
           resources: {}
