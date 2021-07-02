@@ -15,7 +15,7 @@ kubectl apply -f .
 To run the service once, just run the batch job in the subdirectory.
 
 ``` sh
-kubectl apply -f job/consensus-job.yaml
+kubectl apply -f job/consensus-inputdata-job.yaml
 ```
 
 
