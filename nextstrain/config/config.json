@@ -1,8 +1,0 @@
-{
-    "mapTiles": {
-        "api": "api_address",
-        "attribution": "HTML-formatted attribution string to be displayed in bottom-right-hand corner of map",
-        "mapboxWordMark": true
-    }
-}
-
