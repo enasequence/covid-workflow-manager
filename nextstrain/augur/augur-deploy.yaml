@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: augur
+  namespace: nextstrain
+  labels:
+    app: augur
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: augur
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: augur
+    spec:
+      containers:
+        - name: augur
+          command: ['augur', 'parse', '-h']
+          image: staphb/augur
+          resources: {}
