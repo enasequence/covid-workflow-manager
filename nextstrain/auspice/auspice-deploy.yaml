@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auspice
+  namespace: nextstrain
+  labels:
+    app: auspice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auspice
+  template:
+    metadata:
+      labels:
+        app: auspice
+    spec:
+      containers:
+      - name: auspice
+        image: rmwthorne/test
+        command: ["/bin/sh"]
+        args:
+          - -c
+          - >-
+            cd /home/node/auspice &&
+            rm dist/* &&
+            auspice build --extend /customisations/config.json --verbose &&
+            auspice view --datasetDir /data/datasets
+        ports:
+        - containerPort: 4000
+        volumeMounts:
+          - name: datasets
+            mountPath: /data/datasets
+          - name: config
+            mountPath: /customisations/
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+      volumes:
+        - name: datasets
+          persistentVolumeClaim:
+            claimName: nextstrain-data-pvc
+        - name: config
+          configMap:
+            name: auspice-config
+

@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: auspice-ingress
+  namespace: nextstrain
+spec:
+  rules:
+  - host: ""
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: auspice-svc
+          servicePort: 80

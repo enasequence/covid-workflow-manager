@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: get-test-data
+  namespace: nextstrain
+  labels:
+    job-name: get-test-data
+spec:
+  backoffLimit: 6
+  completions: 1
+  template:
+    metadata:
+      labels:
+        job-name: get-test-data
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: yauritux/busybox-curl
+        imagePullPolicy: Always
+        name: get-test-data
+        command: ["curl"]
+        args: ["http://data.nextstrain.org/ncov.json", "--compressed", "-o", "/data/datasets/ncov.json"]
+        volumeMounts:
+          - name: datasets
+            mountPath: /data/datasets
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+      volumes:
+        - name: datasets
+          persistentVolumeClaim:
+            claimName: nextstrain-data-pvc
