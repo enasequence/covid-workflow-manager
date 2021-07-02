@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: consensus-data-job
+  labels:
+    job-name: consensus-data
+spec:
+  backoffLimit: 6
+  completions: 1
+  template:
+    metadata:
+      labels:
+        job-name: consensus-data-job
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: rmwthorne/consensus-cronjob
+        imagePullPolicy: Always
+        name: consesnsus-data-job
+        env:
+          - name: PYTHONUNBUFFERED
+            value: "1"
+        volumeMounts:
+          - name: data
+            mountPath: /data
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: consensus-pvc

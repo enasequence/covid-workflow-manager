@@ -1,0 +1,28 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: consensus-data-cronjob
+spec:
+  schedule: "00 10 * * *" # 10:00am daily
+  jobTemplate:
+    metadata:
+      labels:
+        ms: consensus-data-cronjob
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: main
+              image: rmwthorne/consensus-cronjob
+              env:
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: consensus-pvc
+
