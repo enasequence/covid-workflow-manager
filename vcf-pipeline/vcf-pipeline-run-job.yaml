@@ -3,29 +3,22 @@ kind: Job
 metadata:
   name: vcf-pipeline-run-job
 spec:
-  parallelism: 50
+  parallelism: 20
   template:
     metadata:
       labels:
         ms: vcf-pipeline-run-job
     spec:
       restartPolicy: Never
-      nodeSelector:
-        vcf: primary
       containers:
       - image: alexeyebi/vcf-pipeline-run-job
         name: vcf-pipeline-run-job
         volumeMounts:
           - name: data
             mountPath: /data
-          - name: output
-            mountPath: /output
       imagePullSecrets:
         - name: regcred
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: jovian-inputdata-pvc
-        - name: output
-          persistentVolumeClaim:
-            claimName: vcf-pipeline-pvc
+            claimName: data
