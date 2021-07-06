@@ -29,6 +29,6 @@ spec:
         - name: regcred
       containers:
       - name: samples-logs-back-end
-        image: alexeyebi/samples-logs-back-end
+        image: rmwthorne/samples-logs-back-end
         ports:
         - containerPort: 80

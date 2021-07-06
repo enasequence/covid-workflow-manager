@@ -1,0 +1,7 @@
+.git
+data
+output
+temp
+env
+Dockerfile
+*.yaml
