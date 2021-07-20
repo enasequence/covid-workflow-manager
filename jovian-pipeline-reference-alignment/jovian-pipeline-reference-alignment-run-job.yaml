@@ -14,7 +14,6 @@ spec:
       containers:
       - name: main
         image: alexeyebi/jovian-pipeline-reference-alignment-run-job
-        args: ["jovian-pipeline-reference-alignment-run-job"]
         resources:
           limits:
             cpu: "15"

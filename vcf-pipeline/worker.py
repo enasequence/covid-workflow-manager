@@ -21,13 +21,27 @@ def main():
             itemstr = item.decode("utf-8")
             print(f"Working on {itemstr}")
             sample = DB.samples.find_one({'id': itemstr})
+            sample['snapshot'] = '2021_07_26'
             # Download data
             os.system(f"mkdir /data/{itemstr}_input")
             if sample['platform'] == 'illumina':
-                read_1 = sample['links'][0].replace(
-                    'ftp.sra.ebi.ac.uk/vol1/', 'ftp://ftp.sra.ebi.ac.uk/vol1/')
-                read_2 = sample['links'][1].replace(
-                    'ftp.sra.ebi.ac.uk/vol1/', 'ftp://ftp.sra.ebi.ac.uk/vol1/')
+                if 'ftp.sra.ebi.ac.uk/vol1/' in sample['links'][0]:
+                    read_1 = sample['links'][0].replace(
+                        'ftp.sra.ebi.ac.uk/vol1/',
+                        'https://hh.fire.sdo.ebi.ac.uk/fire/public/era/')
+                    read_2 = sample['links'][1].replace(
+                        'ftp.sra.ebi.ac.uk/vol1/',
+                        'https://hh.fire.sdo.ebi.ac.uk/fire/public/era/')
+                elif 'ftp.ebi.ac.uk/vol1/' in sample['links'][0]:
+                    read_1 = sample['links'][0].replace(
+                        'ftp.ebi.ac.uk/vol1/',
+                        'https://hh.fire.sdo.ebi.ac.uk/fire/public/era/')
+                    read_2 = sample['links'][1].replace(
+                        'ftp.ebi.ac.uk/vol1/',
+                        'https://hh.fire.sdo.ebi.ac.uk/fire/public/era/')
+                else:
+                    read_1 = sample['links'][0]
+                    read_2 = sample['links'][1]
                 os.system(f"wget -P /data/{itemstr}_input {read_1}")
                 os.system(f"wget -P /data/{itemstr}_input {read_2}")
                 # Start nextflow
@@ -44,8 +58,16 @@ def main():
                                    f"--RUN_ID {itemstr} --resume"
                 nextflow_process = subprocess.run(nextflow_command, shell=True)
             elif sample['platform'] == 'ont':
-                read = sample['links'][0].replace(
-                    'ftp.sra.ebi.ac.uk/vol1/', 'ftp://ftp.sra.ebi.ac.uk/vol1/')
+                if 'ftp.sra.ebi.ac.uk/vol1/' in sample['links'][0]:
+                    read = sample['links'][0].replace(
+                        'ftp.sra.ebi.ac.uk/vol1/',
+                        'https://hh.fire.sdo.ebi.ac.uk/fire/public/era/')
+                elif 'ftp.ebi.ac.uk/vol1/' in sample['links'][0]:
+                    read = sample['links'][0].replace(
+                        'ftp.ebi.ac.uk/vol1/',
+                        'https://hh.fire.sdo.ebi.ac.uk/fire/public/era/')
+                else:
+                    read = sample['links'][0]
                 os.system(f"wget -P /data/{itemstr}_input {read}")
                 # Start nextflow
                 create_dir_process = subprocess.run(
@@ -66,6 +88,7 @@ def main():
                     f"/data/{itemstr}_output/results/"
                     f"{itemstr}.annot.vcf") and os.path.exists(
                 f"/data/{itemstr}_output/results/{itemstr}.coverage"):
+                sample['pipeline'] = 'success'
                 remove_work_process = subprocess.run(
                     f"rm -rf ./work", shell=True)
                 remove_data_process = subprocess.run(f"rm -rf ./results/*fq",
@@ -73,16 +96,16 @@ def main():
                 remove_data_process = subprocess.run(
                     f"rm -rf ./results/*pileup", shell=True)
                 move_results_process = subprocess.run(
-                    f"cp ./results/{itemstr}.annot.vcf /data/2021_07_12_vcf",
+                    f"cp ./results/{itemstr}.annot.vcf /data/2021_07_26_vcf",
                     shell=True)
                 move_results_process = subprocess.run(
                     f"cp ./results/{itemstr}.coverage "
-                    f"/data/2021_07_12_coverage", shell=True)
+                    f"/data/2021_07_26_coverage", shell=True)
                 tar_file_process = subprocess.run(
-                    f"gzip /data/2021_07_12_vcf/{itemstr}.annot.vcf",
+                    f"gzip /data/2021_07_26_vcf/{itemstr}.annot.vcf",
                     shell=True)
                 tar_file_process = subprocess.run(
-                    f"gzip /data/2021_07_12_coverage/{itemstr}.coverage",
+                    f"gzip /data/2021_07_26_coverage/{itemstr}.coverage",
                     shell=True)
                 if os.path.exists(
                         f"/data/{itemstr}_output/results/"
@@ -92,11 +115,11 @@ def main():
                     subprocess.run(
                         f"mv /data/{itemstr}_output/results/"
                         f"{itemstr}_consensus.fasta.gz /data/"
-                        f"2021_07_12_consensus_sequences", shell=True)
+                        f"2021_07_26_consensus_sequences", shell=True)
                     subprocess.run(
                         f"mv /data/{itemstr}_output/results/"
                         f"{itemstr}_filtered.vcf.gz "
-                        f"/data/2021_07_12_filtered_vcf", shell=True)
+                        f"/data/2021_07_26_filtered_vcf", shell=True)
                 os.chdir("/data")
                 archive_results_process = subprocess.run(
                     f"tar -zcvf {itemstr}_output.tar.gz {itemstr}_output",
@@ -106,11 +129,13 @@ def main():
                 remove_raw_data_process = subprocess.run(
                     f"rm -rf {itemstr}_input", shell=True)
             else:
+                sample['pipeline'] = 'failure'
                 os.chdir("/data")
                 remove_results_process = subprocess.run(
                     f"rm -rf {itemstr}_output", shell=True)
                 remove_raw_data_process = subprocess.run(
                     f"rm -rf {itemstr}_input", shell=True)
+            DB.samples.update_one({'id': itemstr}, {'$set': sample})
             q.complete(item)
         else:
             print("Waiting for work")

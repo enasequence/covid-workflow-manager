@@ -1,25 +1,25 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: samples-logs-db-svc
+  name: mongodb-svc
 spec:
   ports:
   - port: 27017
     targetPort: 27017
   selector:
-    ms: samples-logs-db
+    ms: mongodb
 
 ---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: samples-logs-db-pvc
+  name: mongodb-pvc
 spec:
   resources:
     requests:
-      storage: 1Gi
-  storageClassName: nfs-client
+      storage: 10Gi
+  storageClassName: example-nfs
   accessModes:
   - ReadWriteMany
 
@@ -28,16 +28,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: samples-logs-db-deployments
+  name: mongodb-deployments
 spec:
   selector:
     matchLabels:
-      ms: samples-logs-db
+      ms: mongodb
   replicas: 1
   template:
     metadata:
       labels:
-        ms: samples-logs-db
+        ms: mongodb
     spec:
       containers:
       - name: mongodb
@@ -50,4 +50,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: samples-logs-db-pvc
+            claimName: mongodb-pvc
