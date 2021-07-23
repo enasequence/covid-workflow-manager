@@ -204,3 +204,15 @@ class VCFAllAppend(Base):
     aa_pos__aa_length = Column(TEXT, primary_key=True)
     distance = Column(INTEGER, primary_key=True)
     errors_warnings_info = Column(TEXT, primary_key=True)
+
+class CountrySamples(Meta):
+    clean_country = Column(Integer, primary_key=True)
+    n_sample = Column(Integer, primary_key=True)
+
+
+class LineageDefSelectedFields(Base):
+    __tablename__ = "lineage_def"
+    variant_id = Column(TEXT, primary_key=True)
+    pango = Column(TEXT, primary_key=True)
+    nextstrain = Column(TEXT, primary_key=True)
+    description = Column(TEXT, primary_key=True)
