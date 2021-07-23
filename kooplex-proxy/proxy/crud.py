@@ -48,7 +48,6 @@ def get_vcf_all_append(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.VCFAllAppend).offset(skip).limit(limit).all()
 
 
-
 def get_country_samples(db: Session):
     stmt = select(models.Meta.clean_country, func.count()).select_from(
         select(models.Meta).select_from(models.Meta)).groupby(
