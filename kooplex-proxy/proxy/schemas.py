@@ -1,6 +1,6 @@
 import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, BaseConfig
 from typing import Optional
 
 
@@ -226,3 +226,21 @@ class VCFAllAppend(BaseModel):
         orm_mode = True
 
 
+class LineageDefSelectedFields(BaseModel):
+    variant_id: Optional[str]
+    pango:  Optional[str]
+    nextstrain:  Optional[str]
+    description:  Optional[str]
+
+    class Config:
+        orm_mode = False
+        arbitrary_types_allowed = True
+
+
+class CountrySamples(BaseModel):
+    clean_country: Optional[str]
+    n_sample: Optional[int]
+
+    class Config:
+        orm_mode = False
+        arbitrary_types_allowed = True

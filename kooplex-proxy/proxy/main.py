@@ -106,12 +106,13 @@ def read_vcf_all_append(skip: int = 0, limit: int = 100,
     return vcf_all_append
 
 
-@app.get("/country_samples/", response_model=List[models.CountrySamples])
-def read_country_samples(db: Session = Depends(get_db)):
-    vcf_country_samples = crud.country_samples(db)
-    return vcf_country_samples
+@app.get("/country_samples/", response_model=List[schemas.CountrySamples])
+def read_country_samples(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.get_country_samples(db, skip=skip, limit=limit)
 
 
-@app.get("/get-lineage_def/", response_model=List[models.LineageDefSelectedFields])
-def read_lineage_def_some_fields(db: Session = Depends(get_db)):
-    return crud.get_lineage_def_some_fields(db)
+@app.get("/get-lineage_def/", response_model=List[schemas.LineageDefSelectedFields])
+def read_lineage_def_some_fields(skip: int = 0, limit: int = 100,
+                                 db: Session = Depends(get_db)):
+    lineage_def_some_fields = crud.get_lineage_def_some_fields(db, skip=skip, limit=limit)
+    return lineage_def_some_fields

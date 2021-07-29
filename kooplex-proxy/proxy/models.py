@@ -207,15 +207,13 @@ class VCFAllAppend(Base):
 
 
 class CountrySamples(Base):
-    __tablename__ = "Meta"
-    __table_args__ = {'extend_existing': True}
-    clean_country = Meta.clean_country
-    n_sample = Column(Integer, primary_key=True)
+    __abstract__ = True
+    clean_country = Column(TEXT, primary_key=True)
+    n_sample = Column(Integer)
 
 
 class LineageDefSelectedFields(Base):
-    __tablename__ = "lineage_def"
-    __table_args__ = {'extend_existing': True}
+    __abstract__ = True
     variant_id = Column(TEXT, primary_key=True)
     pango = Column(TEXT, primary_key=True)
     nextstrain = Column(TEXT, primary_key=True)
