@@ -79,7 +79,7 @@ class Cov(BaseModel):
 
 class Meta(BaseModel):
     ena_run: Optional[str]
-    collection_date: Optional[datetime.datetime]
+    collection_date: Optional[datetime.date]
     clean_country: Optional[str]
     clean_host: Optional[str]
     accession: Optional[str]
@@ -88,8 +88,8 @@ class Meta(BaseModel):
     study_accession: Optional[str]
     description: Optional[str]
     country: Optional[str]
-    first_created: Optional[datetime.datetime]
-    first_public: Optional[datetime.datetime]
+    first_created: Optional[datetime.date]
+    first_public: Optional[datetime.date]
     host: Optional[str]
     host_sex: Optional[str]
     host_tax_id: Optional[int]
@@ -114,7 +114,7 @@ class Meta(BaseModel):
     fastq_ftp: Optional[str]
     collection_date_submitted: Optional[str]
     checklist: Optional[str]
-    clean_collection_date: Optional[datetime.datetime]
+    clean_collection_date: Optional[datetime.date]
     date_isoweek: Optional[int]
     date_isoyear: Optional[int]
 
@@ -135,20 +135,19 @@ class UniqueCovAppend(BaseModel):
 class LineageDef(BaseModel):
     variant_id: Optional[str]
     pango: Optional[str]
-    nextstrain: Optional[str]
-    ref_pos_alt: Optional[str]
-    codon_change: Optional[str]
-    gene: Optional[str]
-    pos: Optional[float]
-    predicted_effect: Optional[str]
-    protein: Optional[str]
-    protein_codon_position: Optional[float]
-    ref: Optional[str]
-    type: Optional[str]
-    alt: Optional[str]
+    type_variant: Optional[str]
     amino_acid_change: Optional[str]
+    protein_codon_position: Optional[float]
+    ref_protein: Optional[str]
+    alt_protein: Optional[str]
+    gene: Optional[str]
+    effect: Optional[str]
+    snpeff_original_mu: Optional[str]
+    ref_pos_alt: Optional[str]
+    ref: Optional[str]
+    alt: Optional[str]
+    pos: Optional[float]
     description: Optional[str]
-    snp_codon_position: Optional[str]
 
     class Config:
         orm_mode = True
@@ -186,51 +185,11 @@ class UniqueVCF(BaseModel):
         orm_mode = True
 
 
-class VCFAllAppend(BaseModel):
-    ena_run: Optional[str]
-    chrom: Optional[str]
-    pos: Optional[int]
-    ref: Optional[str]
-    alt: Optional[str]
-    qual: Optional[int]
-    filter: Optional[str]
-    dp: Optional[int]
-    af: Optional[float]
-    sb: Optional[int]
-    count_ref_forward_base: Optional[int]
-    count_ref_reverse_base: Optional[int]
-    count_alt_forward_base: Optional[int]
-    count_alt_reverse_base: Optional[int]
-    hrun: Optional[int]
-    indel: Optional[bool]
-    lof: Optional[str]
-    nmd: Optional[str]
-    ann_num: Optional[int]
-    annotation: Optional[str]
-    annotation_impact: Optional[str]
-    gene_name: Optional[str]
-    gene_id: Optional[str]
-    feature_type: Optional[str]
-    feature_id: Optional[str]
-    transcript_biotype: Optional[str]
-    rank_: Optional[str]
-    hgvs_c: Optional[str]
-    hgvs_p: Optional[str]
-    cdna_pos__cdna_length: Optional[str]
-    cds_pos__cds_length: Optional[str]
-    aa_pos__aa_length: Optional[str]
-    distance: Optional[int]
-    errors_warnings_info: Optional[str]
-
-    class Config:
-        orm_mode = True
-
-
 class LineageDefSelectedFields(BaseModel):
     variant_id: Optional[str]
-    pango:  Optional[str]
-    nextstrain:  Optional[str]
-    description:  Optional[str]
+    pango: Optional[str]
+    type_variant: Optional[str]
+    description: Optional[str]
 
     class Config:
         orm_mode = False
@@ -244,3 +203,37 @@ class CountrySamples(BaseModel):
     class Config:
         orm_mode = False
         arbitrary_types_allowed = True
+
+
+class Lineage0(BaseModel):
+    clean_collection_date: Optional[datetime.date]
+    clean_country: Optional[str]
+    n: Optional[int]
+
+    class Config:
+        orm_mode = False
+        arbitrary_types_allowed = True
+
+
+class Lineage(BaseModel):
+    clean_collection_date: Optional[datetime.date]
+    clean_country: Optional[str]
+    variant_id: Optional[str]
+    n: Optional[int]
+
+    class Config:
+        orm_mode = False
+        arbitrary_types_allowed = True
+
+
+class VariantsWeekly(BaseModel):
+    country_name: Optional[str]
+    date_year: Optional[str]
+    date_week: Optional[str]
+    variant_id: Optional[str]
+    weekly_variant_sample: Optional[int]
+
+    class Config:
+        orm_mode = False
+
+    arbitrary_types_allowed = True

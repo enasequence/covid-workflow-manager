@@ -99,14 +99,8 @@ def read_unique_vcf(skip: int = 0, limit: int = 100,
     return unique_vcf
 
 
-@app.get("/vcf_all_append/", response_model=List[schemas.VCFAllAppend])
-def read_vcf_all_append(skip: int = 0, limit: int = 100,
-                        db: Session = Depends(get_db)):
-    vcf_all_append = crud.get_vcf_all_append(db, skip=skip, limit=limit)
-    return vcf_all_append
 
-
-@app.get("/country_samples/", response_model=List[schemas.CountrySamples])
+@app.get("/country_samples/", )
 def read_country_samples(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_country_samples(db, skip=skip, limit=limit)
 
@@ -116,3 +110,21 @@ def read_lineage_def_some_fields(skip: int = 0, limit: int = 100,
                                  db: Session = Depends(get_db)):
     lineage_def_some_fields = crud.get_lineage_def_some_fields(db, skip=skip, limit=limit)
     return lineage_def_some_fields
+
+
+@app.get("/get-lineage0/", response_model=List[schemas.Lineage0])
+def read_lineage(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    lineage0 = crud.get_lineage0(db, skip=skip, limit=limit)
+    return lineage0
+
+
+@app.get("/get-lineage/", response_model=List[schemas.Lineage])
+def read_lineage(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    lineage = crud.get_lineage(db, skip=skip, limit=limit)
+    return lineage
+
+
+@app.get("/variants_weekly/", response_model=List[schemas.VariantsWeekly])
+def read_lineage(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    lineage = crud.get_variants_weekly(db, skip=skip, limit=limit)
+    return lineage
