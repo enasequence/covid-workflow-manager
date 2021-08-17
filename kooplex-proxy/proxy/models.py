@@ -18,14 +18,6 @@ class CovidCountryWeekly(Base):
                                               primary_key=True)
 
 
-class UniqueVCFAppend(Base):
-    __tablename__ = "unique_vcf_append"
-    insertion_ts = Column(TIMESTAMP, primary_key=True)
-    ena_run = Column(VARCHAR, primary_key=True)
-    snapshot = Column(VARCHAR, primary_key=True)
-    integrity = Column(INTEGER, primary_key=True)
-
-
 class VCFAll(Base):
     __tablename__ = "vcf_all"
     ena_run = Column(VARCHAR, primary_key=True)
@@ -114,14 +106,6 @@ class Meta(Base):
     date_isoyear = Column(INTEGER, primary_key=True)
 
 
-class UniqueCovAppend(Base):
-    __tablename__ = "unique_cov_append"
-    insertion_ts = Column(TIMESTAMP, primary_key=True)
-    ena_run = Column(VARCHAR, primary_key=True)
-    snapshot = Column(VARCHAR, primary_key=True)
-    integrity = Column(INTEGER, primary_key=True)
-
-
 class LineageDef(Base):
     __tablename__ = "lineage_def"
     variant_id = Column(TEXT, primary_key=True)
@@ -185,7 +169,7 @@ class Lineage0(Base):
     __abstract__ = True
     clean_collection_date = Column(DATE, primary_key=True)
     clean_country = Column(TEXT, primary_key=True)
-    n = Column(Integer)
+    n = Column(Integer, primary_key=True)
 
 
 class Lineage(Base):
@@ -193,13 +177,35 @@ class Lineage(Base):
     clean_collection_date = Column(DATE, primary_key=True)
     clean_country = Column(TEXT, primary_key=True)
     variant_id = Column(TEXT, primary_key=True)
-    n = Column(Integer)
+    n = Column(Integer, primary_key=True)
 
 
 class VariantsWeekly(Base):
     __abstract__ = True
     country_name = Column(TEXT, primary_key=True)
-    date_year = Column(DOUBLE_PRECISION, primary_key=True)
-    date_week = Column(DOUBLE_PRECISION, primary_key=True)
+    date_isoweek = Column(INTEGER, primary_key=True)
+    date_isoyear = Column(INTEGER, primary_key=True)
     variant_id = Column(TEXT, primary_key=True)
     weekly_variant_sample = Column(Integer, primary_key=True)
+
+
+class UniqueEnaRunSummary(Base):
+    __tablename__ = "unique_ena_run_summary"
+    table_name = Column(TIMESTAMP, primary_key=True)
+    count = Column(Integer, primary_key=True)
+
+
+class LineageView(Base):
+    __tablename__ = "lineage"
+    ena_run = Column(TEXT, primary_key=True)
+    variant_id = Column(TEXT, primary_key=True)
+    n = Column(Integer, primary_key=True)
+    required_mutation = Column(Integer, primary_key=True)
+
+
+class EbiWeeklySamples(Base):
+    __abstract__ = True
+    clean_country = Column(TEXT, primary_key=True)
+    date_isoweek = Column(INTEGER, primary_key=True)
+    date_isoyear = Column(INTEGER, primary_key=True)
+    weekly_sample = Column(Integer, primary_key=True)

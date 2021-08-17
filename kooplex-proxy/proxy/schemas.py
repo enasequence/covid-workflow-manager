@@ -17,17 +17,6 @@ class CovidCountryWeekly(BaseModel):
     class Config:
         orm_mode = True
 
-
-class UniqueVCFAppend(BaseModel):
-    insertion_ts: Optional[datetime.datetime]
-    ena_run: Optional[str]
-    snapshot: Optional[str]
-    integrity: Optional[str]
-
-    class Config:
-        orm_mode = True
-
-
 class VCFAll(BaseModel):
     ena_run: Optional[str]
     chrom: Optional[str]
@@ -121,17 +110,6 @@ class Meta(BaseModel):
     class Config:
         orm_mode = True
 
-
-class UniqueCovAppend(BaseModel):
-    insertion_ts: Optional[datetime.datetime]
-    ena_run: Optional[str]
-    snapshot: Optional[str]
-    integrity: Optional[int]
-
-    class Config:
-        orm_mode = True
-
-
 class LineageDef(BaseModel):
     variant_id: Optional[str]
     pango: Optional[str]
@@ -159,7 +137,7 @@ class Operation(BaseModel):
     last_exit_code: Optional[int]
     stage: Optional[int]
     exit_code: Optional[int]
-    extra_info: Optional[int]
+    extra_info: Optional[str]
 
     class Config:
         orm_mode = True
@@ -228,12 +206,40 @@ class Lineage(BaseModel):
 
 class VariantsWeekly(BaseModel):
     country_name: Optional[str]
-    date_year: Optional[str]
-    date_week: Optional[str]
+    date_year: Optional[float]
+    date_week: Optional[float]
     variant_id: Optional[str]
     weekly_variant_sample: Optional[int]
 
     class Config:
         orm_mode = False
+        arbitrary_types_allowed = True
 
-    arbitrary_types_allowed = True
+
+class UniqueEnaRunSummary(BaseModel):
+    table_name: Optional[str]
+    count: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+
+class LineageView(BaseModel):
+    ena_run: Optional[str]
+    variant_id: Optional[str]
+    n: Optional[int]
+    required_mutation: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+
+class EbiWeeklySamples(BaseModel):
+    Country: Optional[str]
+    date_year: Optional[float]
+    date_week: Optional[float]
+    weekly_sample: Optional[int]
+
+    class Config:
+        orm_mode = False
+        arbitrary_types_allowed = True

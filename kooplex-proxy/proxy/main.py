@@ -36,13 +36,6 @@ def read_covid_country_weekly(skip: int = 0, limit: int = 100,
     return covid_country_weekly
 
 
-@app.get("/unique_vcf_append/", response_model=List[schemas.UniqueVCFAppend])
-def read_unique_vcf_append(skip: int = 0, limit: int = 100,
-                           db: Session = Depends(get_db)):
-    unique_vcf_append = crud.get_unique_vcf_append(db, skip=skip, limit=limit)
-    return unique_vcf_append
-
-
 @app.get("/vcf_all/", response_model=List[schemas.VCFAll])
 def read_vcf_all(skip: int = 0, limit: int = 100,
                  db: Session = Depends(get_db)):
@@ -62,13 +55,6 @@ def read_meta(skip: int = 0, limit: int = 100,
               db: Session = Depends(get_db)):
     meta = crud.get_meta(db, skip=skip, limit=limit)
     return meta
-
-
-@app.get("/unique_cov_append/", response_model=List[schemas.UniqueCovAppend])
-def read_unique_cov_append(skip: int = 0, limit: int = 100,
-                           db: Session = Depends(get_db)):
-    unique_cov_append = crud.get_unique_cov_append(db, skip=skip, limit=limit)
-    return unique_cov_append
 
 
 @app.get("/lineage_def/", response_model=List[schemas.LineageDef])
@@ -99,8 +85,7 @@ def read_unique_vcf(skip: int = 0, limit: int = 100,
     return unique_vcf
 
 
-
-@app.get("/country_samples/", )
+@app.get("/country_samples/", response_model=List[schemas.CountrySamples])
 def read_country_samples(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_country_samples(db, skip=skip, limit=limit)
 
@@ -113,7 +98,7 @@ def read_lineage_def_some_fields(skip: int = 0, limit: int = 100,
 
 
 @app.get("/get-lineage0/", response_model=List[schemas.Lineage0])
-def read_lineage(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_lineage0(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     lineage0 = crud.get_lineage0(db, skip=skip, limit=limit)
     return lineage0
 
@@ -125,6 +110,24 @@ def read_lineage(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
 
 
 @app.get("/variants_weekly/", response_model=List[schemas.VariantsWeekly])
-def read_lineage(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_variants_weekly(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     lineage = crud.get_variants_weekly(db, skip=skip, limit=limit)
     return lineage
+
+
+@app.get("/unique_ena_run_summary/", response_model=List[schemas.UniqueEnaRunSummary])
+def read_unique_ena_run_summary(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    unique_ena_run_summary = crud.get_unique_ena_run_summary(db, skip=skip, limit=limit)
+    return unique_ena_run_summary
+
+
+@app.get("/lineage/", response_model=List[schemas.LineageView])
+def read_lineage(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    lineage = crud.get_lineage_view(db, skip=skip, limit=limit)
+    return lineage
+
+
+@app.get("/ebi_weekly_samples/", response_model=List[schemas.EbiWeeklySamples])
+def read_ebi_weekly_samples(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    ebi_weekly_samples = crud.get_ebi_weekly_samples(db, skip=skip, limit=limit)
+    return ebi_weekly_samples
