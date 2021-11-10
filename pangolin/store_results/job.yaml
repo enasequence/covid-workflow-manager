@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: store-results-job
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: main
+          image: rmwthorne/store-results
+          command: [
+            "python",
+            "./store_results.py",
+            "/consensus/lineages.csv",
+            "--uri", "mongodb://samples-logs-db-svc",
+          ]
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          volumeMounts:
+            - name: data
+              mountPath: /pangolin
+            - name: consensus
+              mountPath: /consensus
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pangolin-pvc
+        - name: consensus
+          persistentVolumeClaim:
+            claimName: consensus-pvc
+

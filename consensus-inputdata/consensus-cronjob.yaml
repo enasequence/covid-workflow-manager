@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: consensus-inputdata-cronjob
+spec:
+  schedule: "0 10 * * *" # 10:00am daily
+  jobTemplate:
+    metadata:
+      labels:
+        ms: consensus-inputdata-cronjob
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: main
+              image: rmwthorne/consensus-inputdata
+              command: ["python3", "get_fasta.py", "-o", "/consensus/"]
+              env:
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+              volumeMounts:
+                - name: consensus
+                  mountPath: /consensus
+          volumes:
+            - name: consensus
+              persistentVolumeClaim:
+                claimName: consensus-pvc
+

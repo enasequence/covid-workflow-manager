@@ -1,25 +1,22 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: phylogeny-cronjob
+  name: metadata-cronjob
 spec:
-  schedule: "@daily"
+  schedule: "30 10 * * *" # 10:30 daily
   jobTemplate:
     spec:
       template:
         metadata:
           labels:
-            ms: phylogeny-cronjob
+            ms: metadata-cronjob
         spec:
           restartPolicy: OnFailure
           containers:
             - name: main
-              image: rmwthorne/phylogeny-cronjob
+              image: rmwthorne/metadata-inputdata
+              command: ["python3", "get_seq_metadata.py", "-o", "/metadata/metadata.tsv"]
               env:
-                - name: MONGO_URI
-                  value: "mongodb://samples-logs-db-svc"
-                - name: DB_NAME
-                  value: "samples"
                 - name: PYTHONUNBUFFERED
                   value: "1"
               volumeMounts:

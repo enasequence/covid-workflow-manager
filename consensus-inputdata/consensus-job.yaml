@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: consensus-inputdata-job
+spec:
+  ttlSecondsAfterFinished: 30
+  template:
+    metadata:
+      labels:
+        ms: consensus-inputdata-job
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: main
+          image: rmwthorne/consensus-inputdata
+          command: ["python3", "get_fasta.py", "-o", "/consensus/"]
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          volumeMounts:
+            - name: consensus
+              mountPath: /consensus
+      volumes:
+        - name: consensus
+          persistentVolumeClaim:
+            claimName: consensus-pvc
+
