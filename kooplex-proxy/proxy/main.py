@@ -104,3 +104,17 @@ def read_vcf_all_append(skip: int = 0, limit: int = 100,
                         db: Session = Depends(get_db)):
     vcf_all_append = crud.get_vcf_all_append(db, skip=skip, limit=limit)
     return vcf_all_append
+
+
+@app.get("/new_cases/", response_model=List[schemas.NewCases])
+def read_new_cases(skip: int = 0, limit: int = 100,
+                   db: Session = Depends(get_db)):
+    new_cases = crud.get_new_cases(db, skip=skip, limit=limit)
+    return new_cases
+
+
+@app.get("/worldplot_data/", response_model=List[schemas.NewCases])
+def read_worldplot_data(skip: int = 0, limit: int = 100,
+                   db: Session = Depends(get_db)):
+    worldplot_data = crud.get_worldplot_data(db, skip=skip, limit=limit)
+    return worldplot_data

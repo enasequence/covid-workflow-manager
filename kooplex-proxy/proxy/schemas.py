@@ -226,3 +226,17 @@ class VCFAllAppend(BaseModel):
         orm_mode = True
 
 
+class NewCases(BaseModel):
+    country_name: Optional[str]
+    date_year: Optional[float]
+    date_week: Optional[float]
+    weekly_sample: Optional[float]
+    iso_a3: Optional[str]
+    iso_a2: Optional[str]
+    country_name_local: Optional[str]
+    population: Optional[float]
+    ecdc_covid_country_weekly_cases: Optional[float]
+    ecdc_covid_country_weekly_deaths: Optional[float]
+
+    class Config:
+        orm_mode = True
