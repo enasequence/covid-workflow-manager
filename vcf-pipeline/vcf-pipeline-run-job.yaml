@@ -25,7 +25,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: jovian-inputdata-pvc
-        - name: output
-          persistentVolumeClaim:
-            claimName: vcf-pipeline-pvc
+            claimName: data

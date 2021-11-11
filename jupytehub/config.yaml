@@ -1,0 +1,41 @@
+proxy:
+  chp:
+    nodeSelector:
+      jovian: jupyterhub
+  traefik:
+    nodeSelector:
+      jovian: jupyterhub
+  secretToken: c25c017f695b2d7684d1e103cd607493429369bec0a58b0701b1425babc37efd
+singleuser:
+  nodeSelector:
+    jovian: jupyterhub
+  image:
+    name: alexeyebi/jupyterhub
+    tag: latest
+  storage:
+    capacity: 30Gi
+    extraVolumes:
+      - name: jupyterhub-shared
+        persistentVolumeClaim:
+          claimName: jovian-outputdata-pvc
+    extraVolumeMounts:
+      - name: jupyterhub-shared
+        mountPath: /user/jovyan
+scheduling:
+  userScheduler:
+    nodeSelector:
+      jovian: jupyterhub
+auth:
+  type: dummy
+  dummy:
+    password: ried7eSh
+  whitelist:
+    users:
+      - admin
+prePuller:
+  hook:
+    nodeSelector:
+      jovian: jupyterhub
+hub:
+  nodeSelector:
+    jovian: jupyterhub
