@@ -1,0 +1,46 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: store-results-cronjob
+spec:
+  schedule: "0 15 * * *" # 3:00pm daily
+  jobTemplate:
+    metadata:
+      labels:
+        ms: store-results-cronjob
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: main
+              image: rmwthorne/store-results
+              command: [
+                "python",
+                "./store_results.py",
+                "/consensus/lineages.csv",
+                "--uri", "mongodb://samples-logs-db-svc",
+              ]
+              resources:
+                requests:
+                  cpu: "1"
+                  memory: "512Mi"
+                limits:
+                  cpu: "4"
+                  memory: "10Gi"
+              env:
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                - name: consensus
+                  mountPath: /consensus
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: pangolin-pvc
+            - name: consensus
+              persistentVolumeClaim:
+                claimName: consensus-pvc
+

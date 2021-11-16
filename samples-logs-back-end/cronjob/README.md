@@ -7,7 +7,14 @@ This CronJob copies data from the [Viral sequences](https://www.covid19dataporta
 
 These data are made available to a web server (samples-logs-back-end) which publishes them as REST endpoints
 
+## Requirements
+
+Depends on the metadata-inputdata microservice.
+
+## Testing
+
 Tests can be run with:
 ```sh
 pytest sync_test.py -v
 ```
+
