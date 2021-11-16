@@ -16,6 +16,13 @@ spec:
             - name: main
               image: rmwthorne/consensus-inputdata
               command: ["python3", "get_fasta.py", "-o", "/consensus/"]
+              resources:
+                requests:
+                  cpu: "1"
+                  memory: "512Mi"
+                limits:
+                  cpu: "4"
+                  memory: "10Gi"
               env:
                 - name: PYTHONUNBUFFERED
                   value: "1"

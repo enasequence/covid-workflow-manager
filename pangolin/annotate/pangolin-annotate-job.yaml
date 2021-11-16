@@ -19,6 +19,13 @@ spec:
             "-t", "16",
             "-o", "/pangolin/"
           ]
+          resources:
+            requests:
+              cpu: "1"
+              memory: "512Mi"
+            limits:
+              cpu: "16"
+              memory: "10Gi"
           env:
             - name: PYTHONUNBUFFERED
               value: "1"
