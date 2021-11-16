@@ -18,14 +18,6 @@ class CovidCountryWeekly(Base):
                                               primary_key=True)
 
 
-class UniqueVCFAppend(Base):
-    __tablename__ = "unique_vcf_append"
-    insertion_ts = Column(TIMESTAMP, primary_key=True)
-    ena_run = Column(VARCHAR, primary_key=True)
-    snapshot = Column(VARCHAR, primary_key=True)
-    integrity = Column(INTEGER, primary_key=True)
-
-
 class VCFAll(Base):
     __tablename__ = "vcf_all"
     ena_run = Column(VARCHAR, primary_key=True)
@@ -114,32 +106,23 @@ class Meta(Base):
     date_isoyear = Column(INTEGER, primary_key=True)
 
 
-class UniqueCovAppend(Base):
-    __tablename__ = "unique_cov_append"
-    insertion_ts = Column(TIMESTAMP, primary_key=True)
-    ena_run = Column(VARCHAR, primary_key=True)
-    snapshot = Column(VARCHAR, primary_key=True)
-    integrity = Column(INTEGER, primary_key=True)
-
-
 class LineageDef(Base):
     __tablename__ = "lineage_def"
     variant_id = Column(TEXT, primary_key=True)
     pango = Column(TEXT, primary_key=True)
-    nextstrain = Column(TEXT, primary_key=True)
-    ref_pos_alt = Column(TEXT, primary_key=True)
-    codon_change = Column(TEXT, primary_key=True)
-    gene = Column(TEXT, primary_key=True)
-    pos = Column(DOUBLE_PRECISION, primary_key=True)
-    predicted_effect = Column(TEXT, primary_key=True)
-    protein = Column(TEXT, primary_key=True)
-    protein_codon_position = Column(DOUBLE_PRECISION, primary_key=True)
-    ref = Column(TEXT, primary_key=True)
-    type = Column(TEXT, primary_key=True)
-    alt = Column(TEXT, primary_key=True)
+    type_variant = Column(TEXT, primary_key=True)
     amino_acid_change = Column(TEXT, primary_key=True)
+    protein_codon_position = Column(DOUBLE_PRECISION, primary_key=True)
+    ref_protein = Column(TEXT, primary_key=True)
+    alt_protein = Column(TEXT, primary_key=True)
+    gene = Column(TEXT, primary_key=True)
+    effect = Column(TEXT, primary_key=True)
+    snpeff_original_mut = Column(TEXT, primary_key=True)
+    ref_pos_alt = Column(TEXT, primary_key=True)
+    ref = Column(TEXT, primary_key=True)
+    alt = Column(TEXT, primary_key=True)
+    pos = Column(DOUBLE_PRECISION, primary_key=True)
     description = Column(TEXT, primary_key=True)
-    snp_codon_position = Column(TEXT, primary_key=True)
 
 
 class Operation(Base):
@@ -168,39 +151,61 @@ class UniqueVCF(Base):
     integrity = Column(INTEGER, primary_key=True)
 
 
-class VCFAllAppend(Base):
-    __tablename__ = "vcf_all_append"
+class CountrySamples(Base):
+    __abstract__ = True
+    clean_country = Column(TEXT, primary_key=True)
+    n_sample = Column(Integer)
+
+
+class LineageDefSelectedFields(Base):
+    __abstract__ = True
+    variant_id = Column(TEXT, primary_key=True)
+    pango = Column(TEXT, primary_key=True)
+    type_variant = Column(TEXT, primary_key=True)
+    description = Column(TEXT, primary_key=True)
+
+
+class Lineage0(Base):
+    __abstract__ = True
+    clean_collection_date = Column(DATE, primary_key=True)
+    clean_country = Column(TEXT, primary_key=True)
+    n = Column(Integer, primary_key=True)
+
+
+class Lineage(Base):
+    __abstract__ = True
+    clean_collection_date = Column(DATE, primary_key=True)
+    clean_country = Column(TEXT, primary_key=True)
+    variant_id = Column(TEXT, primary_key=True)
+    n = Column(Integer, primary_key=True)
+
+
+class VariantsWeekly(Base):
+    __abstract__ = True
+    country_name = Column(TEXT, primary_key=True)
+    date_isoweek = Column(INTEGER, primary_key=True)
+    date_isoyear = Column(INTEGER, primary_key=True)
+    variant_id = Column(TEXT, primary_key=True)
+    weekly_variant_sample = Column(Integer, primary_key=True)
+
+
+class UniqueEnaRunSummary(Base):
+    __tablename__ = "unique_ena_run_summary"
+    table_name = Column(TIMESTAMP, primary_key=True)
+    count = Column(Integer, primary_key=True)
+
+
+class LineageView(Base):
+    __tablename__ = "lineage"
     ena_run = Column(TEXT, primary_key=True)
-    chrom = Column(TEXT, primary_key=True)
-    pos = Column(INTEGER, primary_key=True)
-    ref = Column(TEXT, primary_key=True)
-    alt = Column(TEXT, primary_key=True)
-    qual = Column(INTEGER, primary_key=True)
-    filter = Column(TEXT, primary_key=True)
-    dp = Column(INTEGER, primary_key=True)
-    af = Column(REAL, primary_key=True)
-    sb = Column(INTEGER, primary_key=True)
-    count_ref_forward_base = Column(INTEGER, primary_key=True)
-    count_ref_reverse_base = Column(INTEGER, primary_key=True)
-    count_alt_forward_base = Column(INTEGER, primary_key=True)
-    count_alt_reverse_base = Column(INTEGER, primary_key=True)
-    hrun = Column(INTEGER, primary_key=True)
-    indel = Column(BOOLEAN, primary_key=True)
-    lof = Column(TEXT, primary_key=True)
-    nmd = Column(TEXT, primary_key=True)
-    ann_num = Column(INTEGER, primary_key=True)
-    annotation = Column(TEXT, primary_key=True)
-    annotation_impact = Column(TEXT, primary_key=True)
-    gene_name = Column(TEXT, primary_key=True)
-    gene_id = Column(TEXT, primary_key=True)
-    feature_type = Column(TEXT, primary_key=True)
-    feature_id = Column(TEXT, primary_key=True)
-    transcript_biotype = Column(TEXT, primary_key=True)
-    rank_ = Column(TEXT, primary_key=True)
-    hgvs_c = Column(TEXT, primary_key=True)
-    hgvs_p = Column(TEXT, primary_key=True)
-    cdna_pos__cdna_length = Column(TEXT, primary_key=True)
-    cds_pos__cds_length = Column(TEXT, primary_key=True)
-    aa_pos__aa_length = Column(TEXT, primary_key=True)
-    distance = Column(INTEGER, primary_key=True)
-    errors_warnings_info = Column(TEXT, primary_key=True)
+    variant_id = Column(TEXT, primary_key=True)
+    n = Column(Integer, primary_key=True)
+    required_mutation = Column(Integer, primary_key=True)
+
+
+class EbiWeeklySamples(Base):
+    __abstract__ = True
+    clean_country = Column(TEXT, primary_key=True)
+    date_isoweek = Column(INTEGER, primary_key=True)
+    date_isoyear = Column(INTEGER, primary_key=True)
+    weekly_sample = Column(Integer, primary_key=True)
