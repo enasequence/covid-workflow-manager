@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pangolin-pvc
+  name: metadata-pvc
 spec:
   resources:
     requests:
-      storage: 100Gi
-  storageClassName: nfs-client
+      storage: 10Gi
+  storageClassName: example-nfs
   accessModes:
     - ReadWriteMany
+

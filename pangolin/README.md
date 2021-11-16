@@ -1,6 +1,9 @@
 # PANGOLIN Lineage Annotation
 
-This microservice downloads all available sequences from the [Covid19 Data Portal](https://www.covid19dataportal.org/) and annotates them using the [Pangolin COVID-19 Lineage Assigner](https://www.biorxiv.org/content/10.1101/2020.04.17.046086v1).
+This directory contains two microservices for sequence annotation with pango lineage assignment. 
+
+- `annotate` runs the [Pangolin COVID-19 Lineage Assigner](https://www.biorxiv.org/content/10.1101/2020.04.17.046086v1)
+- `store_results` inserts the annotated result rows (from the csv output) into a database (../samples-logs-backend)
 
 # Getting Started
 
@@ -10,14 +13,5 @@ This service depends on the MongoDB server in the Samples Logs database.
 
 ```sh
 kubectl apply -f ../samples-logs-db/
-```
-
-## Usage
-
-To set up the service as a repeating CronJob on a kubernetes cluster, run the manifests in this directory.
-
-```sh
-kubectl apply -f pangolin-pvc.yaml
-kubectl apply -f pangolin-cronjob.yaml
 ```
 

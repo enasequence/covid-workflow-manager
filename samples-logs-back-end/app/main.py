@@ -49,6 +49,15 @@ def lineages_metadata():
         'last_updated': db.lineages.find_one({}).get('_id').generation_time,
     }
 
+@app.route("/phylogeny/metadata")
+def phylogeny_metadata():
+    client = MongoClient('mongodb://samples-logs-db-svc')
+    db = client.samples
+    return {
+        "total_count": db.phylo.count_documents({}),
+        "has_phylogeny_count": db.phylo.count_documents({'phylogeny': True}),
+        "last_updated": db.phylo.find_one({}).get('_id').generation_time,
+    }
 
 @app.route("/jovian")
 def jovian_samples():
