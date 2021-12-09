@@ -13,8 +13,8 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
 
-      - name: push-docker-gcr@v1
-        uses: raccoondev/push-docker-gcr
+      - name: push-docker-gcr
+        uses: raccoondev/push-docker-gcr@v1
         with:
           gcr_host: gcrp.io
           image_name: artic-illujmina-inputdata
