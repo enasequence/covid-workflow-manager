@@ -20,7 +20,7 @@ jobs:
           gcr_host: gcrp.io
           image_name: artic-illumina-inputdata
           image_tag: latest
-          env:
-            GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
-            GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+        env:
+          GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
 
