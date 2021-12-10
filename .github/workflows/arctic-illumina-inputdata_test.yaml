@@ -2,7 +2,8 @@ name: artic-illumina-inputdata push
 
 on:
   push:
-    branches: [ move-registry ]
+    branches: 
+      - move-registry
     # paths:
     #   - "artic-illumina-inputdata/**"
 
