@@ -17,7 +17,7 @@ jobs:
       - name: push-docker-gcr
         uses: raccoondev/push-docker-gcr@v1
         with:
-          gcr_host: ${{ secrets.GCLOUD_HOST }}
+          gcr_host: docker.pkg.dev
           image_name: covid-workflow-manager/artic-illumina-inputdata
           image_tag: latest
         env:
