@@ -22,5 +22,6 @@ jobs:
           gcr_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
           docker_image_name: covid-workflow-manager/artic-illumina-inputdata
           docker_image_tag: latest
-          docker_context: artic-illumina-inputdata/
+          dockerfile: artic-illumina-inputdata/Dockerfile
+          docker_context: artic-illumina-inputdata/ 
 
