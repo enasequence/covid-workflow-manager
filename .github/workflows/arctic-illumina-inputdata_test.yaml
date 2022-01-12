@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: build & push image
-        uses: kurkop/push-docker-gcr@v1
+        uses: kurkop/push-docker-gcr@v1.2.2
         with:
           gcr_host: docker.pkg.dev
           image_name: covid-workflow-manager/artic-illumina-inputdata
