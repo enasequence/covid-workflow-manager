@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
-      - name: push-docker-gcr
+      - name: build & push image
         uses: raccoondev/push-docker-gcr@v1
         with:
           gcr_host: docker.pkg.dev
@@ -23,4 +23,7 @@ jobs:
         env:
           GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
           GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+    defaults:
+      run:
+        working-directory: artic-illumina-inputdata/
 
