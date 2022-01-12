@@ -18,10 +18,9 @@ jobs:
         uses: kurkop/push-docker-gcr@v1.2.2
         with:
           gcr_host: docker.pkg.dev
-          image_name: covid-workflow-manager/artic-illumina-inputdata
-          image_tag: latest
+          gcr_project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
+          gcr_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          docker_image_name: covid-workflow-manager/artic-illumina-inputdata
+          docker_image_tag: latest
           docker_context: artic-illumina-inputdata/
-        env:
-          GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
-          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
 
