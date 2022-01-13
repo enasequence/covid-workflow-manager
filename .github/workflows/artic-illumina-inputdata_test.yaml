@@ -14,6 +14,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: setup gcp
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
+          export_default_credentials: true
+        run: |
+          gcloud auth configure-docker -q
+
       - name: build & push image
         uses: kurkop/push-docker-gcr@v1.2.2
         with:
