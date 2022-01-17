@@ -17,7 +17,7 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v0
         with:
-          credentials_json: ${{ secrests.GCLOUD_SERVICE_KEY }}
+          credentials_json: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
       - name: setup gcloud sdk
         uses: google-github-actions/setup-gcloud@v0
