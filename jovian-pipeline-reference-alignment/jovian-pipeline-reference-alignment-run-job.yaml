@@ -11,6 +11,8 @@ spec:
       restartPolicy: Never
       nodeSelector:
         analysis: jovian
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
       - name: main
         image: alexeyebi/jovian-pipeline-reference-alignment-run-job
@@ -32,8 +34,6 @@ spec:
             mountPath: /output
           - name: wms
             mountPath: /wms
-      imagePullSecrets:
-        - name: regcred
       volumes:
         - name: sourcecode
           persistentVolumeClaim:

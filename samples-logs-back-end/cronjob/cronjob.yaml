@@ -12,9 +12,11 @@ spec:
             ms: phylogeny-cronjob
         spec:
           restartPolicy: OnFailure
+          imagePullSecrets:
+            - name: ebi-registry-secret
           containers:
             - name: main
-              image: rmwthorne/phylogeny-cronjob
+              image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/samples-logs-back-end-cronjob
               env:
                 - name: MONGO_URI
                   value: "mongodb://samples-logs-db-svc"

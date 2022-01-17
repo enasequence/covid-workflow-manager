@@ -9,8 +9,10 @@ spec:
         ms: ont-pipeline-run-job
     spec:
       restartPolicy: Never
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
-      - image: alexeyebi/ont-pipeline-run-job
+      - image: dockerhub.ebi.ac.uk/c19workflow/covid-workflow-manager/ont-pipeline-run-job
         name: ont-pipeline-run-pod
         args: ["ERR4164785"]
         env:

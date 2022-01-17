@@ -9,6 +9,8 @@ spec:
         ms: jovian-outputdata-job
     spec:
       restartPolicy: OnFailure
+      imagePullSecrets:
+        - name: ebi-registry-secret
       containers:
       - name: main
         image: alexeyebi/jovian-outputdata-job
