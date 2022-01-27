@@ -1,0 +1,73 @@
+<div class="bg-light pb-5 min-vh-100">
+
+<app-header></app-header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <app-navigation></app-navigation>
+      </div>
+    </div>
+
+    <div class="content-container card shadow-sm px-4 py-4">
+
+      <h1 class="display-4 text-center">{{ sampleId | async }}</h1>
+
+      <h2>Import</h2>
+
+      <app-log-list 
+        [title]="'Logs'" 
+        [logs]="(sampleRun | async)?.import_from_ena?.status"
+        [dates]="(sampleRun | async)?.import_from_ena?.date"
+        [styling]="'success'"
+      ></app-log-list>
+
+      <app-log-list
+        [title]="'Errors'"
+        [logs]="(sampleRun | async)?.import_from_ena?.errors"
+        [styling]="'danger'"
+      >
+      </app-log-list>
+
+    </div>
+
+    <div class="content-container card shadow-sm px-4 py-4 mt-3">
+      <h2>Pipeline ({{ pipeline | async | titlecase }})</h2>
+
+      <app-log-list
+        [title]="'Logs'"
+        [logs]="(sampleRun | async)?.pipeline_analysis?.status"
+        [dates]="(sampleRun | async)?.pipeline_analysis?.date"
+        [styling]="'success'"
+      ></app-log-list>
+
+      <app-log-list
+        [title]="'errors'"
+        [logs]="(sampleRun | async)?.pipeline_analysis?.errors"
+        [styling]="'danger'"
+      >
+      </app-log-list>
+
+    </div>
+
+    <div class="content-container card shadow-sm px-4 py-4 mt-3">
+      <h2>Export</h2>
+
+      <app-log-list
+        [title]="'Logs'"
+        [logs]="(sampleRun | async)?.export_to_ena?.status"
+        [dates]="(sampleRun | async)?.export_to_ena?.date"
+        [styling]="'success'"
+      ></app-log-list>
+
+      <app-log-list
+        [title]="'errors'"
+        [logs]="(sampleRun | async)?.export_to_ena?.errors"
+        [styling]="'danger'"
+      >
+      </app-log-list>
+
+    </div>
+
+  </div>
+
+</div>

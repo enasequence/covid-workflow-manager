@@ -1,0 +1,40 @@
+<div class="row mb-2">
+    
+    <div class="col">
+        <div class="btn-group mx-3">
+
+          <a href="#" class="btn btn-outline btn-sm border text-left disabled" style="width: 12em;">
+            <b>{{ shortName(stage) | titlecase }} Status </b>
+          </a>
+
+          <a href="#" [routerLink]="[stage, 'Success' ]" routerLinkActive="btn-dark" class="btn btn-light btn-sm border">
+          Success
+          <span class="badge badge-success badge-pill">
+            {{ getStatusCount('Success') }}
+          </span>
+          </a>
+
+          <a href="#" [routerLink]="[stage, 'Processing']" class="btn btn-light btn-sm border">
+          Processing
+          <span class="badge badge-warning badge-pill">
+            {{ getStatusCount('Processing') }}
+          </span>
+          </a>
+
+          <a href="#" [routerLink]="[stage, 'Undefined']" class="btn btn-light btn-sm border">
+          Undefined
+          <span class="badge badge-info badge-pill">
+            {{ getStatusCount('Undefined') }}
+          </span>
+          </a>
+
+          <a href="#" [routerLink]="[stage, 'Failed']" class="btn btn-light btn-sm border">
+          Failed
+          <span class="badge badge-danger badge-pill">
+            {{ getStatusCount('Failed') }}
+          </span>
+          </a>
+
+        </div>
+    </div>
+</div>

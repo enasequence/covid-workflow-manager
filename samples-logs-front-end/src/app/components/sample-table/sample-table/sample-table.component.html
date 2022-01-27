@@ -1,0 +1,42 @@
+<table class="table border">
+  <caption [ngPlural]="sampleCount()">
+    <ng-template ngPluralCase='one'>1 sample total</ng-template>
+    <ng-template ngPluralCase='other'>{{ sampleCount() }} samples total</ng-template>
+  </caption>
+  
+  <thead class="thead-light">
+  <tr>
+      <th class="border">Sample ID</th>
+      <th class="border" scope="col">Date</th>
+      <th class="border" scope="col">Import status</th>
+      <th class="border" scope="col">Pipeline status</th>
+      <th class="border" scope ="col">Export status</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let item of data | paginate: { itemsPerPage: 10, currentPage: page }">
+    <td><a [routerLink]="'/' + pipeline + '/' + item?.id">{{ item?.id }}</a></td>
+    <td>{{ item?.date }}</td>
+    <td>
+      <app-job-status [status]="item?.importStatus"></app-job-status>
+    </td>
+    <td>
+      <app-job-status [status]="item?.pipelineStatus"></app-job-status>
+    </td>
+    <td>
+      <app-job-status [status]="item?.exportStatus"></app-job-status>
+    </td>
+  </tr>
+
+  <tr *ngIf="data?.length === 0">
+    <td class="text-center" colspan="5">
+      <div class="alert alert-secondary py-3 my-3 mx-4">
+        There are no samples to display yet.
+      </div>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+<pagination-controls (pageChange)="page = $event"></pagination-controls>

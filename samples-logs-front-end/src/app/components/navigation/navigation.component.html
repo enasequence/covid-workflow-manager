@@ -1,0 +1,28 @@
+<div class="row mt-3 mb-3">
+    <div class="col-md-12">
+
+        <button type="button" class="btn btn-info mr-3" [routerLink]="['/artic']">
+          ARTIC
+        </button>
+
+        <div class="btn-group mr-3">
+          <button type="button" class="btn btn-primary" [routerLink]="['/jovian']">Jovian</button>
+          <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-left">
+            <button class="dropdown-item" href="#" [routerLink]="['/jovian']">Reference Alignment</button>
+            <button class="dropdown-item" href="#" [routerLink]="['/jovian-metagenomics']">Metagenomics</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-secondary mr-3" [routerLink]="['/ont']">
+          Nanopore
+        </button>
+
+        <button type="button" class="btn btn-dark mr-3" [routerLink]="['/vcf']">
+          VCF
+        </button>
+
+    </div>
+  </div>
