@@ -7,7 +7,7 @@ data:
   config.json: |+
     {
         "mapTiles": {
-            "api": "https://api.mapbox.com/styles/v1/trvrb/ciu03v244002o2in5hlm3q6w2/tiles/256/{z}/{x}/{y}?access_token=sk.eyJ1IjoicnRob3JuZSIsImEiOiJja3FiOWFheHAwa2ZqMm9vdmZsYmc3YmI5In0.0AChNxs4dQoRJgDWQMBVGw",
+            "api": "",
             "attribution": "Test"
         },
         "browserTitle": "Data Hubs - Auspice",
