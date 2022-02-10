@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ncov-preprocess-data-cronjob
+spec:
+  schedule: "10 10 * * *" # 10:00am daily
+  jobTemplate:
+    metadata:
+      labels:
+        ms: consensus-data-cronjob
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: main
+              image: rmwthorne/ncov-preprocess-cronjob
+              command: ["python", "get_metadata.py"]
+              env:
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: consensus-pvc
+

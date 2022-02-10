@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ncov
+  namespace: nextstrain
+  labels:
+    app: ncov
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ncov
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ncov
+    spec:
+      containers:
+        - name: ncov
+          image: rmwthorne/ncov
+          command: ['sleep', '99999']
+          # command: ['nextstrain', '-h']
+          # command: ['nextstrain', 'build', 
+          # '--native',
+          # '.',
+          # '--cores', '4', 
+          # '--configfile', './my_profiles/getting_started/builds.yaml',
+          # ]
+          resources: {}
+          volumeMounts:
+          - name: datasets
+            mountPath: /data/datasets
+          - name: consensus-pvc
+            mountPath: /data/consensus
+          - name: profile-config
+            mountPath: /opt/ncov/my_profiles/split_1/
+      volumes:
+        - name: datasets
+          persistentVolumeClaim:
+            claimName: nextstrain-data-pvc
+        - name: consensus-pvc
+          persistentVolumeClaim:
+            claimName: consensus-pvc
+        - name: profile-config
+          configMap: 
+            name: ncov-config-4
+

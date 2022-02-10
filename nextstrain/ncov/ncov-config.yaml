@@ -1,0 +1,163 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ncov-config-5
+  namespace: nextstrain
+data:
+  builds.yaml: |+
+    inputs:
+      - name: example
+        metadata: /data/consensus/metadata.tsv
+        sequences: /data/consensus/sequences/viral_sequences/sequences/fasta/20210921-1612.fasta
+    builds:
+      global:
+        subsampling_scheme: region_global
+        region: global
+    subsampling:
+      custom-county:
+        focal:
+          group_by: "year month"
+          seq_per_group: 300
+          query: --query "(country == '{country}') & (division == '{division}') & (location == '{location}')"
+        related:
+          group_by: "country year month"
+          seq_per_group: 20
+          exclude: "--exclude-where 'location={location}'"
+          priorities:
+            type: "proximity"
+            focus: "focal"
+        contextual:
+          group_by: "country year month"
+          seq_per_group: 10
+          exclude: "--exclude-where 'location={location}'"
+    files:
+      auspice_config: "my_profiles/example/my_auspice_config.json"
+      description: "my_profiles/example/my_description.md"
+
+  config.yaml: |
+    configfile:
+      - defaults/parameters.yaml # Pull in the default values
+      - my_profiles/split_1/builds.yaml # Pull in our list of desired builds
+    cores: 4
+    printshellcmds: True
+    show-failed-logs: True
+
+  my_auspice_config.json: |
+    {
+      "title": "My title here",
+      "build_url": "https://github.com/myusername/myrepository/",
+      "maintainers": [
+        {"name": "My name", "url": "www.myurl.com"}
+      ],
+      "colorings": [
+        {
+          "key": "location",
+          "title": "Location",
+          "type": "categorical"
+        },
+        {
+          "key": "division",
+          "title": "Admin Division",
+          "type": "categorical"
+        },
+        {
+          "key": "country",
+          "title": "Country",
+          "type": "categorical"
+        },
+        {
+          "key": "region",
+          "title": "Region",
+          "type": "categorical"
+        },
+        {
+          "key": "host",
+          "title": "Host",
+          "type": "categorical"
+        },
+        {
+          "key": "age",
+          "title": "Age",
+          "type": "continuous"
+        },
+        {
+          "key": "sex",
+          "title": "Sex",
+          "type": "categorical"
+        },
+        {
+          "key": "author",
+          "title": "Authors",
+          "type": "categorical"
+        },
+        {
+          "key": "originating_lab",
+          "title": "Originating Lab",
+          "type": "categorical"
+        },
+        {
+          "key": "submitting_lab",
+          "title": "Submitting Lab",
+          "type": "categorical"
+        },
+        {
+          "key": "recency",
+          "title": "Submission Date",
+          "type": "categorical"
+        },
+        {
+          "key": "gisaid_epi_isl",
+          "type": "categorical"
+        },
+        {
+          "key": "genbank_accession",
+          "type": "categorical"
+        },
+        {
+          "key": "country_exposure",
+          "title": "Country of exposure",
+          "type": "categorical"
+        },
+        {
+          "key": "division_exposure",
+          "title": "Division of exposure",
+          "type": "categorical"
+        },
+        {
+          "key": "region_exposure",
+          "title": "Region of exposure",
+          "type": "categorical"
+        }
+      ],
+      "geo_resolutions": [
+        "location",
+        "division",
+        "country",
+        "region"
+      ],
+      "display_defaults": {
+        "color_by": "division",
+        "distance_measure": "num_date",
+        "geo_resolution": "division",
+        "map_triplicate": true,
+        "branch_label": "none"
+      },
+      "filters": [
+        "recency",
+        "location",
+        "division",
+        "country",
+        "region",
+        "host",
+        "author"
+      ],
+      "panels": [
+        "tree",
+        "map",
+        "entropy"
+      ]
+    }
+
+  my_description.md: |
+    This is the description that appears below your visualization in Auspice.
+

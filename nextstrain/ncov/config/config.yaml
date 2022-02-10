@@ -1,0 +1,7 @@
+configfile:
+  - defaults/parameters.yaml # Pull in the default values
+  - my_profiles/split_1/builds.yaml # Pull in our list of desired builds
+cores: 4
+printshellcmds: True
+show-failed-logs: True
+

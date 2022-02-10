@@ -1,0 +1,37 @@
+inputs:
+  - name: example
+    metadata: /data/2.tsv
+    sequences: /data/2.fa
+builds:
+  global:
+    subsampling_scheme: region_global
+    region: global
+subsampling:
+  custom-county:
+    focal:
+      group_by: "year month"
+      seq_per_group: 300
+      query: --query "(country == '{country}') & (division == '{division}') & (location == '{location}')"
+    related:
+      group_by: "country year month"
+      seq_per_group: 20
+      exclude: "--exclude-where 'location={location}'"
+      priorities:
+        type: "proximity"
+        focus: "focal"
+    contextual:
+      group_by: "country year month"
+      seq_per_group: 10
+      exclude: "--exclude-where 'location={location}'"
+files:
+  auspice_config: "my_profiles/example/my_auspice_config.json"
+  description: "my_profiles/example/my_description.md"
+
+  config.yaml: |
+    configfile:
+      - defaults/parameters.yaml # Pull in the default values
+      - my_profiles/split_1/builds.yaml # Pull in our list of desired builds
+    cores: 4
+    printshellcmds: True
+    show-failed-logs: True
+
