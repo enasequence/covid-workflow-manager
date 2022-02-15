@@ -27,27 +27,32 @@ spec:
     spec:
       containers:
       - name: proxy
-        image: alexeyebi/kooplex-proxy
+        image: milm/kooplex-proxy:latest
         ports:
           - containerPort: 8080
         env:
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: pg-admin-ebi
+                name: dbprod
                 key: admin
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: pg-admin-ebi
+                name: dbprod
                 key: adminpw
           - name: POSTGRES_HOST
             valueFrom:
               secretKeyRef:
-                name: pg-admin-ebi
+                name: dbprod
                 key: dbhost
           - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:
-                name: pg-admin-ebi
+                name: dbprod
                 key: db
+          - name: POSTGRES_PORT
+            valueFrom:
+              secretKeyRef:
+                name: dbprod
+                key: dbport
