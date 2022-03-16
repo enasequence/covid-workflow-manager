@@ -160,7 +160,7 @@ class Operation(BaseModel):
     last_exit_code: Optional[int]
     stage: Optional[int]
     exit_code: Optional[int]
-    extra_info: Optional[int]
+    extra_info: Optional[str]
 
     class Config:
         orm_mode = True

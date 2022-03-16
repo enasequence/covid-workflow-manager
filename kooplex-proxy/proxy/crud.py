@@ -92,7 +92,6 @@ def get_worldplot_data(db: Session, skip: int = 0, limit: int = 100):
         models.Meta.clean_host == 'Homo sapiens',
         models.Meta.clean_collection_date > func.date('2020-03-15'),
         models.Meta.clean_collection_date < func.current_date())
-    )
 
     result_count = db.query(
         models.Meta.country_name,
