@@ -108,8 +108,8 @@ class Meta(Base):
     collection_date_submitted = Column(TEXT)
     checklist = Column(TEXT)
     clean_collection_date = Column(DATE, primary_key=True)
-    date_isoweek = Column(INTEGER, primary_key=True)
-    date_isoyear = Column(INTEGER, primary_key=True)
+    date_isoweek = Column(DATE, primary_key=True)
+    date_isoyear = Column(DATE, primary_key=True)
 
 
 class UniqueCovAppend(Base):
@@ -124,20 +124,19 @@ class LineageDef(Base):
     __tablename__ = "lineage_def"
     variant_id = Column(TEXT, primary_key=True)
     pango = Column(TEXT, primary_key=True)
-    nextstrain = Column(TEXT)
-    ref_pos_alt = Column(TEXT)
-    codon_change = Column(TEXT)
-    gene = Column(TEXT, primary_key=True)
-    pos = Column(DOUBLE_PRECISION, primary_key=True)
-    predicted_effect = Column(TEXT)
-    protein = Column(TEXT, primary_key=True)
-    protein_codon_position = Column(DOUBLE_PRECISION, primary_key=True)
-    ref = Column(TEXT)
-    type = Column(TEXT)
-    alt = Column(TEXT)
+    type_variant = Column(TEXT)
     amino_acid_change = Column(TEXT)
+    protein_codon_position = Column(TEXT, primary_key=True)
+    ref_protein = Column(TEXT)
+    alt_protein = Column(TEXT)
+    gene = Column(TEXT, primary_key=True)
+    effect = Column(TEXT)
+    snpeff_original_mut = Column(TEXT, primary_key=True)
+    ref_pos_alt = Column(TEXT)
+    ref = Column(TEXT)
+    alt = Column(TEXT)
+    pos = Column(DOUBLE_PRECISION, primary_key=True)
     description = Column(TEXT)
-    snp_codon_position = Column(TEXT)
 
 
 class Operation(Base):

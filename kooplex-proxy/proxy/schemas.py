@@ -1,4 +1,4 @@
-import datetime
+from datetime import date, datetime
 
 from pydantic import BaseModel
 from typing import Optional
@@ -19,7 +19,7 @@ class CovidCountryWeekly(BaseModel):
 
 
 class UniqueVCFAppend(BaseModel):
-    insertion_ts: Optional[datetime.datetime]
+    insertion_ts: Optional[date]
     ena_run: Optional[str]
     snapshot: Optional[str]
     integrity: Optional[str]
@@ -79,7 +79,7 @@ class Cov(BaseModel):
 
 class Meta(BaseModel):
     ena_run: Optional[str]
-    collection_date: Optional[datetime.datetime]
+    collection_date: Optional[date]
     clean_country: Optional[str]
     clean_host: Optional[str]
     accession: Optional[str]
@@ -88,8 +88,8 @@ class Meta(BaseModel):
     study_accession: Optional[str]
     description: Optional[str]
     country: Optional[str]
-    first_created: Optional[datetime.datetime]
-    first_public: Optional[datetime.datetime]
+    first_created: Optional[date]
+    first_public: Optional[date]
     host: Optional[str]
     host_sex: Optional[str]
     host_tax_id: Optional[int]
@@ -114,16 +114,16 @@ class Meta(BaseModel):
     fastq_ftp: Optional[str]
     collection_date_submitted: Optional[str]
     checklist: Optional[str]
-    clean_collection_date: Optional[datetime.datetime]
-    date_isoweek: Optional[int]
-    date_isoyear: Optional[int]
+    clean_collection_date: Optional[date]
+    date_isoweek: Optional[date]
+    date_isoyear: Optional[date]
 
     class Config:
         orm_mode = True
 
 
 class UniqueCovAppend(BaseModel):
-    insertion_ts: Optional[datetime.datetime]
+    insertion_ts: Optional[date]
     ena_run: Optional[str]
     snapshot: Optional[str]
     integrity: Optional[int]
@@ -135,27 +135,26 @@ class UniqueCovAppend(BaseModel):
 class LineageDef(BaseModel):
     variant_id: Optional[str]
     pango: Optional[str]
-    nextstrain: Optional[str]
-    ref_pos_alt: Optional[str]
-    codon_change: Optional[str]
-    gene: Optional[str]
-    pos: Optional[float]
-    predicted_effect: Optional[str]
-    protein: Optional[str]
-    protein_codon_position: Optional[float]
-    ref: Optional[str]
-    type: Optional[str]
-    alt: Optional[str]
+    type_variant: Optional[str]
     amino_acid_change: Optional[str]
+    protein_codon_position: Optional[float]
+    ref_protein: Optional[str]
+    alt_protein: Optional[str]
+    gene: Optional[str]
+    effect: Optional[str]
+    snpeff_original_mut: Optional[str]
+    ref_pos_alt: Optional[str]
+    ref: Optional[str]
+    alt: Optional[str]
+    pos: Optional[float]
     description: Optional[str]
-    snp_codon_position: Optional[str]
 
     class Config:
         orm_mode = True
 
 
 class Operation(BaseModel):
-    event_ts: Optional[datetime.datetime]
+    event_ts: Optional[date]
     last_stage: Optional[int]
     last_exit_code: Optional[int]
     stage: Optional[int]
@@ -167,7 +166,7 @@ class Operation(BaseModel):
 
 
 class UniqueCov(BaseModel):
-    insertion_ts: Optional[datetime.datetime]
+    insertion_ts: Optional[date]
     ena_run: Optional[str]
     snapshot: Optional[str]
     integrity: Optional[int]
@@ -177,7 +176,7 @@ class UniqueCov(BaseModel):
 
 
 class UniqueVCF(BaseModel):
-    insertion_ts: Optional[datetime.datetime]
+    insertion_ts: Optional[date]
     ena_run: Optional[str]
     snapshot: Optional[str]
     integrity: Optional[int]
