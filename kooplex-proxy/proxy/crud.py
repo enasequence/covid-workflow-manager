@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import case, func
 from sqlalchemy.sql import alias
-from sqlalchemy.orm import load_only
 import models
 
 
@@ -52,7 +51,7 @@ def get_vcf_all_append(db: Session, skip: int = 0, limit: int = 100):
 def get_new_cases(db: Session, skip: int = 0, limit: int = 100):
 
     expr = case([(models.Meta.clean_country == 'USA', 'United States'), ],
-               else_=models.Meta.clean_country).label("clean_country")
+                else_=models.Meta.clean_country).label("clean_country")
     result_filter = db.query(models.Meta, expr).filter(
         models.Meta.clean_collection_date.isnot(None),
         models.Meta.clean_host == 'Homo sapiens',
@@ -60,25 +59,25 @@ def get_new_cases(db: Session, skip: int = 0, limit: int = 100):
     )
 
     result_count = db.query(
-        models.Meta.country_name,
-        models.Meta.date_year,
-        models.Meta.date_week,
+        models.Meta.clean_country,
+        models.Meta.date_isoyear,
+        models.Meta.date_isoweek,
         func.count('*').label('weekly_sample')
     ).select_from(alias(result_filter))
 
     result_groupby = db.query(
         models.Meta
     ).group_by(
-        models.Meta.country_name,
-        models.Meta.date_year,
-        models.Meta.date_week
+        models.Meta.clean_country,
+        models.Meta.date_isoyear,
+        models.Meta.date_isoweek
     ).select_from(alias(result_count))
 
     lhs, rhs = aliased(result_groupby), aliased(result_filter)
 
     result = outerjoin(
-        lhs, lhs.country_name == rhs.country_name
-    ).outerjoin(lhs, lhs.date_year == rhs.date_year).outerjoin(lhs, lhs.date_week == rhs.date_week)
+        lhs, lhs.clean_country == rhs.clean_country
+    ).outerjoin(lhs, lhs.date_isoyear == rhs.date_isoyear).outerjoin(lhs, lhs.date_isoweek == rhs.date_isoweek)
 
     return result.offset(skip).limit(limit).all()
 

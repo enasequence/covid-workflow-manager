@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: proxy
-        image: sands0/kooplex-proxy:6
+        image: milm/kooplex-proxy:latest
         ports:
           - containerPort: 8080
         env:

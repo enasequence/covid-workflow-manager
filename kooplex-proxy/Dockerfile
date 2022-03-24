@@ -1,4 +1,6 @@
 FROM python
+RUN apt-get update
+RUN apt-get install nano
 RUN pip install fastapi uvicorn[standard] sqlalchemy psycopg2
 COPY ./proxy /proxy
 WORKDIR /proxy
