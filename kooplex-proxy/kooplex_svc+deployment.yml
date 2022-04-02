@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: proxy
-        image: milm/kooplex-proxy:latest
+        image: milm/kooplex-proxy:test13
         ports:
           - containerPort: 8080
         env:

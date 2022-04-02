@@ -1,7 +1,9 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table, MetaData
 from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TEXT, TIMESTAMP, \
     VARCHAR, INTEGER, REAL, BOOLEAN, DATE
 from database import Base
+
+METADATA = MetaData()
 
 
 class CovidCountryWeekly(Base):
@@ -69,47 +71,54 @@ class Cov(Base):
     coverage = Column(INTEGER)
 
 
+MetaTable = Table(
+    "meta",
+    METADATA,
+    Column("ena_run", VARCHAR, primary_key=True),
+    Column("collection_date", DATE, primary_key=True),
+    Column("clean_country", TEXT, primary_key=True),
+    Column("clean_host", TEXT, primary_key=True),
+    Column("accession", TEXT),
+    Column("sample_accession", TEXT, primary_key=True),
+    Column("experiment_accession", TEXT, primary_key=True),
+    Column("study_accession", TEXT, primary_key=True),
+    Column("description", TEXT),
+    Column("country", TEXT),
+    Column("first_created", DATE, primary_key=True),
+    Column("first_public", DATE, primary_key=True),
+    Column("host", TEXT),
+    Column("host_sex", TEXT),
+    Column("host_tax_id", INTEGER),
+    Column("host_body_site", TEXT),
+    Column("bio_material", TEXT),
+    Column("culture_collection", TEXT),
+    Column("instrument_model", TEXT),
+    Column("instrument_platform", TEXT),
+    Column("library_layout", TEXT),
+    Column("library_name", TEXT),
+    Column("library_selection", TEXT),
+    Column("library_source", TEXT),
+    Column("library_strategy", TEXT),
+    Column("sequencing_method", TEXT),
+    Column("isolate", TEXT),
+    Column("strain", TEXT),
+    Column("base_count", DOUBLE_PRECISION),
+    Column("collected_by", TEXT),
+    Column("broker_name", TEXT),
+    Column("center_name", TEXT),
+    Column("sample_capture_status", TEXT),
+    Column("fastq_ftp", TEXT),
+    Column("collection_date_submitted", TEXT),
+    Column("checklist", TEXT),
+    Column("clean_collection_date", DATE, primary_key=True),
+    Column("date_isoyear", DATE, primary_key=True),
+    Column("date_isoweek", DATE, primary_key=True)
+)
+
+
 class Meta(Base):
-    __tablename__ = "meta"
-    ena_run = Column(VARCHAR, primary_key=True)
-    collection_date = Column(DATE, primary_key=True)
-    clean_country = Column(TEXT, primary_key=True)
-    clean_host = Column(TEXT, primary_key=True)
-    accession = Column(TEXT)
-    sample_accession = Column(TEXT, primary_key=True)
-    experiment_accession = Column(TEXT, primary_key=True)
-    study_accession = Column(TEXT, primary_key=True)
-    description = Column(TEXT)
-    country = Column(TEXT)
-    first_created = Column(DATE, primary_key=True)
-    first_public = Column(DATE, primary_key=True)
-    host = Column(TEXT)
-    host_sex = Column(TEXT)
-    host_tax_id = Column(INTEGER)
-    host_body_site = Column(TEXT)
-    bio_material = Column(TEXT)
-    culture_collection = Column(TEXT)
-    instrument_model = Column(TEXT)
-    instrument_platform = Column(TEXT)
-    library_layout = Column(TEXT)
-    library_name = Column(TEXT)
-    library_selection = Column(TEXT)
-    library_source = Column(TEXT)
-    library_strategy = Column(TEXT)
-    sequencing_method = Column(TEXT)
-    isolate = Column(TEXT)
-    strain = Column(TEXT)
-    base_count = Column(DOUBLE_PRECISION)
-    collected_by = Column(TEXT)
-    broker_name = Column(TEXT)
-    center_name = Column(TEXT)
-    sample_capture_status = Column(TEXT)
-    fastq_ftp = Column(TEXT)
-    collection_date_submitted = Column(TEXT)
-    checklist = Column(TEXT)
-    clean_collection_date = Column(DATE, primary_key=True)
-    date_isoweek = Column(DATE, primary_key=True)
-    date_isoyear = Column(DATE, primary_key=True)
+    __table__ = MetaTable
+    #__mapper_args__ = {'column_prefix': '_'}
 
 
 class UniqueCovAppend(Base):

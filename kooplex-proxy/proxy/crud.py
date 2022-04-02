@@ -1,7 +1,10 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import case, func
-from sqlalchemy.sql import alias
+from sqlalchemy.sql import text
+
 import models
+from database import engine
+
+import getpass
 
 
 def get_covid_country_weekly(db: Session, skip: int = 0, limit: int = 100):
@@ -48,63 +51,62 @@ def get_vcf_all_append(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.VCFAllAppend).offset(skip).limit(limit).all()
 
 
-def get_new_cases(db: Session, skip: int = 0, limit: int = 100):
+def get_new_cases(skip: int = 0, limit: int = 100):
 
-    expr = case([(models.Meta.clean_country == 'USA', 'United States'), ],
-                else_=models.Meta.clean_country).label("clean_country")
-    result_filter = db.query(models.Meta, expr).filter(
-        models.Meta.clean_collection_date.isnot(None),
-        models.Meta.clean_host == 'Homo sapiens',
-        models.Meta.clean_collection_date > func.date('2020-03-15')
-    )
+    text_request = text("""CREATE OR REPLACE VIEW app_new_cases_view AS
+        WITH tmp_meta1 as (
+            SELECT "ena_run", CASE WHEN ("clean_country" = 'USA') THEN ('United States') WHEN NOT("clean_country" = 'USA') 
+            THEN ("clean_country") END AS "country_name", "clean_collection_date", "date_isoyear" AS "date_year", 
+            "date_isoweek" AS "date_week"
+            FROM meta
+            WHERE NOT ("clean_collection_date" IS NULL)
+            AND "clean_host" = 'Homo sapiens'
+            AND "clean_collection_date" > CAST('2020-03-15' AS DATE) 
+        )
+        , tmp_grouped as (
+            SELECT "country_name", "date_year", "date_week", COUNT(*) AS "weekly_sample"
+            FROM tmp_meta1
+            GROUP BY "country_name", "date_year", "date_week"
+        )
+        SELECT "LHS"."country_name" AS "country_name", "LHS"."date_year" AS "date_year", "LHS"."date_week" AS "date_week", 
+        "LHS"."weekly_sample" AS "weekly_sample", "RHS"."iso_a3" AS "iso_a3", "RHS"."iso_a2" AS "iso_a2", 
+        "RHS"."country_name_local" AS "country_name_local", "RHS"."population" AS "population", 
+        "RHS"."ecdc_covid_country_weekly_cases" AS "ecdc_covid_country_weekly_cases", 
+        "RHS"."ecdc_covid_country_weekly_deaths" AS "ecdc_covid_country_weekly_deaths"
+        FROM tmp_grouped as "LHS"
+        LEFT JOIN "ecdc_covid_country_weekly" AS "RHS"
+        ON ("LHS"."country_name" = "RHS"."country_name" AND "LHS"."date_year" = "RHS"."date_year" AND 
+        "LHS"."date_week" = "RHS"."date_week");""")
 
-    result_count = db.query(
-        models.Meta.clean_country,
-        models.Meta.date_isoyear,
-        models.Meta.date_isoweek,
-        func.count('*').label('weekly_sample')
-    ).select_from(alias(result_filter))
+    with engine.connect() as conn:
+        conn.execute(text_request)
+        outp = conn.execute(f"""SELECT * FROM app_new_cases_view OFFSET {skip} LIMIT {limit};""").all()
+        conn.execute("""DROP VIEW app_new_cases_view;""")
 
-    result_groupby = db.query(
-        models.Meta
-    ).group_by(
-        models.Meta.clean_country,
-        models.Meta.date_isoyear,
-        models.Meta.date_isoweek
-    ).select_from(alias(result_count))
-
-    lhs, rhs = aliased(result_groupby), aliased(result_filter)
-
-    result = outerjoin(
-        lhs, lhs.clean_country == rhs.clean_country
-    ).outerjoin(lhs, lhs.date_isoyear == rhs.date_isoyear).outerjoin(lhs, lhs.date_isoweek == rhs.date_isoweek)
-
-    return result.offset(skip).limit(limit).all()
+    return outp
 
 
-def get_worldplot_data(db: Session, skip: int = 0, limit: int = 100):
+def get_worldplot_data(skip: int = 0, limit: int = 100):
 
-    expr = case([(models.Meta.clean_country == 'USA', 'United States'), ],
-                else_=models.Meta.clean_country).label("clean_country")
-    result_filter = db.query(models.Meta, expr).filter(
-        models.Meta.clean_collection_date.isnot(None),
-        models.Meta.clean_host == 'Homo sapiens',
-        models.Meta.clean_collection_date > func.date('2020-03-15'),
-        models.Meta.clean_collection_date < func.current_date())
+    text_request = text("""CREATE OR REPLACE VIEW app_worldplot_data_view AS
+        WITH tmp_meta1 as (
+            SELECT "ena_run", CASE WHEN ("clean_country" = 'USA') THEN ('United States') WHEN 
+            NOT("clean_country" = 'USA') THEN ("clean_country") END AS "Country", "clean_collection_date", 
+            "date_isoyear" AS "date_year", "date_isoweek" AS "date_week"
+            FROM meta
+            WHERE NOT ("clean_collection_date" IS NULL)
+            AND NOT ("clean_country" IS NULL)
+            AND "clean_host" = 'Homo sapiens'
+            AND "clean_collection_date" > CAST('2020-03-15' AS DATE)
+            AND "clean_collection_date" < CURRENT_DATE
+        ) 
+        SELECT "Country", "date_year", "date_week", COUNT(*) AS "weekly_sample"
+        FROM tmp_meta1
+        GROUP BY "Country", "date_year", "date_week";""")
 
-    result_count = db.query(
-        models.Meta.country_name,
-        models.Meta.date_year,
-        models.Meta.date_week,
-        func.count('*').label('weekly_sample')
-    ).select_from(alias(result_filter))
+    with engine.connect() as conn:
+        conn.execute(text_request)
+        outp = conn.execute(f"""SELECT * FROM app_worldplot_data_view OFFSET {skip} LIMIT {limit};""").all()
+        conn.execute("""DROP VIEW app_worldplot_data_view;""")
 
-    result = db.query(
-        models.Meta
-    ).group_by(
-        models.Meta.country_name,
-        models.Meta.date_year,
-        models.Meta.date_week
-    ).select_from(alias(result_count))
-
-    return result.offset(skip).limit(limit).all()
+    return outp

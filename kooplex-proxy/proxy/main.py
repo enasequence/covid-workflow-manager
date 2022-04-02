@@ -94,11 +94,11 @@ def read_vcf_all_append(skip: int = 0, limit: int = 100):
 
 @app.get("/new_cases/", response_model=List[schemas.NewCases])
 def read_new_cases(skip: int = 0, limit: int = 100):
-    new_cases = crud.get_new_cases(next(get_db()), skip=skip, limit=limit)
+    new_cases = crud.get_new_cases(skip=skip, limit=limit)
     return new_cases
 
 
 @app.get("/worldplot_data/", response_model=List[schemas.NewCases])
 def read_worldplot_data(skip: int = 0, limit: int = 100):
-    worldplot_data = crud.get_worldplot_data(next(get_db()), skip=skip, limit=limit)
+    worldplot_data = crud.get_worldplot_data(skip=skip, limit=limit)
     return worldplot_data
