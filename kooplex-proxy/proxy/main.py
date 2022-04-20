@@ -92,10 +92,34 @@ def read_vcf_all_append(skip: int = 0, limit: int = 100):
     return vcf_all_append
 
 
+@app.get("/country_samples/", response_model=List[schemas.NewCases])
+def read_country_samples(skip: int = 0, limit: int = 100):
+    country_samples = crud.get_country_samples(skip=skip, limit=limit)
+    return country_samples
+
+
+@app.get("/lineage_def_description/", response_model=List[schemas.NewCases])
+def read_lineage_def_description(skip: int = 0, limit: int = 100):
+    lineage_def_description = crud.get_lineage_def_description(skip=skip, limit=limit)
+    return lineage_def_description
+
+
+@app.get("/lineage/", response_model=List[schemas.NewCases])
+def read_lineage(skip: int = 0, limit: int = 100):
+    lineage = crud.get_lineage(skip=skip, limit=limit)
+    return lineage
+
+
 @app.get("/new_cases/", response_model=List[schemas.NewCases])
 def read_new_cases(skip: int = 0, limit: int = 100):
     new_cases = crud.get_new_cases(skip=skip, limit=limit)
     return new_cases
+
+
+@app.get("/variants_weekly/", response_model=List[schemas.NewCases])
+def read_variants_weekly(skip: int = 0, limit: int = 100):
+    variants_weekly = crud.get_variants_weekly(skip=skip, limit=limit)
+    return variants_weekly
 
 
 @app.get("/worldplot_data/", response_model=List[schemas.NewCases])
