@@ -18,14 +18,6 @@ class CovidCountryWeekly(Base):
     ecdc_covid_country_weekly_deaths = Column(DOUBLE_PRECISION)
 
 
-class UniqueVCFAppend(Base):
-    __tablename__ = "unique_vcf_append"
-    insertion_ts = Column(TIMESTAMP)
-    ena_run = Column(VARCHAR, primary_key=True)
-    snapshot = Column(VARCHAR)
-    integrity = Column(INTEGER)
-
-
 class VCFAll(Base):
     __tablename__ = "vcf_all"
     ena_run = Column(VARCHAR, primary_key=True)
@@ -114,14 +106,6 @@ class Meta(Base):
     date_isoyear = Column(DATE, primary_key=True)
 
 
-class UniqueCovAppend(Base):
-    __tablename__ = "unique_cov_append"
-    insertion_ts = Column(TIMESTAMP)
-    ena_run = Column(VARCHAR, primary_key=True)
-    snapshot = Column(VARCHAR)
-    integrity = Column(INTEGER)
-
-
 class LineageDef(Base):
     __tablename__ = "lineage_def"
     variant_id = Column(TEXT, primary_key=True)
@@ -165,41 +149,3 @@ class UniqueVCF(Base):
     ena_run = Column(VARCHAR, primary_key=True)
     snapshot = Column(VARCHAR)
     integrity = Column(INTEGER)
-
-
-class VCFAllAppend(Base):
-    __tablename__ = "vcf_all_append"
-    ena_run = Column(TEXT, primary_key=True)
-    chrom = Column(TEXT, primary_key=True)
-    pos = Column(INTEGER, primary_key=True)
-    ref = Column(TEXT)
-    alt = Column(TEXT)
-    qual = Column(INTEGER)
-    filter = Column(TEXT)
-    dp = Column(INTEGER)
-    af = Column(REAL)
-    sb = Column(INTEGER)
-    count_ref_forward_base = Column(INTEGER)
-    count_ref_reverse_base = Column(INTEGER)
-    count_alt_forward_base = Column(INTEGER)
-    count_alt_reverse_base = Column(INTEGER)
-    hrun = Column(INTEGER)
-    indel = Column(BOOLEAN)
-    lof = Column(TEXT)
-    nmd = Column(TEXT)
-    ann_num = Column(INTEGER)
-    annotation = Column(TEXT)
-    annotation_impact = Column(TEXT)
-    gene_name = Column(TEXT)
-    gene_id = Column(TEXT)
-    feature_type = Column(TEXT)
-    feature_id = Column(TEXT)
-    transcript_biotype = Column(TEXT)
-    rank_ = Column(TEXT)
-    hgvs_c = Column(TEXT)
-    hgvs_p = Column(TEXT)
-    cdna_pos__cdna_length = Column(TEXT)
-    cds_pos__cds_length = Column(TEXT)
-    aa_pos__aa_length = Column(TEXT)
-    distance = Column(INTEGER)
-    errors_warnings_info = Column(TEXT)
