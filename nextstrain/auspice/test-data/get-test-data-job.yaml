@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: get-test-data
-  namespace: nextstrain
   labels:
     job-name: get-test-data
 spec:

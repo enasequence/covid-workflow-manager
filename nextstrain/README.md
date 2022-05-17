@@ -6,12 +6,11 @@ This microservice provides a [Nextstrain](https://nextstrain.org/sars-cov-2) ins
 
 ### Prerequisites
 
-Create the necessary namespace and persistent volume claim:
+Create the persistent volume claim:
 
 ``` sh
-kubectl apply -f .
+kubectl --namespace=nextstrain apply -f .
 ```
-
 
 ## Usage
 
@@ -26,14 +25,12 @@ The web server can be started with the following:
 
 ``` sh
 cd auspice/
-kubectl apply -f .
+kubectl --namespace=nextstrain apply -f .
 ```
 You will need to provide a tile server API address to fetch geographic tiles in `auspice/auspice-config.yaml`, as described [here](https://docs.nextstrain.org/projects/auspice/en/stable/customise-client/api.html#custom-map-tiles).
 
 For testing, you can populate the server with a subset of example data from the Nextstrain website:
 
 ``` sh
-kubectl apply -f auspice/test-data/get-test-data-job.yaml
+kubectl --namespace=nextstrain apply -f auspice/test-data/get-test-data-job.yaml
 ```
-
-

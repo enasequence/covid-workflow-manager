@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ncov
-  namespace: nextstrain
   labels:
     app: ncov
 spec:
