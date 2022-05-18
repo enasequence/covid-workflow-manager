@@ -32,12 +32,6 @@ def read_covid_country_weekly(skip: int = 0, limit: int = 100):
     return covid_country_weekly
 
 
-@app.get("/unique_vcf_append/", response_model=List[schemas.UniqueVCFAppend])
-def read_unique_vcf_append(skip: int = 0, limit: int = 100):
-    unique_vcf_append = crud.get_unique_vcf_append(next(get_db()), skip=skip, limit=limit)
-    return unique_vcf_append
-
-
 @app.get("/vcf_all/", response_model=List[schemas.VCFAll])
 def read_vcf_all(skip: int = 0, limit: int = 100):
     vcf_all = crud.get_vcf_all(next(get_db()), skip=skip, limit=limit)
@@ -56,22 +50,10 @@ def read_meta(skip: int = 0, limit: int = 100):
     return meta
 
 
-@app.get("/unique_cov_append/", response_model=List[schemas.UniqueCovAppend])
-def read_unique_cov_append(skip: int = 0, limit: int = 100):
-    unique_cov_append = crud.get_unique_cov_append(next(get_db()), skip=skip, limit=limit)
-    return unique_cov_append
-
-
 @app.get("/lineage_def/", response_model=List[schemas.LineageDef])
 def read_lineage_def(skip: int = 0, limit: int = 100):
     lineage_def = crud.get_lineage_def(next(get_db()), skip=skip, limit=limit)
     return lineage_def
-
-
-@app.get("/operation/", response_model=List[schemas.Operation])
-def read_operation(skip: int = 0, limit: int = 100):
-    operation = crud.get_operation(next(get_db()), skip=skip, limit=limit)
-    return operation
 
 
 @app.get("/unique_cov/", response_model=List[schemas.UniqueCov])
@@ -84,12 +66,6 @@ def read_unique_cov(skip: int = 0, limit: int = 100):
 def read_unique_vcf(skip: int = 0, limit: int = 100):
     unique_vcf = crud.get_unique_vcf(next(get_db()), skip=skip, limit=limit)
     return unique_vcf
-
-
-@app.get("/vcf_all_append/", response_model=List[schemas.VCFAllAppend])
-def read_vcf_all_append(skip: int = 0, limit: int = 100):
-    vcf_all_append = crud.get_vcf_all_append(next(get_db()), skip=skip, limit=limit)
-    return vcf_all_append
 
 
 @app.get("/country_samples/", response_model=List[schemas.NewCases])
