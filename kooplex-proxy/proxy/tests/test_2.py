@@ -5,6 +5,7 @@ import sqlalchemy as sa
 
 from sqlalchemy.orm import Session, aliased
 from sqlalchemy import case, func
+from sqlalchemy import and_
 
 from database import SessionLocal, engine
 
@@ -76,7 +77,7 @@ def get_table_names():
     print(engine.table_names())
 
 
-def get_new_cases_test(db: Session, skip: int = 0, limit: int = 100):
+def get_new_cases_test(db: Session, limit: int = 100):
 
     expr = case([(models.Meta.clean_country == 'USA', 'United States'), ],
                 else_=models.Meta.clean_country).label("clean_country")
@@ -124,13 +125,26 @@ def get_new_cases_test(db: Session, skip: int = 0, limit: int = 100):
     #lhs, rhs = aliased(result_count), aliased(result_filter)
     #result = db.query(lhs, rhs).outerjoin(rhs)
     #print(result.offset(skip).limit(limit).all())
+
+    lhs, rhs = aliased(result_count.subquery()), aliased(result_filter.subquery())
+
+    result = db.query(lhs, rhs).outerjoin(
+        rhs,
+        and_(
+            lhs.c.date_isoyear == rhs.c.date_isoyear,
+            lhs.c.clean_country_view == rhs.c.clean_country,
+            lhs.c.date_isoweek == rhs.c.date_isoweek
+        )
+    )
+
+    print(result.limit(limit).all())
     print("TEST-4--END")
 
     return
 
 
-def read_new_cases_test(skip: int = 0, limit: int = 10):
-    get_new_cases_test(next(get_db()), skip=skip, limit=limit)
+def read_new_cases_test(limit: int = 10):
+    get_new_cases_test(next(get_db()), limit=limit)
     return
 
 
