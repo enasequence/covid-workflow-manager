@@ -67,3 +67,9 @@ def get_worldplot_data(skip: int = 0, limit: int = 100):
     with engine.connect() as conn:
         outp = conn.execute(f"""SELECT * FROM app_worldplot_data OFFSET {skip} LIMIT {limit};""").all()
     return outp
+
+
+def check_view(view_name: str = 'app_country_samples'):
+    with engine.connect() as conn:
+        outp = conn.execute(f"""SELECT * FROM pg_attribute WHERE attrelid = '{view_name}'::regclass;""")
+    return outp

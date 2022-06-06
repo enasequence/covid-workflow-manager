@@ -102,3 +102,9 @@ def read_variants_weekly(skip: int = 0, limit: int = 100):
 def read_worldplot_data(skip: int = 0, limit: int = 100):
     worldplot_data = crud.get_worldplot_data(skip=skip, limit=limit)
     return worldplot_data
+
+
+@app.get("/check_views/", response_model=List[schemas.NewCases])
+def check_views(view_name: str = 'app_country_samples'):
+    check_views = crud.check_view(view_name=view_name)
+    return check_views
