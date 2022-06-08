@@ -125,16 +125,6 @@ class LineageDef(Base):
     description = Column(TEXT)
 
 
-class Operation(Base):
-    __tablename__ = "operation"
-    event_ts = Column(TIMESTAMP, primary_key=True)
-    last_stage = Column(INTEGER)
-    last_exit_code = Column(INTEGER,)
-    stage = Column(INTEGER)
-    exit_code = Column(INTEGER)
-    extra_info = Column(TEXT)
-
-
 class UniqueCov(Base):
     __tablename__ = "unique_cov"
     insertion_ts = Column(TIMESTAMP)

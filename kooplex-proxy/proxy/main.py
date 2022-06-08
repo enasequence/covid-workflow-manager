@@ -68,19 +68,19 @@ def read_unique_vcf(skip: int = 0, limit: int = 100):
     return unique_vcf
 
 
-@app.get("/country_samples/", response_model=List[schemas.NewCases])
+@app.get("/country_samples/", response_model=List[schemas.CountrySamples])
 def read_country_samples(skip: int = 0, limit: int = 100):
     country_samples = crud.get_country_samples(skip=skip, limit=limit)
     return country_samples
 
 
-@app.get("/lineage_def_description/", response_model=List[schemas.NewCases])
+@app.get("/lineage_def_description/", response_model=List[schemas.LineageDefDesc])
 def read_lineage_def_description(skip: int = 0, limit: int = 100):
     lineage_def_description = crud.get_lineage_def_description(skip=skip, limit=limit)
     return lineage_def_description
 
 
-@app.get("/lineage/", response_model=List[schemas.NewCases])
+@app.get("/lineage/", response_model=List[schemas.Lineage])
 def read_lineage(skip: int = 0, limit: int = 100):
     lineage = crud.get_lineage(skip=skip, limit=limit)
     return lineage
@@ -92,19 +92,19 @@ def read_new_cases(skip: int = 0, limit: int = 100):
     return new_cases
 
 
-@app.get("/variants_weekly/", response_model=List[schemas.NewCases])
+@app.get("/variants_weekly/", response_model=List[schemas.VariantsWeekly])
 def read_variants_weekly(skip: int = 0, limit: int = 100):
     variants_weekly = crud.get_variants_weekly(skip=skip, limit=limit)
     return variants_weekly
 
 
-@app.get("/worldplot_data/", response_model=List[schemas.NewCases])
+@app.get("/worldplot_data/", response_model=List[schemas.WorldplotData])
 def read_worldplot_data(skip: int = 0, limit: int = 100):
     worldplot_data = crud.get_worldplot_data(skip=skip, limit=limit)
     return worldplot_data
 
 
-@app.get("/check_views/", response_model=List[schemas.NewCases])
+@app.get("/check_views/", response_model=List[schemas.CheckViews])
 def check_views(view_name: str = 'app_country_samples'):
     check_views = crud.check_view(view_name=view_name)
     return check_views
