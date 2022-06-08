@@ -200,8 +200,3 @@ class WorldplotData(BaseModel):
     date_year: int
     date_week: int
     weekly_sample: int
-
-
-class CheckViews(BaseModel):
-    attrelid: int
-    attname: str
