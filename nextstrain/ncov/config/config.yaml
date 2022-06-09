@@ -4,4 +4,3 @@ configfile:
 cores: 4
 printshellcmds: True
 show-failed-logs: True
-

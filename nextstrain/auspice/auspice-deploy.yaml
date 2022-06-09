@@ -46,4 +46,3 @@ spec:
         - name: config
           configMap:
             name: auspice-config
-

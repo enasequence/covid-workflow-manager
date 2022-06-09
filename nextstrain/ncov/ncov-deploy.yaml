@@ -44,4 +44,3 @@ spec:
         - name: profile-config
           configMap: 
             name: ncov-config-4
-

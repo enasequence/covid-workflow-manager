@@ -26,4 +26,3 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: consensus-pvc
-

@@ -9,4 +9,3 @@ spec:
   storageClassName: example-nfs
   accessModes:
   - ReadWriteMany
-

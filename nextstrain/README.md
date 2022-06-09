@@ -33,4 +33,11 @@ For testing, you can populate the server with a subset of example data from the 
 
 ``` sh
 kubectl --namespace=nextstrain apply -f auspice/test-data/get-test-data-job.yaml
+
+kubectl --namespace=nextstrain apply -f auspice/test-data/dataaccess.yaml
+kubectl --namespace=nextstrain cp dataaccess:/data ./data
 ```
+
+get-test-data-job.yaml runs a curl command to get some example data for taking the auspice server
+
+dataaccess.yaml is for uploading locally this example data from the nextstrain-data-pvc
