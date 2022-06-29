@@ -93,6 +93,18 @@ def test_read_worldplot_data():
     assert response.status_code == 200
 
 
+def test_table_description():
+    response = client.get("/table_description/")
+    print(f"table_description:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    assert response.status_code == 200
+
+
+def test_column_description():
+    response = client.get("/column_description/")
+    print(f"column_description:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    assert response.status_code == 200
+
+
 test_read_root()
 test_read_covid_country_weekly()
 test_read_vcf_all()
@@ -107,3 +119,5 @@ test_read_lineage()
 test_read_new_cases()
 test_read_variants_weekly()
 test_read_worldplot_data()
+test_table_description()
+test_column_description()

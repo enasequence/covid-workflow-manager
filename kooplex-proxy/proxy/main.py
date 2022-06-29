@@ -102,3 +102,15 @@ def read_variants_weekly(skip: int = 0, limit: int = 100):
 def read_worldplot_data(skip: int = 0, limit: int = 100):
     worldplot_data = crud.get_worldplot_data(skip=skip, limit=limit)
     return worldplot_data
+
+
+@app.get("/table_description/", response_model=List[schemas.TableDescription])
+def read_table_description(skip: int = 0, limit: int = 100):
+    table_description = crud.get_table_description(skip=skip, limit=limit)
+    return table_description
+
+
+@app.get("/column_description/", response_model=List[schemas.ColumnDescription])
+def read_column_description(skip: int = 0, limit: int = 100):
+    column_description = crud.get_column_description(skip=skip, limit=limit)
+    return column_description

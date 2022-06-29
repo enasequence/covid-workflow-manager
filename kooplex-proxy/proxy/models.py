@@ -12,10 +12,11 @@ class CovidCountryWeekly(Base):
     iso_a2 = Column(TEXT)
     country_name = Column(TEXT, primary_key=True)
     country_name_local = Column(TEXT, primary_key=True)
-    date_year = Column(DOUBLE_PRECISION, primary_key=True)
-    date_week = Column(DOUBLE_PRECISION, primary_key=True)
-    ecdc_covid_country_weekly_cases = Column(DOUBLE_PRECISION)
-    ecdc_covid_country_weekly_deaths = Column(DOUBLE_PRECISION)
+    population = Column(INTEGER, primary_key=True)
+    date_year = Column(INTEGER, primary_key=True)
+    date_week = Column(INTEGER, primary_key=True)
+    ecdc_covid_country_weekly_cases = Column(INTEGER)
+    ecdc_covid_country_weekly_deaths = Column(INTEGER)
 
 
 class VCFAll(Base):

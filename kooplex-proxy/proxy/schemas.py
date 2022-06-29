@@ -9,10 +9,11 @@ class CovidCountryWeekly(BaseModel):
     iso_a2: Optional[str]
     country_name: Optional[str]
     country_name_local: Optional[str]
-    date_year: Optional[float]
-    date_week: Optional[float]
-    ecdc_covid_country_weekly_cases: Optional[float]
-    ecdc_covid_country_weekly_deaths: Optional[float]
+    population: Optional[int]
+    date_year: Optional[int]
+    date_week: Optional[int]
+    ecdc_covid_country_weekly_cases: Optional[int]
+    ecdc_covid_country_weekly_deaths: Optional[int]
 
     class Config:
         orm_mode = True
@@ -200,3 +201,16 @@ class WorldplotData(BaseModel):
     date_year: int
     date_week: int
     weekly_sample: int
+
+
+class TableDescription(BaseModel):
+    type: str
+    table_name: str
+    title: str
+    description: str
+
+
+class ColumnDescription(BaseModel):
+    table_name: str
+    column_name: str
+    description: str

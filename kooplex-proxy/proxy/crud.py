@@ -99,3 +99,19 @@ def get_worldplot_data(skip: int = 0, limit: int = 100):
     with engine.connect() as conn:
         outp = conn.execute(f"""SELECT * FROM app_worldplot_data OFFSET {skip} LIMIT {limit};""").all()
     return outp
+
+
+def get_table_description(skip: int = 0, limit: int = 100):
+    if limit == -1:
+        limit = 'NULL'
+    with engine.connect() as conn:
+        outp = conn.execute(f"""SELECT * FROM table_description OFFSET {skip} LIMIT {limit};""").all()
+    return outp
+
+
+def get_column_description(skip: int = 0, limit: int = 100):
+    if limit == -1:
+        limit = 'NULL'
+    with engine.connect() as conn:
+        outp = conn.execute(f"""SELECT * FROM column_description OFFSET {skip} LIMIT {limit};""").all()
+    return outp
