@@ -39,6 +39,12 @@ def test_read_meta():
     assert response.status_code == 200
 
 
+def test_read_sorted_meta():
+    response = client.get("/sorted_meta/")
+    print(f"sorted_meta:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    assert response.status_code == 200
+
+
 def test_read_lineage_def():
     response = client.get("/lineage_def/")
     print(f"lineage_def:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
@@ -110,6 +116,7 @@ test_read_covid_country_weekly()
 test_read_vcf_all()
 test_read_cov()
 test_read_meta()
+test_read_sorted_meta()
 test_read_lineage_def()
 test_read_unique_cov()
 test_read_unique_vcf()

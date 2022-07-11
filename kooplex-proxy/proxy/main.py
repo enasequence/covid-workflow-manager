@@ -50,6 +50,12 @@ def read_meta(skip: int = 0, limit: int = 100):
     return meta
 
 
+@app.get("/sorted_meta/", response_model=List[schemas.Meta])
+def read_sorted_meta(date: str = '2020-03-15', skip: int = 0, limit: int = 100):
+    meta = crud.get_sorted_meta(next(get_db()), date=date, skip=skip, limit=limit)
+    return meta
+
+
 @app.get("/lineage_def/", response_model=List[schemas.LineageDef])
 def read_lineage_def(skip: int = 0, limit: int = 100):
     lineage_def = crud.get_lineage_def(next(get_db()), skip=skip, limit=limit)

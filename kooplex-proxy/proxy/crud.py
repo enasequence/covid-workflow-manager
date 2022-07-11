@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 import models
 from database import engine
@@ -30,6 +31,20 @@ def get_meta(db: Session, skip: int = 0, limit: int = 100):
         return db.query(models.Meta).offset(skip).all()
     else:
         return db.query(models.Meta).offset(skip).limit(limit).all()
+
+
+def get_sorted_meta(db: Session, date: str = '2020-03-15', skip: int = 0, limit: int = 100):
+    query_obj = db.query(models.Meta).filter(
+                    models.Meta.clean_collection_date > func.date(date)
+                ).order_by(
+                    models.Meta.clean_collection_date.asc(),
+                    models.Meta.clean_country.asc(),
+                    models.Meta.clean_host.asc()
+                ).offset(skip)
+    if limit == -1:
+        return query_obj.all()
+    else:
+        return query_obj.limit(limit).all()
 
 
 def get_lineage_def(db: Session, skip: int = 0, limit: int = 100):
