@@ -51,8 +51,8 @@ def read_meta(skip: int = 0, limit: int = 100):
 
 
 @app.get("/sorted_meta/", response_model=List[schemas.Meta])
-def read_sorted_meta(date: str = '2020-03-15', skip: int = 0, limit: int = 100):
-    meta = crud.get_sorted_meta(next(get_db()), date=date, skip=skip, limit=limit)
+def read_sorted_meta(text_request: str = '', skip: int = 0, limit: int = 100):
+    meta = crud.get_sorted_meta(next(get_db()), text_request=text_request, skip=skip, limit=limit)
     return meta
 
 
