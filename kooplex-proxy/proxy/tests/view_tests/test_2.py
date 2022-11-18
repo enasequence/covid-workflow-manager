@@ -3,7 +3,7 @@ from sqlalchemy.ext import compiler
 from sqlalchemy.sql import table
 import sqlalchemy as sa
 
-from sqlalchemy.orm import Session, aliased
+from sqlalchemy.orm import aliased
 from sqlalchemy import case, func
 from sqlalchemy import and_
 

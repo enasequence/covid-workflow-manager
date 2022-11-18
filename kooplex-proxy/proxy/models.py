@@ -140,3 +140,73 @@ class UniqueVCF(Base):
     ena_run = Column(VARCHAR, primary_key=True)
     snapshot = Column(VARCHAR)
     integrity = Column(INTEGER)
+
+
+class View_country_samples(Base):
+    __tablename__ = "app_country_samples"
+    clean_country = Column(VARCHAR, primary_key=True)
+    n_sample = Column(INTEGER)
+    log_n_sample = Column(DOUBLE_PRECISION)
+
+
+class View_lineage_def_description(Base):
+    __tablename__ = "app_lineage_def_description"
+    variant_id = Column(VARCHAR, primary_key=True)
+    pango = Column(VARCHAR)
+    description = Column(VARCHAR)
+
+
+class View_lineage(Base):
+    __tablename__ = "app_lineage"
+    clean_collection_date = Column(DATE, primary_key=True)
+    clean_country = Column(VARCHAR)
+    variant_id = Column(VARCHAR)
+    n = Column(INTEGER)
+    n_all = Column(INTEGER)
+    pct = Column(DOUBLE_PRECISION)
+
+
+class View_new_cases(Base):
+    __tablename__ = "app_new_cases"
+    country_name = Column(VARCHAR, primary_key=True)
+    date_year = Column(INTEGER, primary_key=True)
+    date_week = Column(INTEGER, primary_key=True)
+    weekly_sample = Column(INTEGER)
+    iso_a3 = Column(VARCHAR)
+    iso_a2 = Column(VARCHAR)
+    country_name_local = Column(VARCHAR)
+    population = Column(INTEGER)
+    ecdc_covid_country_weekly_cases = Column(INTEGER)
+    ecdc_covid_country_weekly_deaths = Column(INTEGER)
+
+
+class View_variants_weekly(Base):
+    __tablename__ = "app_variants_weekly"
+    country_name = Column(VARCHAR, primary_key=True)
+    date_year = Column(INTEGER, primary_key=True)
+    date_week = Column(INTEGER, primary_key=True)
+    variant_id = Column(VARCHAR)
+    weekly_variant_sample = Column(INTEGER)
+
+
+class View_worldplot_data(Base):
+    __tablename__ = "app_worldplot_data"
+    Country = Column(VARCHAR, primary_key=True)
+    date_year = Column(INTEGER, primary_key=True)
+    date_week = Column(INTEGER, primary_key=True)
+    weekly_sample = Column(INTEGER)
+
+
+class View_table_description(Base):
+    __tablename__ = "table_description"
+    type = Column(VARCHAR)
+    table_name = Column(VARCHAR, primary_key=True)
+    title = Column(VARCHAR, primary_key=True)
+    description = Column(VARCHAR)
+
+
+class View_column_description(Base):
+    __tablename__ = "column_description"
+    table_name = Column(VARCHAR, primary_key=True)
+    column_name = Column(VARCHAR, primary_key=True)
+    description = Column(VARCHAR)

@@ -155,31 +155,40 @@ class UniqueVCF(BaseModel):
 
 
 class CountrySamples(BaseModel):
-    clean_country: str
-    n_sample: str
-    log_n_sample: str
+    clean_country: Optional[str]
+    n_sample: Optional[str]
+    log_n_sample: Optional[str]
+
+    class Config:
+        orm_mode = True
 
 
 class LineageDefDesc(BaseModel):
-    variant_id: str
-    pango: str
-    description: str
+    variant_id: Optional[str]
+    pango: Optional[str]
+    description: Optional[str]
+
+    class Config:
+        orm_mode = True
 
 
 class Lineage(BaseModel):
-    clean_collection_date: date
-    clean_country: str
-    variant_id: str
-    n: int
-    n_all: int
-    pct: float
+    clean_collection_date: Optional[date]
+    clean_country: Optional[str]
+    variant_id: Optional[str]
+    n: Optional[int]
+    n_all: Optional[int]
+    pct: Optional[float]
+
+    class Config:
+        orm_mode = True
 
 
 class NewCases(BaseModel):
-    country_name: str
-    date_year: int
-    date_week: int
-    weekly_sample: int
+    country_name: Optional[str]
+    date_year: Optional[int]
+    date_week: Optional[int]
+    weekly_sample: Optional[int]
     iso_a3: Optional[str]
     iso_a2: Optional[str]
     country_name_local: Optional[str]
@@ -187,30 +196,45 @@ class NewCases(BaseModel):
     ecdc_covid_country_weekly_cases: Optional[int]
     ecdc_covid_country_weekly_deaths: Optional[int]
 
+    class Config:
+        orm_mode = True
+
 
 class VariantsWeekly(BaseModel):
-    country_name: str
-    date_year: int
-    date_week: int
-    variant_id: str
-    weekly_variant_sample: int
+    country_name: Optional[str]
+    date_year: Optional[int]
+    date_week: Optional[int]
+    variant_id: Optional[str]
+    weekly_variant_sample: Optional[int]
+
+    class Config:
+        orm_mode = True
 
 
 class WorldplotData(BaseModel):
-    Country: str
-    date_year: int
-    date_week: int
-    weekly_sample: int
+    Country: Optional[str]
+    date_year: Optional[int]
+    date_week: Optional[int]
+    weekly_sample: Optional[int]
+
+    class Config:
+        orm_mode = True
 
 
 class TableDescription(BaseModel):
-    type: str
-    table_name: str
-    title: str
-    description: str
+    type: Optional[str]
+    table_name: Optional[str]
+    title: Optional[str]
+    description: Optional[str]
+
+    class Config:
+        orm_mode = True
 
 
 class ColumnDescription(BaseModel):
-    table_name: str
-    column_name: str
-    description: str
+    table_name: Optional[str]
+    column_name: Optional[str]
+    description: Optional[str]
+
+    class Config:
+        orm_mode = True

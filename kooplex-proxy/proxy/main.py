@@ -52,7 +52,7 @@ def read_meta(skip: int = 0, limit: int = 100):
 
 @app.get("/sorted_meta/", response_model=List[schemas.Meta])
 def read_sorted_meta(text_request: str = '', skip: int = 0, limit: int = 100):
-    meta = crud.get_sorted_meta(next(get_db()), text_request=text_request, skip=skip, limit=limit)
+    meta = crud.get_sorted_meta(next(get_db()), skip=skip, limit=limit)
     return meta
 
 
@@ -76,47 +76,47 @@ def read_unique_vcf(skip: int = 0, limit: int = 100):
 
 @app.get("/country_samples/", response_model=List[schemas.CountrySamples])
 def read_country_samples(skip: int = 0, limit: int = 100):
-    country_samples = crud.get_country_samples(skip=skip, limit=limit)
+    country_samples = crud.get_country_samples(next(get_db()), skip=skip, limit=limit)
     return country_samples
 
 
 @app.get("/lineage_def_description/", response_model=List[schemas.LineageDefDesc])
 def read_lineage_def_description(skip: int = 0, limit: int = 100):
-    lineage_def_description = crud.get_lineage_def_description(skip=skip, limit=limit)
+    lineage_def_description = crud.get_lineage_def_description(next(get_db()), skip=skip, limit=limit)
     return lineage_def_description
 
 
 @app.get("/lineage/", response_model=List[schemas.Lineage])
 def read_lineage(skip: int = 0, limit: int = 100):
-    lineage = crud.get_lineage(skip=skip, limit=limit)
+    lineage = crud.get_lineage(next(get_db()), skip=skip, limit=limit)
     return lineage
 
 
 @app.get("/new_cases/", response_model=List[schemas.NewCases])
 def read_new_cases(skip: int = 0, limit: int = 100):
-    new_cases = crud.get_new_cases(skip=skip, limit=limit)
+    new_cases = crud.get_new_cases(next(get_db()), skip=skip, limit=limit)
     return new_cases
 
 
 @app.get("/variants_weekly/", response_model=List[schemas.VariantsWeekly])
 def read_variants_weekly(skip: int = 0, limit: int = 100):
-    variants_weekly = crud.get_variants_weekly(skip=skip, limit=limit)
+    variants_weekly = crud.get_variants_weekly(next(get_db()), skip=skip, limit=limit)
     return variants_weekly
 
 
 @app.get("/worldplot_data/", response_model=List[schemas.WorldplotData])
 def read_worldplot_data(skip: int = 0, limit: int = 100):
-    worldplot_data = crud.get_worldplot_data(skip=skip, limit=limit)
+    worldplot_data = crud.get_worldplot_data(next(get_db()), skip=skip, limit=limit)
     return worldplot_data
 
 
 @app.get("/table_description/", response_model=List[schemas.TableDescription])
 def read_table_description(skip: int = 0, limit: int = 100):
-    table_description = crud.get_table_description(skip=skip, limit=limit)
+    table_description = crud.get_table_description(next(get_db()), skip=skip, limit=limit)
     return table_description
 
 
 @app.get("/column_description/", response_model=List[schemas.ColumnDescription])
 def read_column_description(skip: int = 0, limit: int = 100):
-    column_description = crud.get_column_description(skip=skip, limit=limit)
+    column_description = crud.get_column_description(next(get_db()), skip=skip, limit=limit)
     return column_description
