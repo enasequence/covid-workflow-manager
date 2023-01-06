@@ -56,3 +56,8 @@ spec:
               secretKeyRef:
                 name: dbprod
                 key: dbport
+          - name: POSTGRES_SCHEMA
+            valueFrom:
+              secretKeyRef:
+                name: dbprod
+                key: dbschema
