@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 
 import models
 from database import engine
@@ -25,7 +26,7 @@ def get_sorted_meta(db: Session, skip: int = 0, limit: int = 100):
               f"clean_collection_date, clean_country, clean_host OFFSET {skip} LIMIT {limit};"
 
     with engine.connect() as conn:
-        outp = conn.execute(request).all()
+        outp = conn.execute(text(request)).all()
     return outp
 
 

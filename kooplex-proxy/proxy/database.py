@@ -9,7 +9,13 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")
-POSTGRES_SCHEMA = os.getenv("POSTGRES_SCHEMA")
+POSTGRES_SCHEMA = 'public'
+
+SCHEMA_SET = {
+    'public',
+    'sandbox_public',
+    'sandbox_private'
+}
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://" \
                           f"{POSTGRES_USER}:{POSTGRES_PASSWORD}@" \
