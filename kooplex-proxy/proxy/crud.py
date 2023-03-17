@@ -1,46 +1,33 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import text
+
 import models
+from database import engine
 
 
-def get_covid_country_weekly(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.CovidCountryWeekly).offset(skip).limit(limit).all()
+def get_country_samples(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.MViewCountrySamples).offset(skip).limit(limit).all()
 
 
-def get_unique_vcf_append(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.UniqueVCFAppend).offset(skip).limit(limit).all()
+def get_human_meta_mv(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.MViewHumanMetaMv).offset(skip).limit(limit).all()
 
 
-def get_vcf_all(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.VCFAll).offset(skip).limit(limit).all()
-
-
-def get_cov(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Cov).offset(skip).limit(limit).all()
-
-
-def get_meta(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Meta).offset(skip).limit(limit).all()
-
-
-def get_unique_cov_append(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.UniqueCovAppend).offset(skip).limit(limit).all()
+def get_human_meta_mv_jhd(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.MViewHumanMetaMvJhd).offset(skip).limit(limit).all()
 
 
 def get_lineage_def(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.LineageDef).offset(skip).limit(limit).all()
 
 
-def get_operation(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Operation).offset(skip).limit(limit).all()
+def get_lineage(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.MViewLineage).offset(skip).limit(limit).all()
 
 
-def get_unique_cov(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.UniqueCov).offset(skip).limit(limit).all()
+def get_new_cases_jhd(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.MViewNewCasesJhd).offset(skip).limit(limit).all()
 
 
-def get_unique_vcf(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.UniqueVCF).offset(skip).limit(limit).all()
-
-
-def get_vcf_all_append(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.VCFAllAppend).offset(skip).limit(limit).all()
+def get_variants_weekly(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.MViewVariantsWeekly).offset(skip).limit(limit).all()

@@ -1,7 +1,6 @@
 from typing import List
 
 from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
 
 import crud
 import models
@@ -27,80 +26,43 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/covid_country_weekly/", response_model=List[
-    schemas.CovidCountryWeekly])
-def read_covid_country_weekly(skip: int = 0, limit: int = 100,
-                              db: Session = Depends(get_db)):
-    covid_country_weekly = crud.get_covid_country_weekly(db, skip=skip,
-                                                         limit=limit)
-    return covid_country_weekly
+@app.get("/country_samples/", response_model=List[schemas.MView_CountrySamples])
+def read_country_samples(skip: int = 0, limit: int = 100):
+    country_samples = crud.get_country_samples(next(get_db()), skip=skip, limit=limit)
+    return country_samples
 
 
-@app.get("/unique_vcf_append/", response_model=List[schemas.UniqueVCFAppend])
-def read_unique_vcf_append(skip: int = 0, limit: int = 100,
-                           db: Session = Depends(get_db)):
-    unique_vcf_append = crud.get_unique_vcf_append(db, skip=skip, limit=limit)
-    return unique_vcf_append
-
-
-@app.get("/vcf_all/", response_model=List[schemas.VCFAll])
-def read_vcf_all(skip: int = 0, limit: int = 100,
-                 db: Session = Depends(get_db)):
-    vcf_all = crud.get_vcf_all(db, skip=skip, limit=limit)
-    return vcf_all
-
-
-@app.get("/cov/", response_model=List[schemas.Cov])
-def read_cov(skip: int = 0, limit: int = 100,
-             db: Session = Depends(get_db)):
-    cov = crud.get_cov(db, skip=skip, limit=limit)
-    return cov
-
-
-@app.get("/meta/", response_model=List[schemas.Meta])
-def read_meta(skip: int = 0, limit: int = 100,
-              db: Session = Depends(get_db)):
-    meta = crud.get_meta(db, skip=skip, limit=limit)
+@app.get("/human_meta_mv/", response_model=List[schemas.MView_HumanMetaMv])
+def read_meta(skip: int = 0, limit: int = 100):
+    meta = crud.get_human_meta_mv(next(get_db()), skip=skip, limit=limit)
     return meta
 
 
-@app.get("/unique_cov_append/", response_model=List[schemas.UniqueCovAppend])
-def read_unique_cov_append(skip: int = 0, limit: int = 100,
-                           db: Session = Depends(get_db)):
-    unique_cov_append = crud.get_unique_cov_append(db, skip=skip, limit=limit)
-    return unique_cov_append
+@app.get("/human_meta_mv_jhd/", response_model=List[schemas.MView_HumanMetaMvJhd])
+def read_meta(skip: int = 0, limit: int = 100):
+    meta = crud.get_human_meta_mv_jhd(next(get_db()), skip=skip, limit=limit)
+    return meta
 
 
-@app.get("/lineage_def/", response_model=List[schemas.LineageDef])
-def read_lineage_def(skip: int = 0, limit: int = 100,
-                     db: Session = Depends(get_db)):
-    lineage_def = crud.get_lineage_def(db, skip=skip, limit=limit)
+@app.get("/lineage_def/", response_model=List[schemas.Table_LineageDef])
+def read_lineage_def(skip: int = 0, limit: int = 100):
+    lineage_def = crud.get_lineage_def(next(get_db()), skip=skip, limit=limit)
     return lineage_def
 
 
-@app.get("/operation/", response_model=List[schemas.Operation])
-def read_operation(skip: int = 0, limit: int = 100,
-                   db: Session = Depends(get_db)):
-    operation = crud.get_operation(db, skip=skip, limit=limit)
-    return operation
+@app.get("/lineage/", response_model=List[schemas.MView_Lineage])
+def read_lineage(skip: int = 0, limit: int = 100):
+    lineage = crud.get_lineage(next(get_db()), skip=skip, limit=limit)
+    return lineage
 
 
-@app.get("/unique_cov/", response_model=List[schemas.UniqueCov])
-def read_unique_cov(skip: int = 0, limit: int = 100,
-                    db: Session = Depends(get_db)):
-    unique_cov = crud.get_unique_cov(db, skip=skip, limit=limit)
-    return unique_cov
+@app.get("/new_cases_jhd/", response_model=List[schemas.MView_NewCasesJhd])
+def read_new_cases(skip: int = 0, limit: int = 100):
+    new_cases = crud.get_new_cases_jhd(next(get_db()), skip=skip, limit=limit)
+    return new_cases
 
 
-@app.get("/unique_vcf/", response_model=List[schemas.UniqueVCF])
-def read_unique_vcf(skip: int = 0, limit: int = 100,
-                    db: Session = Depends(get_db)):
-    unique_vcf = crud.get_unique_vcf(db, skip=skip, limit=limit)
-    return unique_vcf
-
-
-@app.get("/vcf_all_append/", response_model=List[schemas.VCFAllAppend])
-def read_vcf_all_append(skip: int = 0, limit: int = 100,
-                        db: Session = Depends(get_db)):
-    vcf_all_append = crud.get_vcf_all_append(db, skip=skip, limit=limit)
-    return vcf_all_append
+@app.get("/variants_weekly/", response_model=List[schemas.MView_VariantsWeekly])
+def read_variants_weekly(skip: int = 0, limit: int = 100):
+    variants_weekly = crud.get_variants_weekly(next(get_db()), skip=skip, limit=limit)
+    return variants_weekly
