@@ -79,6 +79,8 @@ test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema='sa
 test_country_samples(endp_schema='sandbox_public')
 test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema='sandbox_public')
 
+test_country_samples(endp_schema='test_schema')
+
 test_human_meta_mv()
 test_human_meta_mv_jhd()
 test_lineage_def()
