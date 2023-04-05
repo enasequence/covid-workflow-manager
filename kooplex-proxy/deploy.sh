@@ -5,6 +5,17 @@ if docker images | grep -q kooplex-proxy; then
     docker rmi kooplex-proxy
 fi
 
+IMAGES=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep '^milm/')
+
+if [ -n "$IMAGES" ]; then
+  for IMAGE in $IMAGES; do
+    docker rmi $IMAGE
+  done
+  echo "All milm/ images have been removed"
+else
+  echo "No milm/ images found"
+fi
+
 echo "Building Docker image"
 docker build -t kooplex-proxy --no-cache .
 

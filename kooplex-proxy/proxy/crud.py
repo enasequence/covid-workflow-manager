@@ -9,7 +9,7 @@ def get_country_samples(db: Session, skip: int = 0, limit: int = 100, endp_schem
     current_schema = models.MViewCountrySamples.get_schema()
     if current_schema != endp_schema and endp_schema in SCHEMA_SET:
         models.MViewCountrySamples.set_schema(schema_name=endp_schema)
-        print(f"Changing schema from {current_schema} to {endp_schema} for the endpoint: country_samples\n")
+        print(f"-- Changing schema from '{current_schema}' to '{endp_schema}' for the endpoint: country_samples --")
 
     return db.query(models.MViewCountrySamples).offset(skip).limit(limit).all()
 

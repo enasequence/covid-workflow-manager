@@ -16,7 +16,7 @@ client = TestClient(app)
 
 def test_current_schema_of_the_model(model, expected_schema='sandbox_public'):
     current_schema = model.get_schema()
-    print(f"current schema is: {current_schema}\n")
+    print(f"current schema is '{current_schema}' for object {model.__table__.name}\n")
     assert current_schema == expected_schema
 
 
@@ -71,14 +71,13 @@ def test_variants_weekly():
 test_root()
 
 test_country_samples()
-model = models.MViewCountrySamples
-test_current_schema_of_the_model(model, expected_schema='sandbox_public')
+test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema='sandbox_public')
 
 test_country_samples(endp_schema='sandbox_private')
-test_current_schema_of_the_model(model, expected_schema='sandbox_private')
+test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema='sandbox_private')
 
 test_country_samples(endp_schema='sandbox_public')
-test_current_schema_of_the_model(model, expected_schema='sandbox_public')
+test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema='sandbox_public')
 
 test_human_meta_mv()
 test_human_meta_mv_jhd()
