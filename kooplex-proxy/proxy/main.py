@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 
 import crud
 import models
@@ -27,8 +27,8 @@ def read_root():
 
 
 @app.get("/country_samples/", response_model=List[schemas.MView_CountrySamples])
-def read_country_samples(skip: int = 0, limit: int = 100):
-    country_samples = crud.get_country_samples(next(get_db()), skip=skip, limit=limit)
+def read_country_samples(skip: int = 0, limit: int = 100, schema='sandbox_public'):
+    country_samples = crud.get_country_samples(next(get_db()), skip=skip, limit=limit, endp_schema=schema)
     return country_samples
 
 

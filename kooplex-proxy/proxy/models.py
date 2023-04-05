@@ -1,18 +1,28 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table, MetaData
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table
 from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TEXT, TIMESTAMP, \
     VARCHAR, INTEGER, REAL, BOOLEAN, DATE, NUMERIC
+from sqlalchemy.ext.declarative import declarative_base
 from database import Base
 
-METADATA = MetaData()
+B = declarative_base()
 
 
-class MViewCountrySamples(Base):
+class MViewCountrySamples(B):
     __tablename__ = "app_country_samples_full"
+    __table_args__ = {'schema': 'sandbox_public'}
     country = Column(VARCHAR, primary_key=True)
     n_sample = Column(INTEGER)
     log_n_sample = Column(DOUBLE_PRECISION)
     relative_n_sample = Column(DOUBLE_PRECISION)
     relative_log_n_sample = Column(DOUBLE_PRECISION)
+
+    @classmethod
+    def get_schema(cls):
+        return cls.__table_args__['schema']
+
+    @classmethod
+    def set_schema(cls, schema_name):
+        cls.__table_args__['schema'] = schema_name
 
 
 class MViewHumanMetaMv(Base):
