@@ -33,13 +33,13 @@ def read_country_samples(schema_key='', skip: int = 0, limit: int = 100):
 
 
 @app.get("/human_meta_mv/", response_model=List[schemas.MView_HumanMetaMv])
-def read_meta(schema_key='', skip: int = 0, limit: int = 100):
+def read_human_meta_mv(schema_key='', skip: int = 0, limit: int = 100):
     meta = crud.get_human_meta_mv(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
     return meta
 
 
 @app.get("/human_meta_mv_jhd/", response_model=List[schemas.MView_HumanMetaMvJhd])
-def read_meta(schema_key='', skip: int = 0, limit: int = 100):
+def read_human_meta_mv_jhd(schema_key='', skip: int = 0, limit: int = 100):
     meta = crud.get_human_meta_mv_jhd(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
     return meta
 
@@ -65,4 +65,10 @@ def read_new_cases(schema_key='', skip: int = 0, limit: int = 100):
 @app.get("/variants_weekly/", response_model=List[schemas.MView_VariantsWeekly])
 def read_variants_weekly(schema_key='', skip: int = 0, limit: int = 100):
     variants_weekly = crud.get_variants_weekly(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
+    return variants_weekly
+
+
+@app.get("/unique_ena_run_sum/", response_model=List[schemas.MView_UniqueEnaRunSum])
+def read_unique_ena_run_sum(schema_key='', skip: int = 0, limit: int = 100):
+    variants_weekly = crud.get_unique_ena_run_sum(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
     return variants_weekly

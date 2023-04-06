@@ -69,6 +69,12 @@ def test_variants_weekly():
     assert response.status_code == 200
 
 
+def test_unique_ena_run_sum():
+    response = client.get("/unique_ena_run_sum/")
+    print(f"variants_weekly:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    assert response.status_code == 200
+
+
 test_root()
 
 test_country_samples()
@@ -88,3 +94,4 @@ test_lineage_def()
 test_lineage()
 test_new_cases_jhd()
 test_variants_weekly()
+test_unique_ena_run_sum()
