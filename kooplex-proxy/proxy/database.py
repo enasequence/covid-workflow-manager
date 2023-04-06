@@ -11,9 +11,9 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
 POSTGRES_SCHEMA = 'sandbox_public'
 
-SCHEMA_SET = {
-    'sandbox_public',
-    'sandbox_private'
+ALLOWED_SCHEMAS = {
+    'schema_1': 'sandbox_public',
+    'schema_2': 'sandbox_private'
 }
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://" \

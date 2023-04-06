@@ -6,11 +6,19 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
+import models
 from main import app
 from fastapi.testclient import TestClient
+from database import ALLOWED_SCHEMAS
 
 
 client = TestClient(app)
+
+
+def test_current_schema_of_the_model(model, expected_schema):
+    current_schema = model.get_schema()
+    print(f"current schema is '{current_schema}' for object {model.__table__.name}\n")
+    assert current_schema == expected_schema
 
 
 def test_root():
@@ -19,8 +27,8 @@ def test_root():
     assert response.json() == {"Hello": "World"}
 
 
-def test_country_samples():
-    response = client.get("/country_samples/")
+def test_country_samples(endp_schema_key='schema_1'):
+    response = client.get(f"/country_samples/?schema_key={endp_schema_key}")
     print(f"country_samples:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
@@ -62,7 +70,18 @@ def test_variants_weekly():
 
 
 test_root()
+
 test_country_samples()
+test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema=ALLOWED_SCHEMAS['schema_1'])
+
+test_country_samples(endp_schema_key='schema_2')
+test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema=ALLOWED_SCHEMAS['schema_2'])
+
+test_country_samples(endp_schema_key='schema_1')
+test_current_schema_of_the_model(models.MViewCountrySamples, expected_schema=ALLOWED_SCHEMAS['schema_1'])
+
+test_country_samples(endp_schema_key='schema_test')
+
 test_human_meta_mv()
 test_human_meta_mv_jhd()
 test_lineage_def()
