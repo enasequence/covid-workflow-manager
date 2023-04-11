@@ -61,8 +61,8 @@ class Table_LineageDef(BaseModel):
 
 
 class MView_Lineage(BaseModel):
-    clean_collection_date: Optional[date]
-    clean_country: Optional[str]
+    collection_date: Optional[date]
+    country: Optional[str]
     variant_id: Optional[str]
     n: Optional[int]
     n_all: Optional[int]
@@ -90,6 +90,14 @@ class MView_VariantsWeekly(BaseModel):
     date_week: Optional[float]
     variant_id: Optional[str]
     weekly_variant_sample: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+
+class MView_UniqueEnaRunSum(BaseModel):
+    table_name: Optional[str]
+    count: Optional[int]
 
     class Config:
         orm_mode = True

@@ -22,7 +22,7 @@ dir="$(dirname "$(pwd)")"
 parent="$(dirname $dir)"
 
 echo "Building Docker image"
-docker build -t kooplex-proxy --no-cache $parent
+docker build -t kooplex-proxy $parent
 
 echo "Tagging Docker image"
 IMAGE_ID=$(docker images -q kooplex-proxy)
