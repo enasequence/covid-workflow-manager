@@ -57,7 +57,7 @@ def read_lineage(schema_key='', skip: int = 0, limit: int = 100):
 
 
 @app.get("/new_cases_jhd/", response_model=List[schemas.MView_NewCasesJhd])
-def read_new_cases(schema_key='', skip: int = 0, limit: int = 100):
+def read_new_cases_jhd(schema_key='', skip: int = 0, limit: int = 100):
     new_cases = crud.get_new_cases_jhd(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
     return new_cases
 

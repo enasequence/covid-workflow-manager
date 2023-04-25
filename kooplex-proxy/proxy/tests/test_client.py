@@ -59,7 +59,7 @@ def test_lineage():
 
 def test_new_cases_jhd():
     response = client.get("/new_cases_jhd/")
-    print(f"new_cases:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    print(f"new_cases_jhd:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
 
