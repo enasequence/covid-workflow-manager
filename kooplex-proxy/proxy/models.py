@@ -2,6 +2,7 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table
 from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TEXT, TIMESTAMP, \
     VARCHAR, INTEGER, REAL, BOOLEAN, DATE, NUMERIC
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql.expression import text
 
 from database import ALLOWED_SCHEMAS
 
@@ -117,3 +118,35 @@ class MViewUniqueEnaRunSum(AbstractBase):
     __table_args__ = {'schema': AbstractBase().schema}
     table_name = Column(VARCHAR, primary_key=True)
     count = Column(INTEGER)
+
+
+class SProcFilterCustomBrowserCov(AbstractBase):
+    __tablename__ = 'filter_custom_browser_cov'
+    __table_args__ = {'schema': AbstractBase().schema}
+
+    country = Column(VARCHAR, primary_key=True)
+    count = Column(INTEGER)
+
+    @classmethod
+    def call(cls, session):
+        session.execute(
+            text(f"CALL sandbox_public.filter_custom_browser_cov('p.Asp80Ala,p.Asp215Gly', 'p.Asp77Al,p.Asp102Ala');")
+        )
+        return
+
+
+class SProcFilterCustomBrowserCovTime(AbstractBase):
+    __tablename__ = 'filter_custom_browser_cov_time'
+    __table_args__ = {'schema': AbstractBase().schema}
+
+    collection_date = Column(DATE, primary_key=True)
+    country = Column(VARCHAR, primary_key=True)
+    other_count = Column(INTEGER)
+    variant_count = Column(INTEGER)
+
+    @classmethod
+    def call(cls, session):
+        session.execute(
+            text(f"CALL sandbox_public.filter_custom_browser_cov('p.Asp80Ala,p.Asp215Gly', 'p.Asp77Al,p.Asp102Ala');")
+        )
+        return

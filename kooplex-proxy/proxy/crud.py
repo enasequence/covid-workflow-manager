@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import DeclarativeMeta
+from sqlalchemy.sql.expression import text
 
 import models
 from database import ALLOWED_SCHEMAS
@@ -86,4 +87,28 @@ def get_unique_ena_run_sum(db: Session, endp_schema_key: str, skip: int = 0, lim
     exit_code = schema_changing(model=model, endpoint_name='unique_ena_run_sum', endp_schema_key=endp_schema_key)
     if exit_code == 0:
         return db.query(model).offset(skip).limit(limit).all()
+    return list()
+
+
+def filter_custom_browser_cov(db: Session, endp_schema_key: str, skip: int = 0, limit: int = 100):
+    model = models.SProcFilterCustomBrowserCov
+    exit_code = schema_changing(model=model, endpoint_name='filter_custom_browser_cov', endp_schema_key=endp_schema_key)
+    if exit_code == 0:
+        model.call(session=db)
+        outp = db.execute(
+            text(f"""SELECT * FROM sandbox_public.filter_country_count() OFFSET {skip} LIMIT {limit};""")
+        ).all()
+        return outp
+    return list()
+
+
+def filter_custom_browser_cov_time(db: Session, endp_schema_key: str, skip: int = 0, limit: int = 100):
+    model = models.SProcFilterCustomBrowserCovTime
+    exit_code = schema_changing(model=model, endpoint_name='filter_custom_browser_cov_time', endp_schema_key=endp_schema_key)
+    if exit_code == 0:
+        model.call(session=db)
+        outp = db.execute(
+            text(f"""SELECT * FROM sandbox_public.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
+        ).all()
+        return outp
     return list()

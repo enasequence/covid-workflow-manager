@@ -101,3 +101,21 @@ class MView_UniqueEnaRunSum(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class SProc_FilterCustomBrowserCov(BaseModel):
+    country: Optional[str]
+    count: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+
+class SProc_FilterCustomBrowserCovTime(BaseModel):
+    collection_date: Optional[date]
+    country: Optional[str]
+    other_count: Optional[int]
+    variant_count: Optional[int]
+
+    class Config:
+        orm_mode = True

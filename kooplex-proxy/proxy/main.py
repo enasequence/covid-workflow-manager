@@ -70,5 +70,21 @@ def read_variants_weekly(schema_key='', skip: int = 0, limit: int = 100):
 
 @app.get("/unique_ena_run_sum/", response_model=List[schemas.MView_UniqueEnaRunSum])
 def read_unique_ena_run_sum(schema_key='', skip: int = 0, limit: int = 100):
-    variants_weekly = crud.get_unique_ena_run_sum(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
-    return variants_weekly
+    unique_ena_run_sum = crud.get_unique_ena_run_sum(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
+    return unique_ena_run_sum
+
+
+@app.get("/filter_custom_browser_cov/", response_model=List[schemas.SProc_FilterCustomBrowserCov])
+def filter_custom_browser_cov(schema_key='', skip: int = 0, limit: int = 100):
+    custom_browser_cov = crud.filter_custom_browser_cov(
+        next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit
+    )
+    return custom_browser_cov
+
+
+@app.get("/filter_custom_browser_cov_time/", response_model=List[schemas.SProc_FilterCustomBrowserCovTime])
+def filter_custom_browser_cov_time(schema_key='', skip: int = 0, limit: int = 100):
+    custom_browser_cov_time = crud.filter_custom_browser_cov_time(
+        next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit
+    )
+    return custom_browser_cov_time

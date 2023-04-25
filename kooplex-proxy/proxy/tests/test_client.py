@@ -71,7 +71,19 @@ def test_variants_weekly():
 
 def test_unique_ena_run_sum():
     response = client.get("/unique_ena_run_sum/")
-    print(f"variants_weekly:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    print(f"unique_ena_run_sum:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    assert response.status_code == 200
+
+
+def test_filter_custom_browser_cov():
+    response = client.get("/filter_custom_browser_cov/")
+    print(f"filter_custom_browser_cov:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    assert response.status_code == 200
+
+
+def test_filter_custom_browser_cov_time():
+    response = client.get("/filter_custom_browser_cov_time/")
+    print(f"filter_custom_browser_cov_time:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
 
@@ -95,3 +107,6 @@ test_lineage()
 test_new_cases_jhd()
 test_variants_weekly()
 test_unique_ena_run_sum()
+
+test_filter_custom_browser_cov()
+test_filter_custom_browser_cov_time()
