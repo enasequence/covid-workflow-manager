@@ -128,9 +128,9 @@ class SProcFilterCustomBrowserCov(AbstractBase):
     count = Column(INTEGER)
 
     @classmethod
-    def call(cls, session):
+    def call(cls, session, p1, p2):
         session.execute(
-            text(f"CALL sandbox_public.filter_custom_browser_cov('p.Asp80Ala,p.Asp215Gly', 'p.Asp77Al,p.Asp102Ala');")
+            text(f"CALL sandbox_public.filter_custom_browser_cov('{p1}', '{p2}');")
         )
         return
 
@@ -145,8 +145,8 @@ class SProcFilterCustomBrowserCovTime(AbstractBase):
     variant_count = Column(INTEGER)
 
     @classmethod
-    def call(cls, session):
+    def call(cls, session, p1, p2):
         session.execute(
-            text(f"CALL sandbox_public.filter_custom_browser_cov('p.Asp80Ala,p.Asp215Gly', 'p.Asp77Al,p.Asp102Ala');")
+            text(f"CALL sandbox_public.filter_custom_browser_cov('{p1}', '{p2}');")
         )
         return
