@@ -75,16 +75,16 @@ def read_unique_ena_run_sum(schema_key='', skip: int = 0, limit: int = 100):
 
 
 @app.get("/filter_custom_browser_cov/", response_model=List[schemas.SProc_FilterCustomBrowserCov])
-def filter_custom_browser_cov(p1: str, p2: str, schema_key='', skip: int = 0, limit: int = 100):
+def filter_custom_browser_cov(included: str, excluded: str, schema_key='', skip: int = 0, limit: int = 100):
     custom_browser_cov = crud.filter_custom_browser_cov(
-        next(get_db()), p1=p1, p2=p2, endp_schema_key=schema_key, skip=skip, limit=limit
+        next(get_db()), included=included, excluded=excluded, endp_schema_key=schema_key, skip=skip, limit=limit
     )
     return custom_browser_cov
 
 
 @app.get("/filter_custom_browser_cov_time/", response_model=List[schemas.SProc_FilterCustomBrowserCovTime])
-def filter_custom_browser_cov_time(p1: str, p2: str, schema_key='', skip: int = 0, limit: int = 100):
+def filter_custom_browser_cov_time(included: str, excluded: str, schema_key='', skip: int = 0, limit: int = 100):
     custom_browser_cov_time = crud.filter_custom_browser_cov_time(
-        next(get_db()), p1=p1, p2=p2, endp_schema_key=schema_key, skip=skip, limit=limit
+        next(get_db()), included=included, excluded=excluded, endp_schema_key=schema_key, skip=skip, limit=limit
     )
     return custom_browser_cov_time

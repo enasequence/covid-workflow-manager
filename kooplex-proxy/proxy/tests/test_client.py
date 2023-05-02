@@ -52,7 +52,7 @@ def test_lineage_def():
 
 
 def test_lineage():
-    response = client.get("/lineage/")
+    response = client.get("/lineage/?limit=1000000")
     print(f"lineage:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
@@ -64,7 +64,7 @@ def test_new_cases_jhd():
 
 
 def test_variants_weekly():
-    response = client.get("/variants_weekly/")
+    response = client.get("/variants_weekly/?limit=1000000")
     print(f"variants_weekly:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
@@ -75,14 +75,14 @@ def test_unique_ena_run_sum():
     assert response.status_code == 200
 
 
-def test_filter_custom_browser_cov(p1='p.Asp80Ala,p.Asp215Gly', p2='p.Asp77Al,p.Asp102Ala'):
-    response = client.get(f"/filter_custom_browser_cov/?p1={p1}&p2={p2}")
+def test_filter_custom_browser_cov(included='p.Asp80Ala,p.Asp215Gly', excluded='p.Asp77Al,p.Asp102Ala'):
+    response = client.get(f"/filter_custom_browser_cov/?included={included}&excluded={excluded}")
     print(f"filter_custom_browser_cov:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
 
-def test_filter_custom_browser_cov_time(p1='p.Asp80Ala,p.Asp215Gly', p2='p.Asp77Al,p.Asp102Ala'):
-    response = client.get(f"/filter_custom_browser_cov_time/?p1={p1}&p2={p2}")
+def test_filter_custom_browser_cov_time(included='p.Asp80Ala,p.Asp215Gly', excluded='p.Asp77Al,p.Asp102Ala'):
+    response = client.get(f"/filter_custom_browser_cov_time/?included={included}&excluded={excluded}")
     print(f"filter_custom_browser_cov_time:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 

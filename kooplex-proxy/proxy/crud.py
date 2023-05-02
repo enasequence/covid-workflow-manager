@@ -90,11 +90,12 @@ def get_unique_ena_run_sum(db: Session, endp_schema_key: str, skip: int = 0, lim
     return list()
 
 
-def filter_custom_browser_cov(db: Session, p1: str, p2: str, endp_schema_key: str, skip: int = 0, limit: int = 100):
+def filter_custom_browser_cov(db: Session, included: str, excluded: str, endp_schema_key: str, skip: int = 0,
+                              limit: int = 100):
     model = models.SProcFilterCustomBrowserCov
     exit_code = schema_changing(model=model, endpoint_name='filter_custom_browser_cov', endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        model.call(session=db, p1=p1, p2=p2)
+        model.call(session=db, included=included, excluded=excluded)
         outp = db.execute(
             text(f"""SELECT * FROM sandbox_public.filter_country_count() OFFSET {skip} LIMIT {limit};""")
         ).all()
@@ -102,11 +103,13 @@ def filter_custom_browser_cov(db: Session, p1: str, p2: str, endp_schema_key: st
     return list()
 
 
-def filter_custom_browser_cov_time(db: Session, p1: str, p2: str, endp_schema_key: str, skip: int = 0, limit: int = 100):
+def filter_custom_browser_cov_time(db: Session, included: str, excluded: str, endp_schema_key: str, skip: int = 0,
+                                   limit: int = 100):
     model = models.SProcFilterCustomBrowserCovTime
-    exit_code = schema_changing(model=model, endpoint_name='filter_custom_browser_cov_time', endp_schema_key=endp_schema_key)
+    exit_code = schema_changing(model=model, endpoint_name='filter_custom_browser_cov_time',
+                                endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        model.call(session=db, p1=p1, p2=p2)
+        model.call(session=db, included=included, excluded=excluded)
         outp = db.execute(
             text(f"""SELECT * FROM sandbox_public.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
         ).all()

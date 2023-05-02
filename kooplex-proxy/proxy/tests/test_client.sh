@@ -37,9 +37,9 @@ curl http://localhost:8080/unique_ena_run_sum/
 
 echo "\n\n10---------------------------------------------------\n"
 echo 'filter_custom_browser_cov ->'
-curl "http://localhost:8080/filter_custom_browser_cov/?p1=p.Asp80Ala%2Cp.Asp215Gly&p2=p.Asp77Al%2Cp.Asp102Ala"
+curl "http://localhost:8080/filter_custom_browser_cov/?included=p.Asp80Ala%2Cp.Asp215Gly&excluded=p.Asp77Al%2Cp.Asp102Ala"
 
 echo "\n\n11---------------------------------------------------\n"
 echo 'filter_custom_browser_cov_time ->'
-curl "http://localhost:8080/filter_custom_browser_cov_time/?p1=p.Asp80Ala%2Cp.Asp215Gly&p2=p.Asp77Al%2Cp.Asp102Ala"
+curl "http://localhost:8080/filter_custom_browser_cov_time/?included=p.Asp80Ala%2Cp.Asp215Gly&excluded=p.Asp77Al%2Cp.Asp102Ala"
 echo "\n\n-----------------------------------------------------\n"
