@@ -87,6 +87,12 @@ def test_filter_custom_browser_cov_time(included='p.Asp80Ala,p.Asp215Gly', exclu
     assert response.status_code == 200
 
 
+def test_table_count(table_name: str):
+    response = client.get(f"/table_count/?table_name={table_name}")
+    print(f"table_count for {table_name}:\n{response.json()}\n")
+    assert response.status_code == 200
+
+
 test_root()
 
 test_country_samples()
@@ -110,3 +116,6 @@ test_unique_ena_run_sum()
 
 test_filter_custom_browser_cov()
 test_filter_custom_browser_cov_time()
+
+test_table_count(table_name='app_lineage')
+test_table_count(table_name='app_variants_weekly')

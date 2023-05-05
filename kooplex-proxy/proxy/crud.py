@@ -62,7 +62,7 @@ def get_lineage(db: Session, endp_schema_key: str, skip: int = 0, limit: int = 1
     model = models.MViewLineage
     exit_code = schema_changing(model=model, endpoint_name='lineage', endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        return db.query(model).offset(skip).limit(limit).all()
+        return db.query(model).slice(0, None).all()
     return list()
 
 
@@ -78,7 +78,7 @@ def get_variants_weekly(db: Session, endp_schema_key: str, skip: int = 0, limit:
     model = models.MViewVariantsWeekly
     exit_code = schema_changing(model=model, endpoint_name='variants_weekly', endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        return db.query(model).offset(skip).limit(limit).all()
+        return db.query(model).slice(0, None).all()
     return list()
 
 
@@ -112,6 +112,17 @@ def filter_custom_browser_cov_time(db: Session, included: str, excluded: str, en
         model.call(session=db, included=included, excluded=excluded)
         outp = db.execute(
             text(f"""SELECT * FROM sandbox_public.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
+        ).all()
+        return outp
+    return list()
+
+
+def table_count(db: Session, endp_schema_key: str, table_name: str):
+    model = models.TableCount
+    exit_code = schema_changing(model=model, endpoint_name='table_count', endp_schema_key=endp_schema_key)
+    if exit_code == 0:
+        outp = db.execute(
+            text(f"""SELECT COUNT(*) FROM {model.get_schema()}.{table_name};""")
         ).all()
         return outp
     return list()

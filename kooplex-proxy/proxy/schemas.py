@@ -119,3 +119,10 @@ class SProc_FilterCustomBrowserCovTime(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Table_Count(BaseModel):
+    count: Optional[int]
+
+    class Config:
+        orm_mode = True

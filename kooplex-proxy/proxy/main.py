@@ -88,3 +88,9 @@ def filter_custom_browser_cov_time(included: str, excluded: str, schema_key='', 
         next(get_db()), included=included, excluded=excluded, endp_schema_key=schema_key, skip=skip, limit=limit
     )
     return custom_browser_cov_time
+
+
+@app.get("/table_count/", response_model=List[schemas.Table_Count])
+def table_count(table_name, schema_key=''):
+    table_count_result = crud.table_count(next(get_db()), table_name=table_name, endp_schema_key=schema_key)
+    return table_count_result

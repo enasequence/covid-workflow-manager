@@ -150,3 +150,9 @@ class SProcFilterCustomBrowserCovTime(AbstractBase):
             text(f"CALL {cls.__table_args__['schema']}.filter_custom_browser_cov('{included}', '{excluded}');")
         )
         return
+
+
+class TableCount(AbstractBase):
+    __tablename__ = 'table_count'
+    __table_args__ = {'schema': AbstractBase().schema}
+    count = Column(INTEGER, primary_key=True)
