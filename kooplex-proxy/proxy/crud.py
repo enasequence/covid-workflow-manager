@@ -12,8 +12,9 @@ def schema_changing(model: DeclarativeMeta, endpoint_name: str, endp_schema_key:
     if not endp_schema_key:
         endp_schema = ALLOWED_SCHEMAS.get('schema_1')
     elif endp_schema_key not in ALLOWED_SCHEMAS:
-        values = '/'.join(list(ALLOWED_SCHEMAS.values()))
-        print(f"This schema is unavailable for using, please use one of these schemas: {values}")
+        keys = '/'.join(list(ALLOWED_SCHEMAS.keys()))
+        print(f"This schema key '{endp_schema_key}' is unavailable for using, please "
+              f"use one of these schema keys: {keys}")
         return 1
     else:
         endp_schema = ALLOWED_SCHEMAS[endp_schema_key]
@@ -62,7 +63,7 @@ def get_lineage(db: Session, endp_schema_key: str, skip: int = 0, limit: int = 1
     model = models.MViewLineage
     exit_code = schema_changing(model=model, endpoint_name='lineage', endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        return db.query(model).slice(0, None).all()
+        return db.query(model).offset(skip).limit(limit).all()
     return list()
 
 
@@ -78,7 +79,7 @@ def get_variants_weekly(db: Session, endp_schema_key: str, skip: int = 0, limit:
     model = models.MViewVariantsWeekly
     exit_code = schema_changing(model=model, endpoint_name='variants_weekly', endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        return db.query(model).slice(0, None).all()
+        return db.query(model).offset(skip).limit(limit).all()
     return list()
 
 
@@ -97,7 +98,7 @@ def filter_custom_browser_cov(db: Session, included: str, excluded: str, endp_sc
     if exit_code == 0:
         model.call(session=db, included=included, excluded=excluded)
         outp = db.execute(
-            text(f"""SELECT * FROM sandbox_public.filter_country_count() OFFSET {skip} LIMIT {limit};""")
+            text(f"""SELECT * FROM {model.get_schema()}.filter_country_count() OFFSET {skip} LIMIT {limit};""")
         ).all()
         return outp
     return list()
@@ -111,7 +112,7 @@ def filter_custom_browser_cov_time(db: Session, included: str, excluded: str, en
     if exit_code == 0:
         model.call(session=db, included=included, excluded=excluded)
         outp = db.execute(
-            text(f"""SELECT * FROM sandbox_public.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
+            text(f"""SELECT * FROM {model.get_schema()}.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
         ).all()
         return outp
     return list()

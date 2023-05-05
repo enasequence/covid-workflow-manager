@@ -85,11 +85,11 @@ class MViewLineage(AbstractBase):
     __tablename__ = "app_lineage"
     __table_args__ = {'schema': AbstractBase().schema}
     collection_date = Column(DATE, primary_key=True)
-    country = Column(VARCHAR)
-    variant_id = Column(TEXT)
-    n = Column(INTEGER)
-    n_all = Column(INTEGER)
-    pct = Column(NUMERIC)
+    country = Column(VARCHAR, primary_key=True)
+    variant_id = Column(TEXT, primary_key=True)
+    n = Column(INTEGER, primary_key=True)
+    n_all = Column(INTEGER, primary_key=True)
+    pct = Column(NUMERIC, primary_key=True)
 
 
 class MViewNewCasesJhd(AbstractBase):
@@ -109,8 +109,8 @@ class MViewVariantsWeekly(AbstractBase):
     country = Column(VARCHAR, primary_key=True)
     date_year = Column(DOUBLE_PRECISION, primary_key=True)
     date_week = Column(DOUBLE_PRECISION, primary_key=True)
-    variant_id = Column(TEXT)
-    weekly_variant_sample = Column(INTEGER)
+    variant_id = Column(TEXT, primary_key=True)
+    weekly_variant_sample = Column(INTEGER, primary_key=True)
 
 
 class MViewUniqueEnaRunSum(AbstractBase):
