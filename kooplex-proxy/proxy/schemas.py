@@ -73,7 +73,7 @@ class MView_Lineage(BaseModel):
 
 
 class MView_NewCasesJhd(BaseModel):
-    country_name: Optional[str]
+    country: Optional[str]
     date: Optional[date]
     date_year: Optional[float]
     date_week: Optional[float]
