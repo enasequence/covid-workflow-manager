@@ -70,8 +70,8 @@ def test_variants_weekly():
 
 
 def test_unique_ena_run_sum():
-    response = client.get("/unique_ena_run_sum/")
-    print(f"unique_ena_run_sum:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    response = client.get("/unique_ena_run_summary/")
+    print(f"unique_ena_run_summary:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
 

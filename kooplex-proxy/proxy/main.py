@@ -68,9 +68,11 @@ def read_variants_weekly(schema_key='', skip: int = 0, limit: int = 100):
     return variants_weekly
 
 
-@app.get("/unique_ena_run_sum/", response_model=List[schemas.MView_UniqueEnaRunSum])
+@app.get("/unique_ena_run_summary/", response_model=List[schemas.MView_UniqueEnaRunSum])
 def read_unique_ena_run_sum(schema_key='', skip: int = 0, limit: int = 100):
-    unique_ena_run_sum = crud.get_unique_ena_run_sum(next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit)
+    unique_ena_run_sum = crud.get_unique_ena_run_summary(
+        next(get_db()), endp_schema_key=schema_key, skip=skip, limit=limit
+    )
     return unique_ena_run_sum
 
 

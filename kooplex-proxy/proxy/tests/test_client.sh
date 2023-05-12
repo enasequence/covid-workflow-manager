@@ -32,8 +32,8 @@ echo 'variants_weekly ->'
 curl http://localhost:8080/variants_weekly/
 
 echo "\n\n9---------------------------------------------------\n"
-echo 'unique_ena_run_sum ->'
-curl http://localhost:8080/unique_ena_run_sum/
+echo 'unique_ena_run_summary ->'
+curl http://localhost:8080/unique_ena_run_summary/
 
 echo "\n\n10---------------------------------------------------\n"
 echo 'filter_custom_browser_cov ->'

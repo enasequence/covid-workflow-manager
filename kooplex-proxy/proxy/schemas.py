@@ -33,7 +33,7 @@ class MView_HumanMetaMvJhd(BaseModel):
     date_week: Optional[float]
     weekly_sample: Optional[int]
     cases: Optional[int]
-    pct: Optional[int]
+    pct: Optional[float]
 
     class Config:
         orm_mode = True
@@ -85,7 +85,7 @@ class MView_NewCasesJhd(BaseModel):
 
 
 class MView_VariantsWeekly(BaseModel):
-    country_name: Optional[str]
+    country: Optional[str]
     date_year: Optional[float]
     date_week: Optional[float]
     variant_id: Optional[str]

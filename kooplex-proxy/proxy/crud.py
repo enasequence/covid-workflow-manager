@@ -83,9 +83,9 @@ def get_variants_weekly(db: Session, endp_schema_key: str, skip: int = 0, limit:
     return list()
 
 
-def get_unique_ena_run_sum(db: Session, endp_schema_key: str, skip: int = 0, limit: int = 100):
+def get_unique_ena_run_summary(db: Session, endp_schema_key: str, skip: int = 0, limit: int = 100):
     model = models.MViewUniqueEnaRunSum
-    exit_code = schema_changing(model=model, endpoint_name='unique_ena_run_sum', endp_schema_key=endp_schema_key)
+    exit_code = schema_changing(model=model, endpoint_name='unique_ena_run_summary', endp_schema_key=endp_schema_key)
     if exit_code == 0:
         return db.query(model).offset(skip).limit(limit).all()
     return list()
