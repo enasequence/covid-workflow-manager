@@ -5,6 +5,7 @@ from typing import Optional
 
 
 class MView_CountrySamples(BaseModel):
+    pkey: int
     country: Optional[str]
     n_sample: Optional[int]
     log_n_sample: Optional[float]
@@ -16,6 +17,7 @@ class MView_CountrySamples(BaseModel):
 
 
 class MView_HumanMetaMv(BaseModel):
+    pkey: int
     country_name: Optional[str]
     date: Optional[date]
     date_year: Optional[float]
@@ -27,6 +29,7 @@ class MView_HumanMetaMv(BaseModel):
 
 
 class MView_HumanMetaMvJhd(BaseModel):
+    pkey: int
     country_name: Optional[str]
     date: Optional[date]
     date_year: Optional[float]
@@ -40,6 +43,7 @@ class MView_HumanMetaMvJhd(BaseModel):
 
 
 class Table_LineageDef(BaseModel):
+    pkey: int
     variant_id: Optional[str]
     pango: Optional[str]
     type_variant: Optional[str]
@@ -61,6 +65,7 @@ class Table_LineageDef(BaseModel):
 
 
 class MView_Lineage(BaseModel):
+    pkey: int
     collection_date: Optional[date]
     country: Optional[str]
     variant_id: Optional[str]
@@ -73,6 +78,7 @@ class MView_Lineage(BaseModel):
 
 
 class MView_NewCasesJhd(BaseModel):
+    pkey: int
     country: Optional[str]
     date: Optional[date]
     date_year: Optional[float]
@@ -85,6 +91,7 @@ class MView_NewCasesJhd(BaseModel):
 
 
 class MView_VariantsWeekly(BaseModel):
+    pkey: int
     country: Optional[str]
     date_year: Optional[float]
     date_week: Optional[float]
@@ -96,6 +103,7 @@ class MView_VariantsWeekly(BaseModel):
 
 
 class MView_UniqueEnaRunSum(BaseModel):
+    pkey: int
     table_name: Optional[str]
     count: Optional[int]
 

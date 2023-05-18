@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TEXT, TIMESTAMP, \
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.expression import text
 
-from database import ALLOWED_SCHEMAS
+from database import ALLOWED_SCHEMAS, POSTGRES_SCHEMA_KEY
 
 Base = declarative_base()
 
@@ -14,7 +14,7 @@ class AbstractBase(Base):
     __abstract__ = True
 
     def __init__(self):
-        self.default_schema = ALLOWED_SCHEMAS['schema_1']
+        self.default_schema = ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY]
 
     @property
     def schema(self):
@@ -30,9 +30,10 @@ class AbstractBase(Base):
 
 
 class MViewCountrySamples(AbstractBase):
-    __tablename__ = "app_country_samples_full"
+    __tablename__ = "api_country_samples_full"
     __table_args__ = {'schema': AbstractBase().schema}
-    country = Column(VARCHAR, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    country = Column(VARCHAR)
     n_sample = Column(INTEGER)
     log_n_sample = Column(DOUBLE_PRECISION)
     relative_n_sample = Column(DOUBLE_PRECISION)
@@ -40,20 +41,22 @@ class MViewCountrySamples(AbstractBase):
 
 
 class MViewHumanMetaMv(AbstractBase):
-    __tablename__ = "app_human_meta_mv"
+    __tablename__ = "api_human_meta_mv"
     __table_args__ = {'schema': AbstractBase().schema}
-    country_name = Column(VARCHAR, primary_key=True)
-    date = Column(DATE, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    country_name = Column(VARCHAR)
+    date = Column(DATE)
     date_year = Column(DOUBLE_PRECISION)
     date_week = Column(DOUBLE_PRECISION)
     weekly_sample = Column(INTEGER)
 
 
 class MViewHumanMetaMvJhd(AbstractBase):
-    __tablename__ = "app_human_meta_mv_jhd"
+    __tablename__ = "api_human_meta_mv_jhd"
     __table_args__ = {'schema': AbstractBase().schema}
-    country_name = Column(VARCHAR, primary_key=True)
-    date = Column(DATE, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    country_name = Column(VARCHAR)
+    date = Column(DATE)
     date_year = Column(DOUBLE_PRECISION)
     date_week = Column(DOUBLE_PRECISION)
     weekly_sample = Column(INTEGER)
@@ -62,30 +65,32 @@ class MViewHumanMetaMvJhd(AbstractBase):
 
 
 class LineageDef(AbstractBase):
-    __tablename__ = "lineage_def"
+    __tablename__ = "api_lineage_def"
     __table_args__ = {'schema': AbstractBase().schema}
-    variant_id = Column(TEXT, primary_key=True)
-    pango = Column(TEXT, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    variant_id = Column(TEXT)
+    pango = Column(TEXT)
     type_variant = Column(TEXT)
     amino_acid_change = Column(TEXT)
-    protein_codon_position = Column(INTEGER, primary_key=True)
+    protein_codon_position = Column(INTEGER)
     ref_protein = Column(TEXT)
     alt_protein = Column(TEXT)
-    gene = Column(TEXT, primary_key=True)
+    gene = Column(TEXT)
     effect = Column(TEXT)
-    snpeff_original_mut = Column(TEXT, primary_key=True)
+    snpeff_original_mut = Column(TEXT)
     ref_pos_alt = Column(TEXT)
     ref = Column(TEXT)
     alt = Column(TEXT)
-    pos = Column(INTEGER, primary_key=True)
+    pos = Column(INTEGER)
     description = Column(TEXT)
 
 
 class MViewLineage(AbstractBase):
-    __tablename__ = "app_lineage"
+    __tablename__ = "api_lineage"
     __table_args__ = {'schema': AbstractBase().schema}
-    collection_date = Column(DATE, primary_key=True)
-    country = Column(VARCHAR, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    collection_date = Column(DATE)
+    country = Column(VARCHAR)
     variant_id = Column(TEXT)
     n = Column(INTEGER)
     n_all = Column(INTEGER)
@@ -93,10 +98,11 @@ class MViewLineage(AbstractBase):
 
 
 class MViewNewCasesJhd(AbstractBase):
-    __tablename__ = "app_new_cases_jhd"
+    __tablename__ = "api_new_cases_jhd"
     __table_args__ = {'schema': AbstractBase().schema}
-    country = Column(VARCHAR, primary_key=True)
-    date = Column(DATE, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    country = Column(VARCHAR)
+    date = Column(DATE)
     date_year = Column(DOUBLE_PRECISION)
     date_week = Column(DOUBLE_PRECISION)
     weekly_sample = Column(INTEGER)
@@ -104,19 +110,21 @@ class MViewNewCasesJhd(AbstractBase):
 
 
 class MViewVariantsWeekly(AbstractBase):
-    __tablename__ = "app_variants_weekly"
+    __tablename__ = "api_variants_weekly"
     __table_args__ = {'schema': AbstractBase().schema}
-    country = Column(VARCHAR, primary_key=True)
-    date_year = Column(DOUBLE_PRECISION, primary_key=True)
-    date_week = Column(DOUBLE_PRECISION, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    country = Column(VARCHAR)
+    date_year = Column(DOUBLE_PRECISION)
+    date_week = Column(DOUBLE_PRECISION)
     variant_id = Column(TEXT)
     weekly_variant_sample = Column(INTEGER)
 
 
 class MViewUniqueEnaRunSum(AbstractBase):
-    __tablename__ = "unique_ena_run_summary"
+    __tablename__ = "api_unique_ena_run_summary"
     __table_args__ = {'schema': AbstractBase().schema}
-    table_name = Column(VARCHAR, primary_key=True)
+    pkey = Column(INTEGER, primary_key=True)
+    table_name = Column(VARCHAR)
     count = Column(INTEGER)
 
 

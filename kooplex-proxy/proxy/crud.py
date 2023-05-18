@@ -3,14 +3,14 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.sql.expression import text
 
 import models
-from database import ALLOWED_SCHEMAS
+from database import ALLOWED_SCHEMAS, POSTGRES_SCHEMA_KEY
 
 
 def schema_changing(model: DeclarativeMeta, endpoint_name: str, endp_schema_key: str):
     current_schema = model.get_schema()
 
     if not endp_schema_key:
-        endp_schema = ALLOWED_SCHEMAS.get('schema_1')
+        endp_schema = ALLOWED_SCHEMAS.get(POSTGRES_SCHEMA_KEY)
     elif endp_schema_key not in ALLOWED_SCHEMAS:
         keys = '/'.join(list(ALLOWED_SCHEMAS.keys()))
         print(f"This schema key '{endp_schema_key}' is unavailable for using, please "
@@ -63,9 +63,10 @@ def get_lineage(db: Session, endp_schema_key: str, skip: int = 0, limit: int = 1
     model = models.MViewLineage
     exit_code = schema_changing(model=model, endpoint_name='lineage', endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        return db.query(
-            model.collection_date, model.country, model.variant_id, model.n, model.n_all, model.pct
-        ).distinct().offset(skip).limit(limit).all()
+        #return db.query(
+        #    model.collection_date, model.country, model.variant_id, model.n, model.n_all, model.pct
+        #).distinct().offset(skip).limit(limit).all()
+        return db.query(model).offset(skip).limit(limit).all()
     return list()
 
 
@@ -81,9 +82,10 @@ def get_variants_weekly(db: Session, endp_schema_key: str, skip: int = 0, limit:
     model = models.MViewVariantsWeekly
     exit_code = schema_changing(model=model, endpoint_name='variants_weekly', endp_schema_key=endp_schema_key)
     if exit_code == 0:
-        return db.query(
-            model.country, model.date_year, model.date_week, model.variant_id, model.weekly_variant_sample
-        ).distinct().offset(skip).limit(limit).all()
+        #return db.query(
+        #    model.country, model.date_year, model.date_week, model.variant_id, model.weekly_variant_sample
+        #).distinct().offset(skip).limit(limit).all()
+        return db.query(model).offset(skip).limit(limit).all()
     return list()
 
 
