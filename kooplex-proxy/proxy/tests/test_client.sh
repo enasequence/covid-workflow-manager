@@ -43,3 +43,15 @@ echo "\n\n11---------------------------------------------------\n"
 echo 'filter_custom_browser_cov_time ->'
 curl "http://localhost:8080/filter_custom_browser_cov_time/?included=p.Asp80Ala%2Cp.Asp215Gly&excluded=p.Asp77Al%2Cp.Asp102Ala"
 echo "\n\n-----------------------------------------------------\n"
+
+echo "\n\n12---------------------------------------------------\n"
+curl "http://localhost:8080/lineage/?limit=1000000&schema_key=public" | json_pp | grep country | wc -l
+echo "\n\n-----------------------------------------------------\n"
+
+echo "\n\n13---------------------------------------------------\n"
+curl "http://localhost:8080/lineage/?limit=1000000&schema_key=schema_1" | json_pp | grep country | wc -l
+echo "\n\n-----------------------------------------------------\n"
+
+echo "\n\n14---------------------------------------------------\n"
+curl "http://localhost:8080/lineage/?limit=1000000&schema_key=schema_2" | json_pp | grep country | wc -l
+echo "\n\n-----------------------------------------------------\n"
