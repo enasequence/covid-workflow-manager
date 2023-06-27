@@ -4,10 +4,45 @@ from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TEXT, TIMESTAMP, \
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.expression import text
 
-from database import ALLOWED_SCHEMAS, POSTGRES_SCHEMA_KEY
+from database import SQLALCHEMY_DATABASE_URL, ALLOWED_SCHEMAS, POSTGRES_SCHEMA_KEY
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from fastapi import HTTPException
 
 Base = declarative_base()
 
+
+class DbConnect:
+
+    def __init__(self):
+        self.connect_instance = None
+        self.schema = ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY]
+
+    def connect(self, schema_name):
+
+        if schema_name is None:
+            raise HTTPException(status_code=500, details="Schema name can't be empty")
+
+        if self.connect_instance is not None and self.schema == schema_name:
+            return self.connect_instance
+
+        self.schema = schema_name
+
+        engine = create_engine(
+            SQLALCHEMY_DATABASE_URL, connect_args={'options': '-csearch_path={}'.format(
+                self.schema
+            )}
+        )
+        Base.metadata.create_all(bind=engine)
+        self.connect_instance = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+        return self.connect_instance
+
+    def get_schema(self):
+        return self.schema
+
+db_connect = DbConnect()
 
 class AbstractBase(Base):
 
@@ -22,16 +57,15 @@ class AbstractBase(Base):
 
     @classmethod
     def get_schema(cls):
-        return cls.__table_args__['schema']
+        return cls.__table__.schema
 
     @classmethod
     def set_schema(cls, schema_name):
-        cls.__table_args__['schema'] = schema_name
+        cls.__table__.schema = schema_name
 
 
 class MViewCountrySamples(AbstractBase):
     __tablename__ = "api_country_samples_full"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     country = Column(VARCHAR)
     n_sample = Column(INTEGER)
@@ -42,7 +76,6 @@ class MViewCountrySamples(AbstractBase):
 
 class MViewHumanMetaMv(AbstractBase):
     __tablename__ = "api_human_meta_mv"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     country_name = Column(VARCHAR)
     date = Column(DATE)
@@ -53,7 +86,6 @@ class MViewHumanMetaMv(AbstractBase):
 
 class MViewHumanMetaMvJhd(AbstractBase):
     __tablename__ = "api_human_meta_mv_jhd"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     country_name = Column(VARCHAR)
     date = Column(DATE)
@@ -66,7 +98,6 @@ class MViewHumanMetaMvJhd(AbstractBase):
 
 class LineageDef(AbstractBase):
     __tablename__ = "api_lineage_def"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     variant_id = Column(TEXT)
     pango = Column(TEXT)
@@ -87,7 +118,6 @@ class LineageDef(AbstractBase):
 
 class MViewLineage(AbstractBase):
     __tablename__ = "api_lineage"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     collection_date = Column(DATE)
     country = Column(VARCHAR)
@@ -99,7 +129,6 @@ class MViewLineage(AbstractBase):
 
 class MViewNewCasesJhd(AbstractBase):
     __tablename__ = "api_new_cases_jhd"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     country = Column(VARCHAR)
     date = Column(DATE)
@@ -111,7 +140,6 @@ class MViewNewCasesJhd(AbstractBase):
 
 class MViewVariantsWeekly(AbstractBase):
     __tablename__ = "api_variants_weekly"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     country = Column(VARCHAR)
     date_year = Column(DOUBLE_PRECISION)
@@ -122,7 +150,6 @@ class MViewVariantsWeekly(AbstractBase):
 
 class MViewUniqueEnaRunSum(AbstractBase):
     __tablename__ = "api_unique_ena_run_summary"
-    __table_args__ = {'schema': AbstractBase().schema}
     pkey = Column(INTEGER, primary_key=True)
     table_name = Column(VARCHAR)
     count = Column(INTEGER)
@@ -130,22 +157,21 @@ class MViewUniqueEnaRunSum(AbstractBase):
 
 class SProcFilterCustomBrowserCov(AbstractBase):
     __tablename__ = 'filter_custom_browser_cov'
-    __table_args__ = {'schema': AbstractBase().schema}
 
     country = Column(VARCHAR, primary_key=True)
     count = Column(INTEGER)
 
     @classmethod
     def call(cls, session, included, excluded):
+        global db_connect
         session.execute(
-            text(f"CALL {cls.__table_args__['schema']}.filter_custom_browser_cov('{included}', '{excluded}');")
+            text(f"CALL {db_connect.get_schema()}.filter_custom_browser_cov('{included}', '{excluded}');")
         )
         return
 
 
 class SProcFilterCustomBrowserCovTime(AbstractBase):
     __tablename__ = 'filter_custom_browser_cov_time'
-    __table_args__ = {'schema': AbstractBase().schema}
 
     collection_date = Column(DATE, primary_key=True)
     country = Column(VARCHAR, primary_key=True)
@@ -154,8 +180,9 @@ class SProcFilterCustomBrowserCovTime(AbstractBase):
 
     @classmethod
     def call(cls, session, included, excluded):
+        global db_connect
         session.execute(
-            text(f"CALL {cls.__table_args__['schema']}.filter_custom_browser_cov('{included}', '{excluded}');")
+            text(f"CALL {db_connect.get_schema()}.filter_custom_browser_cov('{included}', '{excluded}');")
         )
         return
 

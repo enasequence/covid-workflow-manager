@@ -6,7 +6,7 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-import models
+from models import db_connect
 from main import app
 from fastapi.testclient import TestClient
 from database import ALLOWED_SCHEMAS, POSTGRES_SCHEMA_KEY
@@ -15,9 +15,10 @@ from database import ALLOWED_SCHEMAS, POSTGRES_SCHEMA_KEY
 client = TestClient(app)
 
 
-def test_current_schema_of_the_model(model, expected_schema):
-    current_schema = model.get_schema()
-    print(f"current schema is '{current_schema}' for object {model.__table__.name}\n")
+def test_current_schema(expected_schema):
+    global db_connect
+    current_schema = db_connect.get_schema()
+    print(f"current schema is '{current_schema}'\n")
     assert current_schema == expected_schema
 
 
@@ -27,8 +28,8 @@ def test_root():
     assert response.json() == {"Hello": "World"}
 
 
-def test_country_samples():
-    response = client.get("/country_samples/")
+def test_country_samples(endp_schema_key=POSTGRES_SCHEMA_KEY):
+    response = client.get(f"/country_samples/?limit=1000000&schema_key={endp_schema_key}")
     print(f"country_samples:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
@@ -55,6 +56,12 @@ def test_lineage(endp_schema_key=POSTGRES_SCHEMA_KEY):
     response = client.get(f"/lineage/?limit=1000000&schema_key={endp_schema_key}")
     print(f"lineage:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
+
+
+def test_lineage_exception(endp_schema_key=POSTGRES_SCHEMA_KEY):
+    response = client.get(f"/lineage/?limit=1000000&schema_key={endp_schema_key}")
+    print(f"response.status_code: {response.status_code}\n")
+    assert response.status_code == 500
 
 
 def test_new_cases_jhd():
@@ -111,24 +118,28 @@ def test_table_count(table_name: str):
 test_root()
 
 test_lineage()
-test_current_schema_of_the_model(
-    models.MViewLineage, expected_schema=ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY]
-)
+test_current_schema(expected_schema=ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY])
 
 test_lineage(endp_schema_key='schema_1')
-test_current_schema_of_the_model(models.MViewLineage, expected_schema=ALLOWED_SCHEMAS['schema_1'])
+test_current_schema(expected_schema=ALLOWED_SCHEMAS['schema_1'])
 
 test_lineage(endp_schema_key='schema_2')
-test_current_schema_of_the_model(models.MViewLineage, expected_schema=ALLOWED_SCHEMAS['schema_2'])
+test_current_schema(expected_schema=ALLOWED_SCHEMAS['schema_2'])
 
 test_lineage(endp_schema_key=POSTGRES_SCHEMA_KEY)
-test_current_schema_of_the_model(
-    models.MViewLineage, expected_schema=ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY]
-)
+test_current_schema(expected_schema=ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY])
 
-test_lineage(endp_schema_key='schema_test')
+test_lineage_exception(endp_schema_key='schema_test')
+
+test_country_samples(endp_schema_key='schema_1')
+test_current_schema(expected_schema=ALLOWED_SCHEMAS['schema_1'])
+
+test_country_samples(endp_schema_key='schema_2')
+test_current_schema(expected_schema=ALLOWED_SCHEMAS['schema_2'])
 
 test_country_samples()
+test_current_schema(expected_schema=ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY])
+
 test_human_meta_mv()
 test_human_meta_mv_jhd()
 test_lineage_def()
