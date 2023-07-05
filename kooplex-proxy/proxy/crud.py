@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql.expression import text
 
 import models
-from models import db_connect
 
 
 def get_country_samples(db: Session, skip: int = 0, limit: int = 100):
@@ -45,24 +44,22 @@ def get_unique_ena_run_summary(db: Session, skip: int = 0, limit: int = 100):
     return db.query(model).offset(skip).limit(limit).all()
 
 
-def filter_custom_browser_cov(db: Session, included: str, excluded: str, skip: int = 0,
+def filter_custom_browser_cov(db: Session, schema: str, included: str, excluded: str, skip: int = 0,
                               limit: int = 100):
-    global db_connect
     model = models.SProcFilterCustomBrowserCov
-    model.call(session=db, included=included, excluded=excluded)
+    model.call(session=db, schema=schema, included=included, excluded=excluded)
     outp = db.execute(
-        text(f"""SELECT * FROM {db_connect.get_schema()}.filter_country_count() OFFSET {skip} LIMIT {limit};""")
+        text(f"""SELECT * FROM {schema}.filter_country_count() OFFSET {skip} LIMIT {limit};""")
     ).all()
     return outp
 
 
-def filter_custom_browser_cov_time(db: Session, included: str, excluded: str, skip: int = 0,
+def filter_custom_browser_cov_time(db: Session, schema: str, included: str, excluded: str, skip: int = 0,
                                    limit: int = 100):
-    global db_connect
-    model = models.SProcFilterCustomBrowserCovTime
-    model.call(session=db, included=included, excluded=excluded)
+    model = models.SProcFilterCustomBrowserCov
+    model.call(session=db, schema=schema, included=included, excluded=excluded)
     outp = db.execute(
-        text(f"""SELECT * FROM {db_connect.get_schema()}.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
+        text(f"""SELECT * FROM {schema}.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
     ).all()
     return outp
 

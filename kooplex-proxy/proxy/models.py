@@ -42,7 +42,9 @@ class DbConnect:
     def get_schema(self):
         return self.schema
 
+
 db_connect = DbConnect()
+
 
 class AbstractBase(Base):
 
@@ -159,30 +161,12 @@ class SProcFilterCustomBrowserCov(AbstractBase):
     __tablename__ = 'filter_custom_browser_cov'
 
     country = Column(VARCHAR, primary_key=True)
-    count = Column(INTEGER)
-
-    @classmethod
-    def call(cls, session, included, excluded):
-        global db_connect
-        session.execute(
-            text(f"CALL {db_connect.get_schema()}.filter_custom_browser_cov('{included}', '{excluded}');")
-        )
-        return
-
-
-class SProcFilterCustomBrowserCovTime(AbstractBase):
-    __tablename__ = 'filter_custom_browser_cov_time'
-
     collection_date = Column(DATE, primary_key=True)
-    country = Column(VARCHAR, primary_key=True)
-    other_count = Column(INTEGER)
-    variant_count = Column(INTEGER)
 
     @classmethod
-    def call(cls, session, included, excluded):
-        global db_connect
+    def call(cls, session, schema, included, excluded):
         session.execute(
-            text(f"CALL {db_connect.get_schema()}.filter_custom_browser_cov('{included}', '{excluded}');")
+            text(f"CALL {schema}.filter_custom_browser_cov('{included}', '{excluded}');")
         )
         return
 

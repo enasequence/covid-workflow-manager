@@ -85,7 +85,7 @@ def test_unique_ena_run_sum():
 def test_filter_custom_browser_cov(
         included='p.Asp80Ala,p.Asp215Gly',
         excluded='p.Asp77Al,p.Asp102Ala',
-        endp_schema_key='schema_1'
+        endp_schema_key=POSTGRES_SCHEMA_KEY
     ):
 
     response = client.get(
@@ -99,7 +99,7 @@ def test_filter_custom_browser_cov(
 def test_filter_custom_browser_cov_time(
         included='p.Asp80Ala,p.Asp215Gly',
         excluded='p.Asp77Al,p.Asp102Ala',
-        endp_schema_key='schema_1'
+        endp_schema_key=POSTGRES_SCHEMA_KEY
     ):
     response = client.get(
         f"/filter_custom_browser_cov_time/?included={included}&excluded={excluded}&"
@@ -147,8 +147,12 @@ test_new_cases_jhd()
 test_variants_weekly()
 test_unique_ena_run_sum()
 
-test_filter_custom_browser_cov()
-test_filter_custom_browser_cov_time()
-
 test_table_count(table_name='api_lineage')
 test_table_count(table_name='api_variants_weekly')
+
+test_filter_custom_browser_cov()
+test_filter_custom_browser_cov_time()
+test_filter_custom_browser_cov(endp_schema_key='schema_1')
+test_filter_custom_browser_cov_time(endp_schema_key='schema_1')
+test_filter_custom_browser_cov(endp_schema_key='schema_2')
+test_filter_custom_browser_cov_time(endp_schema_key='schema_2')
