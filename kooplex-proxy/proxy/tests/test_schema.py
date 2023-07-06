@@ -6,7 +6,7 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-from database import engine
+from database import engine, ALLOWED_SCHEMAS, POSTGRES_SCHEMA_KEY
 from sqlalchemy import text
 
 
@@ -15,7 +15,7 @@ def test_current_schema():
         schema = conn.execute(text("SELECT current_schema();")).all()
         print(f"current schema\n{schema}\n")
         assert len(schema) == 1
-        assert schema[0][0] == 'sandbox_public'
+        assert schema[0][0] == ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY]
 
 
 def test_current_public_mviews():
