@@ -107,25 +107,60 @@ def read_unique_ena_run_sum(schema_key='', skip: int = 0, limit: int = 100):
 @app.get("/filter_custom_browser_cov/", response_model=List[schemas.SProc_FilterCustomBrowserCov])
 def filter_custom_browser_cov(included: str, excluded: str, schema_key='', skip: int = 0, limit: int = 100):
     schema_name = get_schema_name(schema_key)
-    db = get_db(schema_name)
+
     custom_browser_cov = crud.filter_custom_browser_cov(
-        next(db), schema=schema_name, included=included, excluded=excluded, skip=skip, limit=limit
+        schema=schema_name, included=included, excluded=excluded, skip=skip, limit=limit
     )
+    custom_browser_cov = [
+        schemas.SProc_FilterCustomBrowserCov(country=item[0], count=item[1]) for item in custom_browser_cov
+    ]
+
     return custom_browser_cov
 
 
 @app.get("/filter_custom_browser_cov_time/", response_model=List[schemas.SProc_FilterCustomBrowserCovTime])
 def filter_custom_browser_cov_time(included: str, excluded: str, schema_key='', skip: int = 0, limit: int = 100):
     schema_name = get_schema_name(schema_key)
-    db = get_db(schema_name)
+
     custom_browser_cov = crud.filter_custom_browser_cov_time(
-        next(db), schema=schema_name, included=included, excluded=excluded, skip=skip, limit=limit
+        schema=schema_name, included=included, excluded=excluded, skip=skip, limit=limit
     )
+
+    custom_browser_cov = [
+        schemas.SProc_FilterCustomBrowserCovTime(
+            collection_date=item[0], country=item[1], other_count=item[2], variant_count=item[3]
+        ) for item in custom_browser_cov
+    ]
+
     return custom_browser_cov
 
 
-@app.get("/table_count/", response_model=List[schemas.Table_Count])
-def table_count(table_name, schema_key=''):
-    db = get_db(get_schema_name(schema_key))
-    table_count_result = crud.table_count(next(db), table_name=table_name)
-    return table_count_result
+@app.get("/filter_custom_browser/", response_model=List[schemas.SProc_FilterCustomBrowser])
+def filter_custom_browser_cov(included: str, excluded: str, schema_key='', skip: int = 0, limit: int = 100):
+    schema_name = get_schema_name(schema_key)
+
+    custom_browser_cov = crud.filter_custom_browser(
+        schema=schema_name, included=included, excluded=excluded, skip=skip, limit=limit
+    )
+    custom_browser_cov = [
+        schemas.SProc_FilterCustomBrowser(country=item[0], count=item[1]) for item in custom_browser_cov
+    ]
+
+    return custom_browser_cov
+
+
+@app.get("/filter_custom_browser_time/", response_model=List[schemas.SProc_FilterCustomBrowserTime])
+def filter_custom_browser_cov_time(included: str, excluded: str, schema_key='', skip: int = 0, limit: int = 100):
+    schema_name = get_schema_name(schema_key)
+
+    custom_browser_cov = crud.filter_custom_browser_time(
+        schema=schema_name, included=included, excluded=excluded, skip=skip, limit=limit
+    )
+
+    custom_browser_cov = [
+        schemas.SProc_FilterCustomBrowserTime(
+            collection_date=item[0], country=item[1], other_count=item[2], variant_count=item[3]
+        ) for item in custom_browser_cov
+    ]
+
+    return custom_browser_cov
