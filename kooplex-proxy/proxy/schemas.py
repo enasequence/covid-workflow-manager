@@ -129,8 +129,19 @@ class SProc_FilterCustomBrowserCovTime(BaseModel):
         orm_mode = True
 
 
-class Table_Count(BaseModel):
+class SProc_FilterCustomBrowser(BaseModel):
+    country: Optional[str]
     count: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+
+class SProc_FilterCustomBrowserTime(BaseModel):
+    collection_date: Optional[date]
+    country: Optional[str]
+    other_count: Optional[int]
+    variant_count: Optional[int]
 
     class Config:
         orm_mode = True

@@ -19,6 +19,7 @@ class DbConnect:
     def __init__(self):
         self.connect_instance = None
         self.schema = ALLOWED_SCHEMAS[POSTGRES_SCHEMA_KEY]
+        self.engine = None
 
     def connect(self, schema_name):
 
@@ -35,12 +36,17 @@ class DbConnect:
                 self.schema
             )}
         )
+        self.engine = engine
+
         Base.metadata.create_all(bind=engine)
         self.connect_instance = sessionmaker(autocommit=False, autoflush=False, bind=engine)
         return self.connect_instance
 
     def get_schema(self):
         return self.schema
+
+    def get_engine(self):
+        return self.engine
 
 
 db_connect = DbConnect()
@@ -164,14 +170,38 @@ class SProcFilterCustomBrowserCov(AbstractBase):
     collection_date = Column(DATE, primary_key=True)
 
     @classmethod
-    def call(cls, session, schema, included, excluded):
-        session.execute(
-            text(f"CALL {schema}.filter_custom_browser_cov('{included}', '{excluded}');")
+    def call(cls, schema, included, excluded):
+        global db_connect
+        engine = db_connect.get_engine()
+
+        connection = engine.raw_connection()
+
+        cursor = connection.cursor()
+        cursor.execute(
+            f"CALL {schema}.filter_custom_browser_cov('{included}', '{excluded}');"
         )
-        return
+        cursor.close()
+
+        return connection
 
 
-class TableCount(AbstractBase):
-    __tablename__ = 'table_count'
-    __table_args__ = {'schema': AbstractBase().schema}
-    count = Column(INTEGER, primary_key=True)
+class SProcFilterCustomBrowser(AbstractBase):
+    __tablename__ = 'filter_custom_browser'
+
+    country = Column(VARCHAR, primary_key=True)
+    collection_date = Column(DATE, primary_key=True)
+
+    @classmethod
+    def call(cls, schema, included, excluded):
+        global db_connect
+        engine = db_connect.get_engine()
+
+        connection = engine.raw_connection()
+
+        cursor = connection.cursor()
+        cursor.execute(
+            f"CALL {schema}.filter_custom_browser('{included}', '{excluded}');"
+        )
+        cursor.close()
+
+        return connection

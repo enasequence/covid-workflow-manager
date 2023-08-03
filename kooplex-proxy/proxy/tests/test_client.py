@@ -103,15 +103,38 @@ def test_filter_custom_browser_cov_time(
     ):
     response = client.get(
         f"/filter_custom_browser_cov_time/?included={included}&excluded={excluded}&"
-        f"schema_key={endp_schema_key}"
+        f"schema_key={endp_schema_key}",
+        timeout=1500
     )
     print(f"filter_custom_browser_cov_time:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
 
-def test_table_count(table_name: str):
-    response = client.get(f"/table_count/?table_name={table_name}")
-    print(f"table_count for {table_name}:\n{response.json()}\n")
+def test_filter_custom_browser(
+        included='p.Asp80Ala,p.Asp215Gly',
+        excluded='p.Asp77Al,p.Asp102Ala',
+        endp_schema_key=POSTGRES_SCHEMA_KEY
+    ):
+
+    response = client.get(
+        f"/filter_custom_browser/?included={included}&excluded={excluded}&"
+        f"schema_key={endp_schema_key}"
+    )
+    print(f"filter_custom_browser:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
+    assert response.status_code == 200
+
+
+def test_filter_custom_browser_time(
+        included='p.Asp80Ala,p.Asp215Gly',
+        excluded='p.Asp77Al,p.Asp102Ala',
+        endp_schema_key=POSTGRES_SCHEMA_KEY
+    ):
+    response = client.get(
+        f"/filter_custom_browser_time/?included={included}&excluded={excluded}&"
+        f"schema_key={endp_schema_key}",
+        timeout=1500
+    )
+    print(f"filter_custom_browser_time:\nlen: {len(response.json())}\n{response.json()[:5]}\n")
     assert response.status_code == 200
 
 
@@ -147,12 +170,12 @@ test_new_cases_jhd()
 test_variants_weekly()
 test_unique_ena_run_sum()
 
-test_table_count(table_name='api_lineage')
-test_table_count(table_name='api_variants_weekly')
-
 test_filter_custom_browser_cov()
 test_filter_custom_browser_cov_time()
 test_filter_custom_browser_cov(endp_schema_key='schema_1')
 test_filter_custom_browser_cov_time(endp_schema_key='schema_1')
 test_filter_custom_browser_cov(endp_schema_key='schema_2')
 test_filter_custom_browser_cov_time(endp_schema_key='schema_2')
+
+test_filter_custom_browser()
+test_filter_custom_browser_time()

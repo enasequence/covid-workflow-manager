@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.expression import text
+import asyncio
+import time
 
 import models
 
@@ -44,29 +46,145 @@ def get_unique_ena_run_summary(db: Session, skip: int = 0, limit: int = 100):
     return db.query(model).offset(skip).limit(limit).all()
 
 
-def filter_custom_browser_cov(db: Session, schema: str, included: str, excluded: str, skip: int = 0,
+def filter_custom_browser_cov(schema: str, included: str, excluded: str, skip: int = 0,
                               limit: int = 100):
     model = models.SProcFilterCustomBrowserCov
-    model.call(session=db, schema=schema, included=included, excluded=excluded)
-    outp = db.execute(
-        text(f"""SELECT * FROM {schema}.filter_country_count() OFFSET {skip} LIMIT {limit};""")
-    ).all()
+
+    async def model_call():
+        connection = model.call(schema=schema, included=included, excluded=excluded)
+        return connection
+
+    async def main_call():
+        connection = await model_call()
+
+        try:
+            cursor = connection.cursor()
+            cursor.callproc(f"{schema}.filter_country_count")
+
+            for _ in range(skip):
+                cursor.fetchone()
+
+            outp = []
+            for _ in range(limit):
+                row = cursor.fetchone()
+                if row is None:
+                    break
+                outp.append(row)
+
+        finally:
+            cursor.close()
+            connection.close()
+
+        return outp
+
+    outp = asyncio.run(main_call())
+
     return outp
 
 
-def filter_custom_browser_cov_time(db: Session, schema: str, included: str, excluded: str, skip: int = 0,
+def filter_custom_browser_cov_time(schema: str, included: str, excluded: str, skip: int = 0,
                                    limit: int = 100):
     model = models.SProcFilterCustomBrowserCov
-    model.call(session=db, schema=schema, included=included, excluded=excluded)
-    outp = db.execute(
-        text(f"""SELECT * FROM {schema}.filter_country_count_time() OFFSET {skip} LIMIT {limit};""")
-    ).all()
+
+    async def model_call():
+        connection = model.call(schema=schema, included=included, excluded=excluded)
+        return connection
+
+    async def main_call():
+        connection = await model_call()
+
+        try:
+            cursor = connection.cursor()
+            cursor.callproc(f"{schema}.filter_country_count_time")
+
+            for _ in range(skip):
+                cursor.fetchone()
+
+            outp = []
+            for _ in range(limit):
+                row = cursor.fetchone()
+                if row is None:
+                    break
+                outp.append(row)
+
+        finally:
+            cursor.close()
+            connection.close()
+
+        return outp
+
+    outp = asyncio.run(main_call())
+
     return outp
 
 
-def table_count(db: Session, table_name: str):
-    model = models.TableCount
-    outp = db.execute(
-        text(f"""SELECT COUNT(*) FROM {model.get_schema()}.{table_name};""")
-    ).all()
+def filter_custom_browser(schema: str, included: str, excluded: str, skip: int = 0,
+                              limit: int = 100):
+    model = models.SProcFilterCustomBrowser
+
+    async def model_call():
+        connection = model.call(schema=schema, included=included, excluded=excluded)
+        return connection
+
+    async def main_call():
+        connection = await model_call()
+
+        try:
+            cursor = connection.cursor()
+            cursor.callproc(f"{schema}.filter_country_count")
+
+            for _ in range(skip):
+                cursor.fetchone()
+
+            outp = []
+            for _ in range(limit):
+                row = cursor.fetchone()
+                if row is None:
+                    break
+                outp.append(row)
+
+        finally:
+            cursor.close()
+            connection.close()
+
+        return outp
+
+    outp = asyncio.run(main_call())
+
+    return outp
+
+
+def filter_custom_browser_time(schema: str, included: str, excluded: str, skip: int = 0,
+                                   limit: int = 100):
+    model = models.SProcFilterCustomBrowser
+
+    async def model_call():
+        connection = model.call(schema=schema, included=included, excluded=excluded)
+        return connection
+
+    async def main_call():
+        connection = await model_call()
+
+        try:
+            cursor = connection.cursor()
+            cursor.callproc(f"{schema}.filter_country_count_time")
+
+            for _ in range(skip):
+                cursor.fetchone()
+
+            outp = []
+            for _ in range(limit):
+                row = cursor.fetchone()
+                if row is None:
+                    break
+                outp.append(row)
+
+        finally:
+            cursor.close()
+            connection.close()
+
+        return outp
+
+    outp = asyncio.run(main_call())
+
     return outp
